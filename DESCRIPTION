@@ -39,4 +39,4 @@ Encoding: UTF-8
 LazyData: true
 LazyLoad: true
 RoxygenNote: 7.3.2
-SystemRequirements: FSL, Freesurfer (https://surfer.nmr.mgh.harvard.edu/)
+SystemRequirements: FSL (https://fsl.fmrib.ox.ac.uk/), FreeSurfer (https://freesurfer.net/)
