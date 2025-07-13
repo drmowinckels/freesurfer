@@ -10,7 +10,6 @@
 #'
 #' @return Long \code{data.frame}
 #' @export
-#' @importFrom reshape2 melt
 #' @examplesIf have_fs()
 #' fs_subj_dir()
 #' df = aparcs_to_bg(subjects = "bert", measure = "thickness")
@@ -74,7 +73,22 @@ aparcs_to_bg = function(subjects, measure, ...) {
   x = x[!grepl("Mean", x)]
   tab = tab[, x]
   id.vars = x[1]
-  ltab = reshape2::melt(tab, id.vars = id.vars)
+
+  varying_cols <- setdiff(names(tab), id.vars)
+
+  ltab_baseR <- reshape(
+    tab,
+    varying = varying_cols,
+    v.names = "value",
+    timevar = "variable",
+    times = varying_cols,
+    idvar = id.vars,
+    direction = "long"
+  )
+
+  ltab_baseR <- ltab_baseR[order(ltab_baseR[[id.vars]], ltab_baseR$variable), ]
+  row.names(ltab_baseR) <- NULL
+
   colnames(ltab) = c("id", "name", measure)
   return(ltab)
 }
