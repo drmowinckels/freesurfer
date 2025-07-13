@@ -1,3 +1,9 @@
+# freesurfer 1.8.1.900
+
+- Simplify management of common parameter information
+- Creates containing folder of tempfiles if necessary
+- Improved handling of running examples with @examplesIf
+
 # freesurfer 1.8.0
 
 - Adds `...` to all functions that call `fs_cmd`, to allow user control of `system()`.
