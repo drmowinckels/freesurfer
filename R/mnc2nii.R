@@ -12,19 +12,19 @@
 #' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
 #'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
 #'    mnc = nii2mnc(img)
-#'    img_file = mnc2nii(mnc, outfile = tempfile(fileext = ".nii"))
+#'    img_file = mnc2nii(mnc, outfile = fs_tempfile(fileext = ".nii"))
 #'    neurobase::readnii(img_file, verbose = TRUE)
 #' }
 mnc2nii = function(file, outfile = NULL, ...) {
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ".nii.gz")
+    outfile = fs_tempfile(fileext = ".nii.gz")
   }
   out_ext = file_ext(tolower(outfile))
   outfile = paste0(nii.stub(outfile), ".nii")
 
   # copy for bs stuff
   stopifnot(all(file.exists(file)))
-  tfile = tempfile()
+  tfile = fs_tempfile()
   dir.create(tfile, showWarnings = FALSE)
   infile = file.path(tfile, basename(file))
   file.copy(from = file, to = infile, overwrite = TRUE)

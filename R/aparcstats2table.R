@@ -112,7 +112,7 @@ aparcstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ext)
+    outfile = fs_tempfile(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 

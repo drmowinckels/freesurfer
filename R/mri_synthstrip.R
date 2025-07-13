@@ -22,7 +22,7 @@ mri_synthstrip = function(
   ...
 ) {
   if (is.null(maskfile)) {
-    maskfile = tempfile(fileext = "_mask.nii.gz")
+    maskfile = fs_tempfile(fileext = "_mask.nii.gz")
   }
   maskfile = normalizePath(path.expand(maskfile), mustWork = FALSE)
   maskfile_attr = maskfile

@@ -10,7 +10,7 @@
 #' @examples \dontrun{
 #' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
 #'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-#'    res = mris_euler_number(img, outfile = tempfile(fileext = ".mgz"))
+#'    res = mris_euler_number(img, outfile = fs_tempfile(fileext = ".mgz"))
 #' }
 #' }
 mris_euler_number = function(
@@ -23,7 +23,7 @@ mris_euler_number = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ".txt")
+    outfile = fs_tempfile(fileext = ".txt")
   }
   # args = paste0("-o ", outfile)
   args = paste0("2> ", outfile)

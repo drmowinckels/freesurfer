@@ -15,7 +15,7 @@ surf_convert = function(
   ...
 ) {
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ".dat")
+    outfile = fs_tempfile(fileext = ".dat")
   }
   opts = "--ascii+crsf"
   res = fs_cmd(
