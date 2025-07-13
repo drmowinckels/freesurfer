@@ -115,5 +115,5 @@ fs_cmd = function(
 #' @keyword internal
 #' @noRd
 fs_system <- function(...) {
-  fs_system(...)
+  system(...)
 }
