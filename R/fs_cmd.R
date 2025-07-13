@@ -74,7 +74,7 @@ fs_cmd = function(
   if (verbose) {
     message(cmd, "\n")
   }
-  res = fs_fs_system(cmd, intern = intern, ...)
+  res = fs_system(cmd, intern = intern, ...)
   if (retimg) {
     if (samefile) {
       outfile = file
@@ -106,11 +106,11 @@ fs_cmd = function(
 #'
 #' @examples
 #' # Run a simple system command and capture output
-#' output <- fs_fs_system("echo Hello, World!", intern = TRUE)
+#' output <- fs_system("echo Hello, World!", intern = TRUE)
 #' print(output)
 #'
 #' # Run a command and check the return status
-#' status <- fs_fs_system("ls nonexistent-folder", intern = FALSE)
+#' status <- fs_system("ls nonexistent-folder", intern = FALSE)
 #' print(status)
 #' @keyword internal
 #' @noRd
