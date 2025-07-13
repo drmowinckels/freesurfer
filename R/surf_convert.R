@@ -6,11 +6,9 @@
 #' @param ... Additional arguments to pass to \code{\link{fs_cmd}}
 #' @return \code{data.frame}
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'    fname = file.path(fs_subj_dir(), "bert", "surf", "lh.thickness")
 #'    out = surf_convert(fname)
-#' }
 surf_convert = function(
   file,
   outfile = NULL,

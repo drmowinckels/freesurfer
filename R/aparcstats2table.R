@@ -21,13 +21,12 @@
 #' @return Character filename of output file, with the
 #' attribute of the separator
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    fs_subj_dir()
-#'    outfile = aparcstats2table(subjects = "bert",
-#'                     hemi = "lh",
-#'                     meas = "thickness")
-#' }
+#' @examplesIf have_fs()
+#' fs_subj_dir()
+#' outfile = aparcstats2table(
+#'    subjects = "bert",
+#'    hemi = "lh",
+#'    meas = "thickness")
 aparcstats2table = function(
   subjects,
   outfile = NULL,

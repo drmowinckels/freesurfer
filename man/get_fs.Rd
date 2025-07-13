@@ -7,8 +7,8 @@
 get_fs(bin_app = c("bin", "mni/bin", ""))
 }
 \arguments{
-\item{bin_app}{Should \code{bin} be added to the freesurfer path? 
-All executables are assumed to be in \code{FREESURFER_HOME/bin/}.  If not, and 
+\item{bin_app}{Should \code{bin} be added to the freesurfer path?
+All executables are assumed to be in \code{FREESURFER_HOME/bin/}.  If not, and
 \code{bin_app = ""}, they will be assumed to be in \code{FREESURFER_HOME/}.}
 }
 \value{
@@ -20,11 +20,11 @@ for location of Freesurfer functions
 }
 \note{
 This will use \code{Sys.getenv("FREESURFER_HOME")} before \code{getOption("freesurfer.path")}.
-If the directory is not found for Freesurfer in \code{Sys.getenv("FreesurferDIR")} and 
+If the directory is not found for Freesurfer in \code{Sys.getenv("FreesurferDIR")} and
 \code{getOption("freesurfer.path")}, it will try the default directory \code{/usr/local/freesurfer}.
 }
 \examples{
-if (have_fs()) {
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 get_fs()
-}
+\dontshow{\}) # examplesIf}
 }
