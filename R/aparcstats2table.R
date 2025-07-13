@@ -129,7 +129,7 @@ aparcstats2table = function(
     orig_subj_dir = Sys.getenv("SUBJECTS_DIR")
     old_reset = sprintf("export SUBJECTS_DIR=%s; ", orig_subj_dir)
     on.exit({
-      system(old_reset)
+      fs_system(old_reset)
     })
     subj_dir = path.expand(subj_dir)
     cmd_pre = sprintf("export SUBJECTS_DIR=%s; ", subj_dir)

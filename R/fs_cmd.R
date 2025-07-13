@@ -74,12 +74,46 @@ fs_cmd = function(
   if (verbose) {
     message(cmd, "\n")
   }
-  res = system(cmd, intern = intern, ...)
+  res = fs_fs_system(cmd, intern = intern, ...)
   if (retimg) {
-    if (samefile) outfile = file
+    if (samefile) {
+      outfile = file
+    }
     img = readnii(outfile, reorient = reorient)
     return(img)
   }
 
   return(res)
+}
+
+#' Execute a System Command
+#'
+#' The `fs_system` function runs a system command using the base \code{\link[base]{system}}
+#' function and provides a simple wrapper for accessing system shell functionality.
+#'
+#' @param ... Arguments passed to the base \code{\link[base]{system}} function, such as `command`,
+#'        `intern`, and `ignore.stdout` or `ignore.stderr`. These control the
+#'        command to be executed and how its output is handled.
+#'
+#' @return The function returns the result of \code{\link[base]{system}}:
+#' - If `intern = TRUE`, a character vector with the command output.
+#' - If `intern = FALSE`, an integer status code returned by the system command.
+#'
+#' @details The function is a lightweight wrapper around the \code{\link[base]{system}}
+#' function, offering additional flexibility for executing shell commands
+#' programmatically. Users are encouraged to handle potential errors or
+#' outputs based on their use case.
+#'
+#' @examples
+#' # Run a simple system command and capture output
+#' output <- fs_fs_system("echo Hello, World!", intern = TRUE)
+#' print(output)
+#'
+#' # Run a command and check the return status
+#' status <- fs_fs_system("ls nonexistent-folder", intern = FALSE)
+#' print(status)
+#' @keyword internal
+#' @noRd
+fs_system <- function(...) {
+  fs_system(...)
 }

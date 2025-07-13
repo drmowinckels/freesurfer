@@ -16,7 +16,7 @@ run_check_fs_cmd = function(cmd, outfile, verbose = TRUE, ...) {
   if (verbose) {
     message(cmd, "\n")
   }
-  res = system(cmd, ...)
+  res = fs_system(cmd, ...)
   fe_after = file.exists(outfile)
 
   check_fs_result(res = res, fe_before = fe_before, fe_after = fe_after)
