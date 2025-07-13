@@ -1,11 +1,11 @@
 #' @title Tract Reconstruction Helper for trac-all from Freesurfer
 #' @description Wrapper for the \code{trac-all} function in Freesurfer
-#' 
+#'
 #' @param infile Input filename (dcm or nii)
-#' @param outdir Output directory
-#' @param subjid subject id, if NULL, the basename of the infile will be used
-#' @param verbose print diagnostic messages
-#' @param opts Additional options
+#' @template outdir
+#' @template subjid
+#' @template verbose
+#' @template opts
 #'
 #' @return Result of \code{\link{system}}
 #' @export
@@ -16,7 +16,6 @@ tracker <- function(
   verbose = TRUE,
   opts = ""
 ) {
-  
   if (is.null(subjid)) {
     subjid = nii.stub(infile, bn = TRUE)
     subjid = file_path_sans_ext(subjid)
@@ -27,19 +26,20 @@ tracker <- function(
   } else {
     in_opts = ""
   }
-  
+
   if (!is.null(outdir)) {
     sd_opts = paste0(" -sd ", shQuote(outdir))
   } else {
     sd_opts = ""
   }
-  
+
   opts = paste(
     in_opts,
     sd_opts,
     paste0(" -s ", subjid),
-    opts)
-  
+    opts
+  )
+
   cmd = get_fs()
   cmd = paste0(cmd, "trac-all")
   cmd = paste(cmd, opts)

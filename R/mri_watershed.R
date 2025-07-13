@@ -4,7 +4,7 @@
 #' @param file (character) input filename
 #' @param outfile (character) output filename
 #' @param retimg (logical) return image of class nifti
-#' @param opts (character) additional options to \code{mri_watershed}
+#' @template opts
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Character or nifti depending on \code{retimg}
 #' @export

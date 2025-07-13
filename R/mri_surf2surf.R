@@ -9,12 +9,9 @@
 #' @param src_type (character) source file type, can be curv or paint (w)
 #' @param trg_type (character) target file type, can be curv, paint (w), mgh, or nii
 #' @param sval (character) source file
-#' @param subj_dir (character path) if a different subjects directory
-#' is to be used other than \code{SUBJECTS_DIR} from shell, it can be
-#' specified here.  Use with care as if the command fail, it may not reset
-#' the \code{SUBJECTS_DIR} back correctly after the error
-#' @param opts (character) additional options to \code{mri_surf2surf}
-#' @param verbose (logical) print diagnostic messages
+#' @template subj_dir
+#' @template opts
+#' @template verbose
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @return Name of output file
 #' @export

@@ -1,11 +1,11 @@
 #' @title Reconstruction from Freesurfer for All Steps
 #' @description Reconstruction from Freesurfer for All Steps
-#' 
+#'
 #' @param infile Input filename (dcm or nii)
-#' @param outdir Output directory
-#' @param subjid subject id
-#' @param verbose print diagnostic messages
-#' @param opts Additional options
+#' @template outdir
+#' @template subjid
+#' @template verbose
+#' @template opts
 #' @param ... arguments passed to \code{\link{reconner}}
 #'
 #' @note If you would like to restart a \code{recon-all} run,
@@ -20,11 +20,12 @@ recon_all <- function(
   opts = "-all",
   ...
 ) {
-  
-  reconner(infile = infile,
-           outdir = outdir,
-           subjid = subjid,
-           verbose = verbose,
-           opts = opts,
-           ...)
+  reconner(
+    infile = infile,
+    outdir = outdir,
+    subjid = subjid,
+    verbose = verbose,
+    opts = opts,
+    ...
+  )
 }

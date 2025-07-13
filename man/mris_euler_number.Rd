@@ -11,7 +11,7 @@ mris_euler_number(file, outfile = NULL, opts = "", ...)
 
 \item{outfile}{(character) output filename}
 
-\item{opts}{(character) additional options to \code{mris_euler_number}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{...}{Additional arguments to pass to \code{\link{fs_cmd}}}
 }

@@ -9,8 +9,7 @@ mris_convert_curv(curv, opts = "", ...)
 \arguments{
 \item{curv}{(character) scalar curv overlay file}
 
-\item{opts}{(character) additional options to 
-\code{\link{mris_convert}}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{...}{additional arguments to \code{\link{mris_convert}}}
 }
@@ -18,7 +17,7 @@ mris_convert_curv(curv, opts = "", ...)
 Result of \code{\link{mris_convert}}
 }
 \description{
-This function call \code{mris_convert}, 
+This function call \code{mris_convert},
 using the \code{-c} option
 }
 \note{
@@ -40,5 +39,5 @@ if (have_fs()) {
  res = read_fs_table(asc_file, header = FALSE)
  colnames(res) = c("index", "coord_1", "coord_2", "coord_3", "value")
  head(res)
-}  
+}
 }

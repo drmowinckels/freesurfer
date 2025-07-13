@@ -39,7 +39,7 @@ is to be used other than \code{SUBJECTS_DIR} from shell, it can be
 specified here.  Use with care as if the command fail, it may not reset
 the \code{SUBJECTS_DIR} back correctly after the error}
 
-\item{opts}{(character) additional options to \code{mri_surf2surf}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{verbose}{(logical) print diagnostic messages}
 

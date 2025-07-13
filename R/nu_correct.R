@@ -3,8 +3,8 @@
 #' to correct for non-uniformity
 #' @param file (character) input filename
 #' @param mask (character or nifti) Mask to use for correction.
-#' @param opts (character) additional options to \code{mri_segment}
-#' @param verbose print diagnostic messages
+#' @template opts
+#' @template verbose
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Object of class nifti depending on \code{retimg}
 #' @importFrom neurobase parse_img_ext readnii

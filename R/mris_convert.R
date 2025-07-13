@@ -4,8 +4,8 @@
 #' @param infile (character) file path for input file
 #' @param outfile (character) output file path
 #' @param ext (character) output file extension, default is set to .asc
-#' @param opts (character) additional options to add to front of command
-#' @param verbose (logical) print diagnostic messages
+#' @template opts
+#' @template verbose
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @return Name of output file
 #' @export

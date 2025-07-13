@@ -11,7 +11,7 @@ mri_convert(file, outfile, opts = "", ...)
 
 \item{outfile}{(character) output filename}
 
-\item{opts}{(character) additional options to \code{mri_convert}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{...}{Additional arguments to pass to \code{\link{fs_cmd}}}
 }

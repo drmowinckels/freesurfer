@@ -7,8 +7,8 @@
 #' @param reorient (logical) If retimg, should file be reoriented when read in?
 #' Passed to \code{\link[neurobase]{readnii}}.
 #' @param intern (logical) to be passed to \code{\link{system}}
-#' @param opts (character) operations to be passed to \code{func}
-#' @param verbose (logical) print out command before running
+#' @template opts
+#' @template verbose
 #' @param samefile (logical) is the output the same file?
 #' @param opts_after_outfile (logical) should \code{opts} come after
 #' the \code{outfile} in the Freesurfer command?
@@ -76,7 +76,9 @@ fs_cmd = function(
   }
   res = system(cmd, intern = intern, ...)
   if (retimg) {
-    if (samefile) outfile = file
+    if (samefile) {
+      outfile = file
+    }
     img = readnii(outfile, reorient = reorient)
     return(img)
   }

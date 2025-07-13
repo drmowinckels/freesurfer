@@ -5,7 +5,7 @@
 #'
 #' @param cmd Command to be run
 #' @param outfile Output file to be produced
-#' @param verbose print diagnostic messages
+#' @template verbose
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @seealso \code{\link{check_fs_result}}
 #'

@@ -29,8 +29,8 @@ e.g. \code{aseg.stats}.}
 \item{sep}{(character) separator for the output file.  This will be
 an attribute of \code{outfile}}
 
-\item{skip}{(logical) if subject does not have parcellation, 
-should the command skip that subject (\code{TRUE}) or error 
+\item{skip}{(logical) if subject does not have parcellation,
+should the command skip that subject (\code{TRUE}) or error
 (\code{FALSE})}
 
 \item{subj_dir}{(character path) if a different subjects directory
@@ -38,16 +38,16 @@ is to be used other than \code{SUBJECTS_DIR} from shell, it can be
 specified here.  Use with care as if the command fail, it may not reset
 the \code{SUBJECTS_DIR} back correctly after the error}
 
-\item{opts}{(character) additional options to \code{asegstats2table}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{verbose}{(logical) print diagnostic messages}
 }
 \value{
-Character filename of output file, with the 
+Character filename of output file, with the
 attribute of the separator
 }
 \description{
-This function calls \code{asegstats2table} to 
+This function calls \code{asegstats2table} to
 convert parcellation statistics to a table
 }
 \examples{

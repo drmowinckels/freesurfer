@@ -9,7 +9,7 @@ read_annotation(path, verbose = TRUE)
 \arguments{
 \item{path}{path to annotation file, usually with extension \code{annot}}
 
-\item{verbose}{logical.}
+\item{verbose}{(logical) print diagnostic messages}
 }
 \value{
 list of 3 with vertices, labels, and colortable
@@ -34,5 +34,5 @@ if (have_fs()) {
     bert_dir = file.path(fs_subj_dir(), "bert")
     annot_file = file.path(bert_dir, "label", "lh.aparc.annot")
     res = read_annotation(annot_file)
-} 
+}
 }

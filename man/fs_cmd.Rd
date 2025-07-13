@@ -35,9 +35,9 @@ Passed to \code{\link[neurobase]{readnii}}.}
 
 \item{intern}{(logical) to be passed to \code{\link{system}}}
 
-\item{opts}{(character) operations to be passed to \code{func}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
-\item{verbose}{(logical) print out command before running}
+\item{verbose}{(logical) print diagnostic messages}
 
 \item{samefile}{(logical) is the output the same file?}
 

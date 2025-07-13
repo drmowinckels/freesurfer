@@ -20,7 +20,7 @@ mris_convert(
 
 \item{ext}{(character) output file extension, default is set to .asc}
 
-\item{opts}{(character) additional options to add to front of command}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{verbose}{(logical) print diagnostic messages}
 

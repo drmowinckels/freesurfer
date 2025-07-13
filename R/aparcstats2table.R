@@ -11,12 +11,9 @@
 #' @param skip (logical) if subject does not have parcellation,
 #' should the command skip that subject (\code{TRUE}) or error
 #' (\code{FALSE})
-#' @param subj_dir (character path) if a different subjects directory
-#' is to be used other than \code{SUBJECTS_DIR} from shell, it can be
-#' specified here.  Use with care as if the command fail, it may not reset
-#' the \code{SUBJECTS_DIR} back correctly after the error
-#' @param opts (character) additional options to \code{aparcstats2table}
-#' @param verbose (logical) print diagnostic messages
+#' @template subj_dir
+#' @template opts
+#' @template verbose
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @return Character filename of output file, with the
 #' attribute of the separator

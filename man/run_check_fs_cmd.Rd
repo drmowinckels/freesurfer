@@ -11,7 +11,7 @@ run_check_fs_cmd(cmd, outfile, verbose = TRUE, ...)
 
 \item{outfile}{Output file to be produced}
 
-\item{verbose}{print diagnostic messages}
+\item{verbose}{(logical) print diagnostic messages}
 
 \item{...}{Additional arguments to pass to \code{\link{system}}}
 }

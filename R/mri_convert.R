@@ -2,7 +2,7 @@
 #' @description This function calls \code{mri_convert} to convert an image
 #' @param file (character) input filename
 #' @param outfile (character) output filename
-#' @param opts (character) additional options to \code{mri_convert}
+#' @template opts
 #' @param ... Additional arguments to pass to \code{\link{fs_cmd}}
 #' @return Result of \code{system} command
 #' @export
