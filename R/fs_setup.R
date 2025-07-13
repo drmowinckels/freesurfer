@@ -235,11 +235,11 @@ freesurferdir = function() {
 
 #' @rdname freesurferdir
 #' @export
-freesurfer_dir = freesurferdir()
+freesurfer_dir = freesurferdir
 
 #' @rdname freesurferdir
 #' @export
-fs_dir = freesurferdir()
+fs_dir = freesurferdir
 
 
 #' @title Logical check if Freesurfer is accessible
