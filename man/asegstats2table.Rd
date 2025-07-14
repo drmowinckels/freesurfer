@@ -51,8 +51,8 @@ This function calls \code{asegstats2table} to
 convert parcellation statistics to a table
 }
 \examples{
-if (have_fs()) {
-   outfile = asegstats2table(subjects = "bert",
-                    meas = "mean")
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+outfile = asegstats2table(subjects = "bert",
+  meas = "mean")
+\dontshow{\}) # examplesIf}
 }

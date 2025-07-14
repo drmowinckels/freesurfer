@@ -112,7 +112,7 @@ fs_cmd = function(
 #' # Run a command and check the return status
 #' status <- fs_system("ls nonexistent-folder", intern = FALSE)
 #' print(status)
-#' @keyword internal
+#' @keywords internal
 #' @noRd
 fs_system <- function(...) {
   system(...)
