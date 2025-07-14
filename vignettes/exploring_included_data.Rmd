@@ -319,7 +319,7 @@ This object is included in \pkg{freesurfer} and denotes the indices, labels, and
 ```{r seg_file_show, echo = TRUE, eval = FALSE}
 if (have_fs()) {
   seg_file = file = file.path(fs_subj_dir(), "bert", "mri", "aseg.mgz")
-  seg = readmgz(seg_file)
+  seg = read_mgz(seg_file)
   breaks = c(-1, fs_lut$index)
   colors = rgb(fs_lut$R, fs_lut$G, fs_lut$B, alpha = 255/2, maxColorValue = 255)
   ortho2(ss, seg, col.y = colors, ybreaks = breaks)
@@ -331,7 +331,7 @@ if (have_fs()) {
 if (have_fs()) {
   seg_file = file = file.path(fs_subj_dir(), 
                               "bert", "mri", "aseg.mgz")
-  seg = readmgz(seg_file)
+  seg = read_mgz(seg_file)
   if (fsl_check) {
     L = fslr::rpi_orient(seg)
   } else {

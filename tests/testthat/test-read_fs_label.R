@@ -142,7 +142,6 @@ test_that("handles leading/trailing spaces in lines", {
     result <- read_fs_label(mock_label_spaces)
 
     expect_equal(nrow(result), 2)
-    # Check specific values to ensure parsing handles spaces
     expect_equal(result$vertex_num[1], "0")
     expect_equal(result$r_coord[1], "1.234567")
     expect_equal(result$value[2], "1.000000")
