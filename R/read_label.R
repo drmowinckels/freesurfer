@@ -20,6 +20,9 @@
 #'  }
 #'  out = read_fs_label(file)
 read_fs_label = function(file) {
+  if (!file_exists(file)) {
+    stop("File does not exist")
+  }
   header = readLines(con = file)
   comment = header[1]
   n_lines = as.numeric(header[2])
@@ -32,6 +35,9 @@ read_fs_label = function(file) {
     x[!x %in% ""]
   })
   ss = do.call("rbind", ss)
+  if (is.null(ss)) {
+    stop("The file is no valid label content.")
+  }
   colnames(ss) = c("vertex_num", "r_coord", "a_coord", "s_coord", "value")
   ss = data.frame(ss, stringsAsFactors = FALSE)
   attr(ss, "comment") = comment
