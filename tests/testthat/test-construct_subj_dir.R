@@ -1,7 +1,7 @@
-test_that("construct_subj_dir creates correct directory structure and copies files", {
+test_that("creates correct directory structure and copies files", {
   # Setup: Prepare temporary files and directories
   subj_root_dir <- tempdir()
-  dir.create(subj_root_dir, recursive = TRUE, showWarnings = FALSE)
+  mkdir(subj_root_dir)
   label_file <- tempfile(fileext = ".txt", tmpdir = subj_root_dir)
   mri_files <- c(
     tempfile(fileext = ".mgz", tmpdir = subj_root_dir),

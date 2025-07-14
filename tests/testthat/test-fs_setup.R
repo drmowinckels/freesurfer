@@ -443,7 +443,7 @@ test_that("fs_subj_dir and set_fs_subj_dir manage SUBJECTS_DIR", {
               getwd(),
               "my_custom_subjects_dir_isolated"
             )
-            dir.create(custom_subj_dir, recursive = TRUE, showWarnings = FALSE)
+            mkdir(custom_subj_dir)
 
             set_fs_subj_dir(custom_subj_dir)
             expect_equal(Sys.getenv("SUBJECTS_DIR"), custom_subj_dir)

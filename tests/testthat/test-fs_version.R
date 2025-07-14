@@ -1,7 +1,7 @@
 test_that("fs_version works correctly when version file exists", {
   # Setup: Create a temporary directory and a mock version file
   temp_dir <- tempfile()
-  dir.create(temp_dir)
+  mkdir(temp_dir)
   temp_version_file <- file.path(temp_dir, "build-stamp.txt")
   writeLines("Freesurfer v7.2.0", temp_version_file)
 
@@ -21,7 +21,7 @@ test_that("fs_version works correctly when version file exists", {
 test_that("fs_version returns empty string and warns when version file does not exist", {
   # Setup: Create a temporary directory without a version file
   temp_dir <- tempfile()
-  dir.create(temp_dir)
+  mkdir(temp_dir)
 
   # Mock fs_dir to return the temporary directory
   testthat::local_mocked_bindings(
@@ -42,7 +42,7 @@ test_that("fs_version returns empty string and warns when version file does not 
 test_that("fs_version handles an empty version file gracefully", {
   # Setup: Create a temporary directory with an empty version file
   temp_dir <- tempfile()
-  dir.create(temp_dir)
+  mkdir(temp_dir)
   temp_version_file <- file.path(temp_dir, "build-stamp.txt")
   file.create(temp_version_file)
 
@@ -62,7 +62,7 @@ test_that("fs_version handles an empty version file gracefully", {
 test_that("fs_version handles multi-line version files", {
   # Setup: Create a temporary directory with a multi-line version file
   temp_dir <- tempfile()
-  dir.create(temp_dir)
+  mkdir(temp_dir)
   temp_version_file <- file.path(temp_dir, "build-stamp.txt")
   writeLines(
     "Freesurfer v7.2.0",
@@ -79,13 +79,13 @@ test_that("fs_version handles multi-line version files", {
   expect_equal(version, "Freesurfer v7.2.0")
 
   # Teardown: Remove temporary directory
-  unlink(temp_dir, recursive = TRUE)
+  rmdir(temp_dir)
 })
 
 test_that("fs_version works correctly in nested directories", {
   # Setup: Create a nested temporary directory with a version file
   temp_dir <- file.path(tempfile(), "nested", "subdir")
-  dir.create(temp_dir, recursive = TRUE)
+  mkdir(temp_dir)
   temp_version_file <- file.path(temp_dir, "build-stamp.txt")
   writeLines("Freesurfer v7.3.0", temp_version_file)
 
@@ -99,5 +99,5 @@ test_that("fs_version works correctly in nested directories", {
   expect_equal(version, "Freesurfer v7.3.0")
 
   # Teardown: Remove the temporary directory
-  unlink(dirname(dirname(temp_dir)), recursive = TRUE)
+  rmdir(dirname(dirname(temp_dir)))
 })

@@ -20,13 +20,13 @@ skip_if_no_fsl <- function() {
   }
 }
 
+rmdir <- function(path) {
+  unlink(path, recursive = TRUE, force = TRUE)
+}
+
 mock_freesurfer_env <- function(base_path = TEST_FS_HOME) {
   unlink(base_path, recursive = TRUE, force = TRUE)
-  dir.create(
-    file.path(base_path, "bin"),
-    recursive = TRUE,
-    showWarnings = FALSE
-  )
+  mkdir(file.path(base_path, "bin"))
   file.create(file.path(base_path, "license.txt"))
   writeLines(
     c(
@@ -36,9 +36,5 @@ mock_freesurfer_env <- function(base_path = TEST_FS_HOME) {
     ),
     con = file.path(base_path, "FreeSurferEnv.sh")
   )
-  dir.create(
-    file.path(base_path, "subjects"),
-    recursive = TRUE,
-    showWarnings = FALSE
-  )
+  mkdir(file.path(base_path, "subjects"))
 }

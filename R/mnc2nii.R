@@ -23,9 +23,9 @@ mnc2nii = function(file, outfile = NULL, ...) {
   outfile = paste0(nii.stub(outfile), ".nii")
 
   # copy for bs stuff
-  stopifnot(all(file.exists(file)))
+  stopifnot(all(file_exists(file)))
   tfile = fs_tempfile()
-  dir.create(tfile, showWarnings = FALSE)
+  mkdir(tfile)
   infile = file.path(tfile, basename(file))
   file.copy(from = file, to = infile, overwrite = TRUE)
 

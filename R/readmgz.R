@@ -9,11 +9,7 @@
 #' @export
 readmgz = function(file, ...) {
   outfile = fs_tempfile(fileext = ".nii.gz")
-  dir.create(
-    dirname(outfile),
-    showWarnings = FALSE,
-    recursive = TRUE
-  )
+  mkdir(dirname(outfile))
   mri_convert(file, outfile, ...)
   readnii(outfile)
 }
