@@ -18,11 +18,9 @@
 #' @return Character filename of output file, with the
 #' attribute of the separator
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    outfile = asegstats2table(subjects = "bert",
-#'                     meas = "mean")
-#' }
+#' @examplesIf have_fs()
+#' outfile = asegstats2table(subjects = "bert",
+#'   meas = "mean")
 asegstats2table = function(
   subjects = NULL,
   inputs = NULL,
