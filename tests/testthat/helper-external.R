@@ -2,7 +2,7 @@
 #'
 #' @keywords internal
 skip_if_no_freesurfer <- function() {
-  if (have_fs()) {
+  if (!have_fs()) {
     testthat::skip(
       "FreeSurfer not found. Skipping FreeSurfer-dependent test(s)."
     )
@@ -13,7 +13,7 @@ skip_if_no_freesurfer <- function() {
 #'
 #' @keywords internal
 skip_if_no_fsl <- function() {
-  if (fslr::have_fsl()) {
+  if (!fslr::have_fsl()) {
     testthat::skip(
       "FSL not found. Skipping FSL-dependent test(s)."
     )
