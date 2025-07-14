@@ -43,7 +43,8 @@ temp_file <- function(...) {
   x
 }
 
-
+#' Utility to check file existence
+#' @noRd
 file_exists <- function(...) {
   base::file.exists(...)
 }
