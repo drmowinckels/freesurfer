@@ -20,4 +20,3 @@ fs_version = function() {
   }
   return(version)
 }
-
