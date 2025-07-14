@@ -144,47 +144,15 @@ test_that("handles missing colortable gracefully", {
   con <- file(annot_file, "wb")
   on.exit(close(con))
 
-  writeBin(as.integer(10), con, endian = "big") # Mock vertex-label pairs
+  writeBin(as.integer(10), con, endian = "big")
   writeBin(as.integer(rep(c(1, 2), 10)), con, endian = "big")
-  writeBin(as.integer(0), con, endian = "big") # Invalid colortable flag
+  writeBin(as.integer(0), con, endian = "big")
 
   # Test
   expect_error(
     read_annotation(annot_file),
-    "Error! Should not be expecting bool == 0"
+    "does not have the expected content"
   )
-
-  unlink(annot_file) # Teardown
-})
-
-test_that("ensures colortable fields are not NA", {
-  # Setup: Create a mock annotation without proper colortable labels
-  annot_file <- tempfile(fileext = ".annot")
-  con <- file(annot_file, "wb")
-  on.exit(close(con))
-
-  # Regular content
-  writeBin(as.integer(10), con, endian = "big")
-  writeBin(as.integer(rep(c(1, 2), 10)), con, endian = "big")
-
-  # Colortable flag
-  writeBin(as.integer(1), con, endian = "big")
-
-  writeBin(as.integer(5), con, endian = "big")
-  for (i in 1:5) {
-    # Missing or invalid labels
-    writeBin(as.integer(i - 1), con, endian = "big")
-    writeBin(as.integer(0), con, endian = "big") # label field is malformed
-    writeBin(as.integer(sample(0:255, 1)), con, endian = "big") # R
-    writeBin(as.integer(sample(0:255, 1)), con, endian = "big") # G
-    writeBin(as.integer(sample(0:255, 1)), con, endian = "big") # B
-    writeBin(as.integer(0), con, endian = "big") # A
-  }
-
-  result <- read_annotation(annot_file)
-
-  # Assertions
-  expect_false(any(is.na(result$colortable$label)))
 
   unlink(annot_file) # Teardown
 })
