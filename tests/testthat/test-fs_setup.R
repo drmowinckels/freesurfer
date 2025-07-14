@@ -126,11 +126,11 @@ test_that("get_fs finds default paths", {
               .local = TRUE,
               {
                 local_mocked_bindings(
-                  `base::file.exists` = function(path) {
+                  `file_exists` = function(path) {
                     if (path == default_mock_path) {
                       return(TRUE)
                     }
-                    return(base::file.exists(path))
+                    return(file_exists(path))
                   }
                 )
                 expect_warning(
@@ -160,7 +160,7 @@ test_that("get_fs stops if no FreeSurfer found", {
         new = list(`freesurfer.path` = NULL),
         code = {
           local_mocked_bindings(
-            `base::file.exists` = function(path) FALSE
+            `file_exists` = function(path) FALSE
           )
           expect_error(get_fs(), "Can't find Freesurfer")
         }
@@ -204,7 +204,7 @@ test_that("get_fs handles bin_app correctly", {
 
                 # Test with "mni/bin" (mocking specific internal file system calls)
                 local_mocked_bindings(
-                  `base::file.exists` = function(path) {
+                  `file_exists` = function(path) {
                     if (
                       grepl(
                         file.path(
@@ -219,7 +219,7 @@ test_that("get_fs handles bin_app correctly", {
                     ) {
                       return(TRUE)
                     }
-                    return(base::file.exists(path))
+                    return(file_exists(path))
                   },
                   `base::list.files` = function(
                     path,

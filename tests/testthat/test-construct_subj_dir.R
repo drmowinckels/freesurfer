@@ -13,11 +13,11 @@ test_that("creates correct directory structure and copies files", {
   )
   surf_file <- tempfile(fileext = ".surf", tmpdir = subj_root_dir)
 
-  # A dummy content to make files valid
-  writeLines("dummy content", label_file)
-  lapply(mri_files, writeLines, "dummy content")
-  lapply(stats_files, writeLines, "dummy content")
-  writeLines("dummy content", surf_file)
+  # A dummy_content to make files valid
+  writeLines("dummy_content", label_file)
+  lapply(mri_files, writeLines, "dummy_content")
+  lapply(stats_files, writeLines, "dummy_content")
+  writeLines("dummy_content", surf_file)
 
   # Run function
   result <- construct_subj_dir(
@@ -41,25 +41,25 @@ test_that("creates correct directory structure and copies files", {
     "test_subj",
     c("label", "mri", "stats", "surf")
   )
-  expect_true(all(file.exists(expected_dirs)))
+  expect_true(all(file_exists(expected_dirs)))
 
   # Assertions: Check files copied correctly
-  expect_true(file.exists(file.path(expected_dirs[1], basename(label_file))))
-  expect_true(all(file.exists(file.path(
+  expect_true(file_exists(file.path(expected_dirs[1], basename(label_file))))
+  expect_true(all(file_exists(file.path(
     expected_dirs[2],
     basename(mri_files)
   ))))
-  expect_true(all(file.exists(file.path(
+  expect_true(all(file_exists(file.path(
     expected_dirs[3],
     basename(stats_files)
   ))))
-  expect_true(file.exists(file.path(expected_dirs[4], basename(surf_file))))
+  expect_true(file_exists(file.path(expected_dirs[4], basename(surf_file))))
 
   # Teardown: Clean up temporary files
   unlink(subj_root_dir, recursive = TRUE)
 })
 
-test_that("construct_subj_dir handles NULL parameters gracefully", {
+test_that("handles NULL parameters gracefully", {
   subj_root_dir <- tempdir()
 
   # Run function with NULL parameters
@@ -87,7 +87,7 @@ test_that("construct_subj_dir handles NULL parameters gracefully", {
   unlink(subj_root_dir, recursive = TRUE)
 })
 
-test_that("construct_subj_dir generates temporary ID if subj is NULL", {
+test_that("generates temporary ID if subj is NULL", {
   subj_root_dir <- tempdir()
 
   # Run function without specifying `subj`
@@ -109,7 +109,7 @@ test_that("construct_subj_dir generates temporary ID if subj is NULL", {
   unlink(subj_root_dir, recursive = TRUE)
 })
 
-test_that("construct_subj_dir stops on missing files", {
+test_that("stops on missing files", {
   subj_root_dir <- tempdir()
 
   # Provide a non-existent file
@@ -125,12 +125,12 @@ test_that("construct_subj_dir stops on missing files", {
   )
 })
 
-test_that("construct_subj_dir creates partial folders when some parameters are NULL", {
+test_that("creates partial folders when some parameters are NULL", {
   subj_root_dir <- tempdir()
   mri_file <- tempfile(fileext = ".mgz", tmpdir = subj_root_dir)
   stats_file <- tempfile(fileext = ".stats", tmpdir = subj_root_dir)
-  writeLines("dummy content", mri_file)
-  writeLines("dummy content", stats_file)
+  writeLines("dummy_content", mri_file)
+  writeLines("dummy_content", stats_file)
 
   # Run function with some NULL parameters
   result <- construct_subj_dir(
@@ -144,10 +144,10 @@ test_that("construct_subj_dir creates partial folders when some parameters are N
 
   # Assertions: Check directories and files
   created_dirs <- file.path(subj_root_dir, result$subj, c("mri", "stats"))
-  expect_true(all(file.exists(created_dirs))) # Only "mri" and "stats" created
+  expect_true(all(file_exists(created_dirs))) # Only "mri" and "stats" created
 
-  expect_true(file.exists(file.path(created_dirs[1], basename(mri_file))))
-  expect_true(file.exists(file.path(created_dirs[2], basename(stats_file))))
+  expect_true(file_exists(file.path(created_dirs[1], basename(mri_file))))
+  expect_true(file_exists(file.path(created_dirs[2], basename(stats_file))))
 
   # Teardown: Clean up temporary files
   unlink(subj_root_dir, recursive = TRUE)
