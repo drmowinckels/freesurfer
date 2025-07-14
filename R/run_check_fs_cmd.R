@@ -12,12 +12,12 @@
 #' @return Invisible NULL
 #' @export
 run_check_fs_cmd = function(cmd, outfile, verbose = TRUE, ...) {
-  fe_before = file.exists(outfile)
+  fe_before = file_exists(outfile)
   if (verbose) {
     message(cmd, "\n")
   }
   res = fs_system(cmd, ...)
-  fe_after = file.exists(outfile)
+  fe_after = file_exists(outfile)
 
   check_fs_result(res = res, fe_before = fe_before, fe_after = fe_after)
   return(invisible(NULL))

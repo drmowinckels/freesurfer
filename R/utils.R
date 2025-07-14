@@ -42,3 +42,8 @@ fs_tempfile <- function(...) {
   mkdir(dirname(x))
   x
 }
+
+
+file_exists <- function(...) {
+  base::file.exists(...)
+}

@@ -57,7 +57,7 @@ construct_subj_dir = function(
       out_names = file.path(fol, basename(y))
       for (ix in seq(N)) {
         x = y[ix]
-        if (!file.exists(x)) {
+        if (!file_exists(x)) {
           stop(paste0(x))
         }
         out = out_names[ix]

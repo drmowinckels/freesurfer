@@ -40,10 +40,10 @@ mnc2nii = function(file, outfile = NULL, ...) {
     bin_app = "mni/bin",
     ...
   )
-  if (!file.exists(outfile)) {
+  if (!file_exists(outfile)) {
     real_outfile = outfile
     outfile = paste0(outfile, ".nii")
-    if (!file.exists(outfile)) {
+    if (!file_exists(outfile)) {
       stop("mnc2nii did not produce outfile specified")
     }
     file.copy(outfile, real_outfile, overwrite = TRUE)

@@ -134,12 +134,12 @@ asegstats2table = function(
   cmd = paste(cmd, args)
   cmd = paste(cmd, opts)
 
-  fe_before = file.exists(outfile)
+  fe_before = file_exists(outfile)
   if (verbose) {
     message(cmd, "\n")
   }
   res = fs_system(cmd)
-  fe_after = file.exists(outfile)
+  fe_after = file_exists(outfile)
 
   if (res != 0 & !fe_after) {
     stop("Command Failed, no output produced")

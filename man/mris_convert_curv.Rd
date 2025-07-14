@@ -32,7 +32,7 @@ if (have_fs()) {
  infile = file.path(bert_surf_dir, "lh.white"),
  curv = file.path(bert_surf_dir, "lh.thickness")
  )
- if (!file.exists(asc_file)) {
+ if (!file_exists(asc_file)) {
    asc_file = file.path(dirname(asc_file), paste0("lh.",
    basename(asc_file)))
  }

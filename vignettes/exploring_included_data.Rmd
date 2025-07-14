@@ -408,7 +408,7 @@ if (have_fs()) {
 ```{r rgl_plot, cache = TRUE, eval = TRUE, echo = FALSE}
 if (have_fs()) {
     # rgl_out_file = "muschelli_files/figure-latex/rgl_plot_out.png"
-  # if (!file.exists(rgl_out_file)) {
+  # if (!file_exists(rgl_out_file)) {
     right_file = file.path(fs_subj_dir(), 
                            "bert", "surf", "rh.pial")
     right_triangles = surface_to_triangles(infile = right_file)

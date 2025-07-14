@@ -46,7 +46,7 @@ nii2mnc = function(
     bin_app = "mni/bin",
     ...
   )
-  if (!file.exists(outfile)) {
+  if (!file_exists(outfile)) {
     stop("nii2mnc did not produce outfile specified")
   }
   return(outfile)

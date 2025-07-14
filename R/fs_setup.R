@@ -16,7 +16,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   freesurferdir = Sys.getenv("FREESURFER_HOME")
   if (
     !is.null(freesurferdir) &&
-      !file.exists(freesurferdir) &&
+      !file_exists(freesurferdir) &&
       !freesurferdir %in% ""
   ) {
     warning("FREESURFER_HOME is set but it does not exist!")
@@ -39,7 +39,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
         "/usr/bin/freesurfer"
       )
       for (def_path in def_paths) {
-        if (file.exists(def_path)) {
+        if (file_exists(def_path)) {
           warning(paste0("Setting freesurfer.path to ", def_path))
           options(freesurfer.path = def_path)
           freesurferdir = def_path
@@ -55,9 +55,9 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
     # FSF_OUTPUT_FORMAT
     freesurferout = get_fs_output()
     # lic_file = file.path(freesurferdir, "license.txt")
-    # if (!file.exists(lic_file)) {
+    # if (!file_exists(lic_file)) {
     #   try_lic_file = file.path(freesurferdir, "LICENSE")
-    #   if (file.exists(try_lic_file)) {
+    #   if (file_exists(try_lic_file)) {
     #     file.copy(from = try_lic_file, to = lic_file, overwrite = FALSE)
     #   }
     # }
@@ -94,7 +94,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
     # fix https://github.com/muschellij2/freesurfer/issues/9
     try_sourcer = function(sourcer) {
       sh_file_cmd = ifelse(
-        file.exists(shfile),
+        file_exists(shfile),
         paste0(
           sourcer,
           " ",
@@ -136,7 +136,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 
   # if (add_home && !grepl("reesurfer", Sys.getenv("PATH"))) {
   sh_file_cmd = ifelse(
-    file.exists(shfile),
+    file_exists(shfile),
     paste0(
       sourcer,
       " ",
@@ -200,13 +200,13 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   if (freesurferdir %in% "") {
     stop("Can't find Freesurfer")
   }
-  if (!is.null(freesurferdir) && !file.exists(freesurferdir)) {
+  if (!is.null(freesurferdir) && !file_exists(freesurferdir)) {
     stop("Can't find Freesurfer")
   }
 
   fs_license_txt = file.path(freesurferdir, "license.txt")
   fs_license = file.path(freesurferdir, ".license")
-  if (!file.exists(fs_license) && !file.exists(fs_license_txt)) {
+  if (!file_exists(fs_license) && !file_exists(fs_license_txt)) {
     warning("Freesurfer is found, but no license!")
   }
   return(cmd)
@@ -256,12 +256,12 @@ have_fs = function(..., check_license = FALSE) {
   if (inherits(freesurferdir, "try-error")) {
     return(FALSE)
   }
-  if (!file.exists(freesurferdir)) {
+  if (!file_exists(freesurferdir)) {
     return(FALSE)
   }
   if (check_license) {
     fs_license = file.path(freesurferdir, "license.txt")
-    if (!file.exists(fs_license)) {
+    if (!file_exists(fs_license)) {
       return(FALSE)
     }
   }
@@ -356,7 +356,7 @@ fs_subj_dir = function() {
 #'
 #' @export
 set_fs_subj_dir = function(x = file.path(fs_dir(), "subjects")) {
-  if (!file.exists(x)) {
+  if (!file_exists(x)) {
     stop("Path to set subj_dir does not exist, erroring out!")
   }
   options("fs.subj_dir" = x)

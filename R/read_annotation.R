@@ -25,7 +25,7 @@
 #'     res = read_annotation(annot_file)
 #' }
 read_annotation <- function(path, verbose = TRUE) {
-  if (!file.exists(path)) {
+  if (!file_exists(path)) {
     stop("File ", path, " does not exist", call. = FALSE)
   }
 
