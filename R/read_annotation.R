@@ -33,6 +33,11 @@ read_annotation <- function(path, verbose = TRUE) {
   on.exit(close(ff))
 
   annot <- readBin(ff, integer(), endian = "big")
+
+  if (length(annot) == 0) {
+    stop("annot file does not have the expected content")
+  }
+
   tmp <- readBin(ff, integer(), n = 2 * annot, endian = "big")
 
   vertices <- tmp[seq(1, by = 2, length.out = length(tmp) / 2)]
