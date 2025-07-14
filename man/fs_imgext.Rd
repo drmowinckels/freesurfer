@@ -10,7 +10,7 @@ fs_imgext()
 Extension for output type
 }
 \description{
-Runs \code{get_fs_output()} to extract FSLOUTPUTTYPE and then 
+Runs \code{get_fs_output()} to extract FSLOUTPUTTYPE and then
 gets corresponding extension (such as .nii.gz)
 }
 \examples{

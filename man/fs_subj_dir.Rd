@@ -10,7 +10,7 @@ fs_subj_dir()
 SUBJECTS_DIR, such as \code{${FREESURFER_HOME}/subjects}
 }
 \description{
-Finds the SUBJECTS_DIR from system environment or 
+Finds the SUBJECTS_DIR from system environment or
 \code{getOption("fs.subj_dir")} for subjects dir
 }
 \examples{

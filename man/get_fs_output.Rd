@@ -10,7 +10,7 @@ get_fs_output()
 FSF_OUTPUT_FORMAT, such as nii.gz  If none found, uses nii.gz as default
 }
 \description{
-Finds the FSF_OUTPUT_FORMAT from system environment or 
+Finds the FSF_OUTPUT_FORMAT from system environment or
 \code{getOption("fs.outputtype")} for output type (nii.gz, nii, ANALYZE,etc)
 }
 \examples{

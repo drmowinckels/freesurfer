@@ -20,6 +20,6 @@ fs_help = function(func_name, help.arg = "--help", extra.args = "", ...) {
     res = fs_system(cmd, intern = TRUE)
   })
   #     res = system2(func_name, args = args, stdout=TRUE, stderr=TRUE)
-  cat(res, sep = "\n")
+  message(paste(res, sep = "\n"))
   return(invisible(res))
 }

@@ -1,6 +1,6 @@
 # freesurfer 1.8.0
 
-- Adds `...` to all functions that call `fs_cmd`, to allow user control of `system()`.
+- Adds `...` to all functions that call `fs_cmd`, to allow user control of `fs_system()`.
 
 # freesurfer 1.8.0
 

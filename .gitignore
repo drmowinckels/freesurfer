@@ -15,3 +15,4 @@ inst/doc
 # logs from freesurfer
 R/*.log
 revdep
+docs
