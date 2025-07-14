@@ -1,12 +1,12 @@
-#' Helper function to create mock annotation files
-#'  @param colortable character. Specifies the colortable type/version to include.
-#'  Must be one of:
-#'  - `"0"`: No colortable will bewritten.
-#'  - `"2"`: A FreeSurfer version 1colortable (internal flag 1) will bewritten.
-#'  Note: This is often referredto as 'version 2' in some contexts,
-#'  but internally FreeSurferuses flag 1 for this older format.
-#'  - `"3"`: A FreeSurfer version 2 colortable (internal flag -1) will bewritten.
-#'  This is the more modernformat, often used for custom tables.
+# Helper function to create mock annotation files (unchanged, but included for context)
+#  @param colortable character. Specifies the colortable type/version to include.
+#  Must be one of:
+#  - `"0"`: No colortable will bewritten.
+#  - `"2"`: A FreeSurfer version 1colortable (internal flag 1) will bewritten.
+#  Note: This is often referredto as 'version 2' in some contexts,
+#  but internally FreeSurferuses flag 1 for this older format.
+#  - `"3"`: A FreeSurfer version 2 colortable (internal flag -1) will bewritten.
+#  This is the more modernformat, often used for custom tables.
 create_mock_annot_file <- function(
   file_path,
   num_vertices = 10,
@@ -81,78 +81,153 @@ test_that("throws an error if file does not exist", {
   nonexistent_path <- tempfile(fileext = ".annot")
   expect_error(
     read_annotation(nonexistent_path),
-    "does not exist"
+    "does not exist",
+    fixed = TRUE
   )
 })
 
 test_that("handles valid annotation files with colortable", {
-  # Setup: Create a mock annotation file
-  annot_file <- tempfile(fileext = ".annot")
-  create_mock_annot_file(annot_file)
+  withr::with_tempfile(
+    "annot_file",
+    fileext = ".annot",
+    {
+      create_mock_annot_file(annot_file, colortable = 2)
 
-  # Test: Read the mock annotation file
-  result <- read_annotation(annot_file)
+      result <- read_annotation(annot_file)
 
-  # Assertions
-  expect_named(result, c("vertices", "label", "colortable"))
-  expect_length(result$vertices, 10)
-  expect_length(result$label, 10)
-  expect_true(is.data.frame(result$colortable))
-  expect_equal(ncol(result$colortable), 6)
+      expect_named(result, c("vertices", "label", "colortable"))
+      expect_length(result$vertices, 10)
+      expect_length(result$label, 10)
+      expect_true(is.data.frame(result$colortable))
+      expect_equal(ncol(result$colortable), 6)
+      expect_gt(nrow(result$colortable), 0)
+    }
+  )
 
-  unlink(annot_file) # Teardown
+  skip_if_no_freesurfer()
+  # What annot file shipped with fs has color?
+  # ant <- file.path(
+  #   fs_subj_dir(),
+  #   "bert",
+  #   "label",
+  #   "rh.aparc.annot"
+  # )
+  # result <- read_annotation(ant)
+
+  # expect_named(
+  #   result,
+  #   c("vertices", "label", "colortable")
+  # )
+  # expect_length(result$vertices, 134800)
+  # expect_length(result$label, 134800)
+  # expect_true(is.data.frame(result$colortable))
+  # expect_equal(nrow(result$colortable), 0)
 })
 
-test_that("handles annotation files without colortable", {
-  # Setup: Create a mock annotation file without colortable
-  annot_file <- tempfile(fileext = ".annot")
-  create_mock_annot_file(annot_file, colortable = 0)
+test_that("handles annotation files with no colortable", {
+  withr::with_tempfile("annot_file", fileext = ".annot", {
+    create_mock_annot_file(annot_file, colortable = 0)
 
-  # Test: Read the mock annotation file
-  result <- read_annotation(annot_file)
+    result <- read_annotation(annot_file)
 
-  # Assertions
-  expect_named(result, c("vertices", "label", "colortable"))
-  expect_length(result$vertices, 10)
-  expect_length(result$label, 10)
+    expect_named(result, c("vertices", "label", "colortable"))
+    expect_length(result$vertices, 10)
+    expect_length(result$label, 10)
+    expect_true(is.data.frame(result$colortable))
+    expect_equal(nrow(result$colortable), 0)
+  })
+
+  skip_if_no_freesurfer()
+
+  ant <- file.path(
+    fs_subj_dir(),
+    "bert",
+    "label",
+    "rh.aparc.annot"
+  )
+  result <- read_annotation(ant)
+
+  expect_named(
+    result,
+    c("vertices", "label", "colortable")
+  )
+  expect_length(result$vertices, 134800)
+  expect_length(result$label, 134800)
   expect_true(is.data.frame(result$colortable))
-  expect_equal(nrow(result$colortable), 0) # No colortable entries
-
-  unlink(annot_file) # Teardown
+  expect_equal(nrow(result$colortable), 0)
 })
 
 test_that("handles annotation files with no vertices", {
-  # Setup: Create a mock annotation file with no vertices
-  annot_file <- tempfile(fileext = ".annot")
-  create_mock_annot_file(annot_file, num_vertices = 0)
+  withr::with_tempfile("annot_file", fileext = ".annot", {
+    create_mock_annot_file(annot_file, num_vertices = 0, colortable = 0)
+    expect_message(
+      result <- read_annotation(
+        annot_file,
+        verbose = TRUE
+      )
+    )
 
-  # Test: Read the mock annotation file
-  result <- read_annotation(annot_file, verbose = FALSE)
-
-  # Assertions
-  expect_named(result, c("vertices", "label", "colortable"))
-  expect_equal(length(result$vertices), 0)
-  expect_equal(length(result$label), 0)
-  expect_true(is.data.frame(result$colortable))
-
-  unlink(annot_file) # Teardown
+    expect_named(result, c("vertices", "label", "colortable"))
+    expect_equal(length(result$vertices), 0)
+    expect_equal(length(result$label), 0)
+    expect_true(is.data.frame(result$colortable))
+    expect_equal(nrow(result$colortable), 0)
+  })
 })
 
-test_that("handles missing colortable gracefully", {
-  # Setup: Create a mock annotation file with an invalid colortable flag
-  annot_file <- tempfile(fileext = ".annot")
-  con <- file(annot_file, "wb")
-  on.exit(close(con))
+test_that("handles missing colortable gracefully with an unexpected flag", {
+  withr::with_tempfile(
+    "annot_file",
+    fileext = ".annot",
+    {
+      (function() {
+        con <- file(annot_file, "wb")
+        on.exit(close(con), add = TRUE)
 
-  writeBin(as.integer(10), con, endian = "big")
-  writeBin(as.integer(rep(c(1, 2), 10)), con, endian = "big")
-  writeBin(as.integer(0), con, endian = "big")
+        writeBin(
+          as.integer(10),
+          con,
+          endian = "big"
+        )
+        writeBin(
+          as.integer(rep(c(1, 2), 10)),
+          con,
+          endian = "big"
+        )
 
-  # Test
-  expect_error(
-    read_annotation(annot_file),
-    "does not have the expected content"
+        writeBin(
+          as.integer(99),
+          con,
+          endian = "big"
+        )
+      })()
+
+      expect_error(
+        read_annotation(annot_file),
+        "Unexpected colortable flag: 99"
+      )
+    }
   )
+})
 
-  unlink(annot_file) # Teardown
+test_that("handles version 3 colortable (internal flag -1)", {
+  withr::with_tempfile(
+    "annot_file",
+    fileext = ".annot",
+    {
+      create_mock_annot_file(
+        annot_file,
+        colortable = 3
+      )
+
+      result <- read_annotation(annot_file)
+
+      expect_named(result, c("vertices", "label", "colortable"))
+      expect_length(result$vertices, 10)
+      expect_length(result$label, 10)
+      expect_true(is.data.frame(result$colortable))
+      expect_equal(ncol(result$colortable), 6)
+      expect_gt(nrow(result$colortable), 0)
+    }
+  )
 })
