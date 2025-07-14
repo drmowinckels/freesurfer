@@ -16,13 +16,13 @@ reconner(
 \arguments{
 \item{infile}{Input filename (dcm or nii)}
 
-\item{outdir}{Output directory}
+\item{outdir}{Character, Path to output directory.}
 
-\item{subjid}{subject id}
+\item{subjid}{subject id, if NULL, the basename of the infile will be used}
 
-\item{verbose}{print diagnostic messages}
+\item{verbose}{(logical) print diagnostic messages}
 
-\item{opts}{Additional options}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{force}{Force running of the reconstruction}
 }

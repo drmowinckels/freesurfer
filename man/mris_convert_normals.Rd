@@ -7,8 +7,7 @@
 mris_convert_normals(opts = "", ...)
 }
 \arguments{
-\item{opts}{(character) additional options to 
-\code{\link{mris_convert}}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{...}{additional arguments to \code{\link{mris_convert}}}
 }
@@ -16,7 +15,7 @@ mris_convert_normals(opts = "", ...)
 Result of \code{\link{mris_convert}}
 }
 \description{
-This function call \code{mris_convert}, 
+This function call \code{mris_convert},
 using the \code{-n} option
 }
 \examples{
@@ -24,7 +23,7 @@ if (have_fs()) {
  bert_dir = file.path(fs_subj_dir(), "bert")
  asc_file = mris_convert_normals(
  infile = file.path(bert_dir, "surf", "lh.white")
- )  
+ )
 readLines(asc_file, n = 6)
-}   
+}
 }

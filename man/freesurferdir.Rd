@@ -21,9 +21,9 @@ Finds the FREESURFER_HOME from system environment or
 for location of Freesurfer functions and returns it
 }
 \examples{
-if (have_fs()) {
- freesurferdir()
- freesurfer_dir()
- fs_dir()
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+freesurferdir()
+freesurfer_dir()
+fs_dir()
+\dontshow{\}) # examplesIf}
 }

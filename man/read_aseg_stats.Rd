@@ -9,19 +9,19 @@ read_aseg_stats(file, lowercase = TRUE)
 \arguments{
 \item{file}{aseg.stats file from Freesurfer}
 
-\item{lowercase}{should the measures and values be lowercase (`TRUE`) or 
+\item{lowercase}{should the measures and values be lowercase (`TRUE`) or
 kept as is?}
 }
 \value{
-List of 2 \code{data.frame}s, one with the global measures and one 
+List of 2 \code{data.frame}s, one with the global measures and one
 with the structure-specific measures.
 }
 \description{
 Reads an \code{aseg.stats} file from an individual subject
 }
 \examples{
-if (have_fs()) {
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
  file = file.path(fs_subj_dir(), "bert", "stats", "aseg.stats")
  out = read_aseg_stats(file)
-}
+\dontshow{\}) # examplesIf}
 }

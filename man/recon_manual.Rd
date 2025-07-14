@@ -25,23 +25,23 @@ autorecon3(infile, outdir = NULL, subjid, verbose = TRUE)
 \arguments{
 \item{infile}{Input filename (dcm or nii)}
 
-\item{outdir}{Output directory}
+\item{outdir}{Character, Path to output directory.}
 
-\item{subjid}{subject id}
+\item{subjid}{subject id, if NULL, the basename of the infile will be used}
 
-\item{verbose}{print diagnostic messages}
+\item{verbose}{(logical) print diagnostic messages}
 }
 \value{
 Result of \code{\link{system}}
 }
 \description{
-Reconstruction from Freesurfer for Step 1-5 
+Reconstruction from Freesurfer for Step 1-5
 (Motion Correction to Skull Strip), which calls \code{-autorecon1}
 in \code{recon-all}
 }
 \note{
-See https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all for the 
-steps of each \code{autorecon1-3}. 
-If you set \code{infile = NULL}, then you can omit the 
+See https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all for the
+steps of each \code{autorecon1-3}.
+If you set \code{infile = NULL}, then you can omit the
 \code{-i} flag in \code{recon-all}.
 }

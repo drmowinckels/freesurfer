@@ -24,7 +24,7 @@ If the directory is not found for Freesurfer in \code{Sys.getenv("FreesurferDIR"
 \code{getOption("freesurfer.path")}, it will try the default directory \code{/usr/local/freesurfer}.
 }
 \examples{
-if (have_fs()) {
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 get_fs()
-}
+\dontshow{\}) # examplesIf}
 }

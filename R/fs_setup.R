@@ -9,10 +9,8 @@
 #' \code{getOption("freesurfer.path")}, it will try the default directory \code{/usr/local/freesurfer}.
 #' @return NULL if Freesurfer in path, or bash code for setting up Freesurfer DIR
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #' get_fs()
-#' }
 get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   cmd = NULL
   freesurferdir = Sys.getenv("FREESURFER_HOME")
@@ -205,8 +203,10 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   if (!is.null(freesurferdir) && !file.exists(freesurferdir)) {
     stop("Can't find Freesurfer")
   }
-  fs_license = file.path(freesurferdir, "license.txt")
-  if (!file.exists(fs_license)) {
+
+  fs_license_txt = file.path(freesurferdir, "license.txt")
+  fs_license = file.path(freesurferdir, ".license")
+  if (!file.exists(fs_license) && !file.exists(fs_license_txt)) {
     warning("Freesurfer is found, but no license!")
   }
   return(cmd)
@@ -220,12 +220,10 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 #' @return Character path
 #' @aliases freesurfer_dir
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'  freesurferdir()
-#'  freesurfer_dir()
-#'  fs_dir()
-#' }
+#' @examplesIf have_fs()
+#' freesurferdir()
+#' freesurfer_dir()
+#' fs_dir()
 freesurferdir = function() {
   freesurferdir = Sys.getenv("FREESURFER_HOME")
   if (freesurferdir == "") {
@@ -237,15 +235,11 @@ freesurferdir = function() {
 
 #' @rdname freesurferdir
 #' @export
-freesurfer_dir = function() {
-  freesurferdir()
-}
+freesurfer_dir = freesurferdir
 
 #' @rdname freesurferdir
 #' @export
-fs_dir = function() {
-  freesurferdir()
-}
+fs_dir = freesurferdir
 
 
 #' @title Logical check if Freesurfer is accessible
@@ -321,10 +315,8 @@ fs_imgext = function() {
 #' @return SUBJECTS_DIR, such as \code{${FREESURFER_HOME}/subjects}
 #'
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    fs_subj_dir()
-#' }
+#' @examplesIf have_fs()
+#' fs_subj_dir()
 fs_subj_dir = function() {
   fs_out = Sys.getenv("SUBJECTS_DIR")
   if (fs_out == "") {

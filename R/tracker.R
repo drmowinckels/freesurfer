@@ -2,10 +2,10 @@
 #' @description Wrapper for the \code{trac-all} function in Freesurfer
 #'
 #' @param infile Input filename (dcm or nii)
-#' @param outdir Output directory
-#' @param subjid subject id, if NULL, the basename of the infile will be used
-#' @param verbose print diagnostic messages
-#' @param opts Additional options
+#' @template outdir
+#' @template subjid
+#' @template verbose
+#' @template opts
 #'
 #' @return Result of \code{\link{system}}
 #' @export

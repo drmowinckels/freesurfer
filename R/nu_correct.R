@@ -3,8 +3,8 @@
 #' to correct for non-uniformity
 #' @param file (character) input filename
 #' @param mask (character or nifti) Mask to use for correction.
-#' @param opts (character) additional options to \code{mri_segment}
-#' @param verbose print diagnostic messages
+#' @template opts
+#' @template verbose
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Object of class nifti depending on \code{retimg}
 #' @importFrom neurobase parse_img_ext readnii
@@ -29,7 +29,7 @@ nu_correct = function(
   }
   # no.outfile = FALSE
   # if (is.null(outfile)) {
-  outfile = tempfile(fileext = ".nii")
+  outfile = fs_tempfile(fileext = ".nii")
   # no.outfile = TRUE
   # }
 
@@ -37,7 +37,7 @@ nu_correct = function(
   if (!(ext %in% c("nii", "mnc"))) {
     stop("outfile extension must be nii/nii.gz or mnc")
   }
-  tmpfile = tempfile(fileext = ".mnc")
+  tmpfile = fs_tempfile(fileext = ".mnc")
 
   opts = trimws(opts)
   if (!is.null(mask)) {

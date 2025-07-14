@@ -36,7 +36,7 @@ construct_subj_dir = function(
   subj_root_dir = tempdir()
 ) {
   if (is.null(subj)) {
-    subj = basename(tempfile())
+    subj = basename(fs_tempfile())
   }
   base_dir = file.path(subj_root_dir, subj)
   dir.create(base_dir)
@@ -78,5 +78,11 @@ construct_subj_dir = function(
   res = unlist(res)
   stopifnot(all(res))
 
-  list(subj = subj, subj_dir = subj_root_dir, types = type_names)
+  invisible(
+    list(
+      subj = subj,
+      subj_dir = subj_root_dir,
+      types = type_names
+    )
+  )
 }

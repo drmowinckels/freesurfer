@@ -11,7 +11,7 @@ mris_euler_number(file, outfile = NULL, opts = "", ...)
 
 \item{outfile}{(character) output filename}
 
-\item{opts}{(character) additional options to \code{mris_euler_number}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{...}{Additional arguments to pass to \code{\link{fs_cmd}}}
 }
@@ -26,7 +26,7 @@ calculate the Euler Number
 \dontrun{
 if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-   res = mris_euler_number(img, outfile = tempfile(fileext = ".mgz"))
+   res = mris_euler_number(img, outfile = fs_tempfile(fileext = ".mgz"))
 }
 }
 }

@@ -16,7 +16,7 @@
 #' if (have_fs()){
 #'    base_url = "https://surfer.nmr.mgh.harvard.edu/pub/dist/mri_deface"
 #'    url = file.path(base_url, "sample_T1_input.mgz")
-#'    x = tempfile(fileext = ".mgz")
+#'    x = fs_tempfile(fileext = ".mgz")
 #'    out = try({
 #'    utils::download.file(url, destfile = x)
 #'    })
@@ -26,7 +26,7 @@
 #'       url = paste0(
 #'          "https://raw.githubusercontent.com/muschellij2/kirby21.t1/master/",
 #'          "inst/visit_1/113/113-01-T1.nii.gz")
-#'       x = tempfile(fileext = ".nii.gz")
+#'       x = fs_tempfile(fileext = ".nii.gz")
 #'       out = try({
 #'           utils::download.file(url, destfile = x)
 #'       })
@@ -44,7 +44,7 @@ mri_deface = function(
   brain_url = file.path(base_url, "talairach_mixed_with_skull.gca.gz")
   face_url = file.path(base_url, "face.gca.gz")
   download_unzip = function(url) {
-    x = tempfile(fileext = ".gca.gz")
+    x = fs_tempfile(fileext = ".gca.gz")
     utils::download.file(url, destfile = x)
     x = R.utils::gunzip(x)
     x
