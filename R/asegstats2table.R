@@ -105,7 +105,7 @@ asegstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = fs_tempfile(fileext = ext)
+    outfile = temp_file(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 

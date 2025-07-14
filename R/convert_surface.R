@@ -126,7 +126,7 @@ surface_to_obj = function(infile, outfile = NULL, ...) {
   splits = convert_surface(infile, ...)
 
   if (is.null(outfile)) {
-    outfile = fs_tempfile(fileext = ".obj")
+    outfile = temp_file(fileext = ".obj")
   }
   scipen = getOption("scipen")
   on.exit({

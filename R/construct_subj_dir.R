@@ -36,7 +36,7 @@ construct_subj_dir = function(
   subj_root_dir = tempdir()
 ) {
   if (is.null(subj)) {
-    subj = basename(fs_tempfile())
+    subj = basename(temp_file())
   }
   base_dir = file.path(subj_root_dir, subj)
   mkdir(base_dir)

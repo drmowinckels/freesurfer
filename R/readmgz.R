@@ -8,7 +8,7 @@
 #' @importFrom neurobase readnii
 #' @export
 readmgz = function(file, ...) {
-  outfile = fs_tempfile(fileext = ".nii.gz")
+  outfile = temp_file(fileext = ".nii.gz")
   mkdir(dirname(outfile))
   mri_convert(file, outfile, ...)
   readnii(outfile)

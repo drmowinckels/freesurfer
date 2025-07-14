@@ -29,7 +29,7 @@ nu_correct = function(
   }
   # no.outfile = FALSE
   # if (is.null(outfile)) {
-  outfile = fs_tempfile(fileext = ".nii")
+  outfile = temp_file(fileext = ".nii")
   # no.outfile = TRUE
   # }
 
@@ -37,7 +37,7 @@ nu_correct = function(
   if (!(ext %in% c("nii", "mnc"))) {
     stop("outfile extension must be nii/nii.gz or mnc")
   }
-  tmpfile = fs_tempfile(fileext = ".mnc")
+  tmpfile = temp_file(fileext = ".mnc")
 
   opts = trimws(opts)
   if (!is.null(mask)) {

@@ -10,7 +10,7 @@ mkdir <- function(path) {
 
 #' Create a Temporary File with a Newly Created Directory
 #'
-#' The `fs_tempfile` function generates a temporary file path and ensures
+#' The `temp_file` function generates a temporary file path and ensures
 #' that the directory containing the file exists by creating it if necessary.
 #'
 #' @param ... Arguments passed to the \code{\link{tempfile}} function, typically
@@ -28,7 +28,7 @@ mkdir <- function(path) {
 #'
 #' @examples
 #' # Create a temporary file and its directory
-#' file_path <- fs_tempfile(pattern = "example_")
+#' file_path <- temp_file(pattern = "example_")
 #'
 #' # Print the file path
 #' print(file_path)
@@ -37,7 +37,7 @@ mkdir <- function(path) {
 #' dir.exists(dirname(file_path))
 #'
 #' @export
-fs_tempfile <- function(...) {
+temp_file <- function(...) {
   x <- tempfile(...)
   mkdir(dirname(x))
   x
