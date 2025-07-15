@@ -45,6 +45,10 @@ temp_file <- function(...) {
 
 #' Utility to check file existence
 #' @noRd
-file_exists <- function(...) {
-  base::file.exists(...)
+file_exists <- function(..., error = FALSE) {
+  x <- base::file.exists(...)
+  if (all(!x, error)) {
+    stop("File does not exist")
+  }
+  x
 }

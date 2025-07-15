@@ -17,9 +17,9 @@ fs_help = function(func_name, help.arg = "--help", extra.args = "", ...) {
   cmd <- paste0(cmd, sprintf('%s %s %s', func_name, help.arg, extra.args))
   #     args = paste(help.arg, extra.args, sep=" ", collapse = " ")
   suppressWarnings({
-    res = system(cmd, intern = TRUE)
+    res = fs_system(cmd, intern = TRUE)
   })
   #     res = system2(func_name, args = args, stdout=TRUE, stderr=TRUE)
-  message(res, sep = "\n")
+  message(paste(res, collapse = "\n"))
   return(invisible(res))
 }

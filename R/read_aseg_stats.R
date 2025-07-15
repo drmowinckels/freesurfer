@@ -13,6 +13,8 @@
 #'  file = file.path(fs_subj_dir(), "bert", "stats", "aseg.stats")
 #'  out = read_aseg_stats(file)
 read_aseg_stats = function(file, lowercase = TRUE) {
+  file_exists(file, error = TRUE)
+
   rl = readLines(file)
   start_subj = grep("^# subjectname", rl)
   n_rl = length(rl)
