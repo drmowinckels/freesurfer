@@ -112,6 +112,9 @@ if (have_fs()) {
 }
 ```
 
+Be aware that the `have_fs()` function is simple in that it check if the `fs_dir()` actually exists or not.
+It does not make any validation of whether this Freesurfer installation and R are set up correctly to work together.
+So make sure your `fs_sitrep()` looks good, first and foremost, then `have_fs()` is a convenient tool for scripting logic.
 
 ## Understanding Freesurfer Output Formats
 
@@ -132,11 +135,14 @@ Its primary purpose is to generate a shell command string that correctly configu
 
 #### Why is `get_fs()` important?
 
-FreeSurfer, like many command-line tools, relies on specific environment variables and setup scripts to function correctly.
+As described above, FreeSurfer relies on specific environment variables and setup scripts to function correctly.
 Without these, your R session wouldn't know where to find the FreeSurfer programs (like `recon-all` or `mri_convert`), or how to handle their output. 
-`get_fs()` automates this complex setup process, allowing you to run FreeSurfer commands seamlessly from R without manually configuring your shell for each session.
+While the `fs_sitrep()` will help you get setup up correctly, its the `get_fs()` that powers the Freesurfer-R integration after this.
+Based on the settings you have provided (or default ones if you have not), `get_fs()` will create a string that will prefix any Freesurfer command that is called from R.
+Depending on your system setup, and the complexity of the Freesurfer function called, this string is a vital component to running the Freesurfer commands from R and capturing their results.
 
-#### How `get_fs()` works:
+
+#### How it works
 
 `get_fs()` follows a logical hierarchy to determine and set up your FreeSurfer environment:
 
@@ -158,7 +164,7 @@ Without these, your R session wouldn't know where to find the FreeSurfer program
 
       * FreeSurfer often includes a shell script called `FreeSurferEnv.sh` in its installation directory. This script performs additional, more detailed environment configurations.
 
-1.  **Setting Output Format (`FSF_OUTPUT_FORMAT`)**:
+1.  **Setting Output Format**:
 
       * The function also sets the `FSF_OUTPUT_FORMAT` environment variable, which dictates the default image format for FreeSurfer's output (e.g., `.nii.gz` for compressed NIfTI files).
 
@@ -166,7 +172,10 @@ Without these, your R session wouldn't know where to find the FreeSurfer program
 
       * Finally, `get_fs()` consolidates all these steps into a single bash command string. This string includes `export` commands for environment variables and commands to source necessary setup scripts, followed by the path to the FreeSurfer binary directory. This complete command string is what `fs_cmd()` (and potentially other functions in your package) will execute in the background to run FreeSurfer tools.
 
-### Example Usage:
+### Example Usage
+
+In most cases, you will never directly need to run this command.
+But it is good to know of it, how it works and what it's output is.
 
 ```{r}
 # Generate a shell command to set up FreeSurfer with the default `bin` directory
