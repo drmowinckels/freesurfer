@@ -9,10 +9,10 @@ surface_to_obj(infile, outfile = NULL, ...)
 \arguments{
 \item{infile}{Input surface file}
 
-\item{outfile}{output Wavefront OBJ file.  If \code{NULL}, 
+\item{outfile}{output Wavefront OBJ file.  If \code{NULL},
 a temporary file will be created}
 
-\item{...}{additional arguments to pass to 
+\item{...}{additional arguments to pass to
 \code{\link{convert_surface}}}
 }
 \value{
@@ -24,7 +24,7 @@ to a Wavefront OBJ file
 }
 \examples{
 if (have_fs()) {
-infile = file.path(fs_subj_dir(), 
+infile = file.path(fs_subj_dir(),
                    "bert", "surf", "rh.pial")
 res = surface_to_obj(infile = infile)
 }

@@ -7,7 +7,7 @@
 fs_version()
 }
 \value{
-If the version file does not exist, it will throw a warning, but 
+If the version file does not exist, it will throw a warning, but
 it will return an empty string.  Otherwise it will be a string of the version.
 }
 \description{

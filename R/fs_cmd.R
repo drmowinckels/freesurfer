@@ -72,11 +72,13 @@ fs_cmd = function(
     cmd <- paste(cmd, sprintf(' %s;', opts))
   }
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_text(cmd)
   }
   res = system(cmd, intern = intern, ...)
   if (retimg) {
-    if (samefile) outfile = file
+    if (samefile) {
+      outfile = file
+    }
     img = readnii(outfile, reorient = reorient)
     return(img)
   }

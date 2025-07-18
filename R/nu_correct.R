@@ -35,7 +35,7 @@ nu_correct = function(
 
   out_ext = neurobase::parse_img_ext(outfile)
   if (!(ext %in% c("nii", "mnc"))) {
-    stop("outfile extension must be nii/nii.gz or mnc")
+    cli::cli_abort("outfile extension must be nii/nii.gz or mnc")
   }
   tmpfile = tempfile(fileext = ".mnc")
 
@@ -75,5 +75,5 @@ nu_correct = function(
 #' @return Result of \code{fs_help}
 #' @export
 nu_correct.help = function() {
-  fs_help(func_name = "nu_correct", help.arg = "-help", bin_app = "mni/bin")
+  fs_help("nu_correct", help.arg = "-help", bin_app = "mni/bin")
 }

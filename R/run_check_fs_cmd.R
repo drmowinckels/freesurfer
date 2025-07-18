@@ -14,7 +14,7 @@
 run_check_fs_cmd = function(cmd, outfile, verbose = TRUE, ...) {
   fe_before = file.exists(outfile)
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_code(cmd)
   }
   res = system(cmd, ...)
   fe_after = file.exists(outfile)

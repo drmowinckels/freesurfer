@@ -1,4 +1,4 @@
-#' @title Use Freesurfers MRI Mask 
+#' @title Use Freesurfers MRI Mask
 #' @description This function calls \code{mri_mask} to mask an image
 #' @param file (character) input filename
 #' @param mask (character) mask filename
@@ -8,20 +8,15 @@
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Character or nifti depending on \code{retimg}
 #' @export
-#' @examples 
+#' @examples
 #' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-#'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))  
+#'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
 #'    mask = img > 1
 #'    res = mri_mask(img, mask)
 #' }
-mri_mask = function(file, 
-                    mask,
-                    outfile = NULL, 
-                    retimg = TRUE,
-                    opts = "", 
-                    ...){
+mri_mask = function(file, mask, outfile = NULL, retimg = TRUE, opts = "", ...) {
   mask = checkimg(mask)
-  
+
   res = fs_cmd(
     func = "mri_mask",
     file = file,
@@ -30,16 +25,17 @@ mri_mask = function(file,
     opts = mask,
     retimg = retimg,
     samefile = FALSE,
-    ...)
+    ...
+  )
   return(res)
 }
 
 
 #' @title MRI Normalize Help
-#' @description This calls Freesurfer's \code{mri_mask} help 
+#' @description This calls Freesurfer's \code{mri_mask} help
 #'
 #' @return Result of \code{fs_help}
 #' @export
-mri_mask.help = function(){
-  fs_help(func_name = "mri_mask")
+mri_mask.help = function() {
+  fs_help("mri_mask")
 }

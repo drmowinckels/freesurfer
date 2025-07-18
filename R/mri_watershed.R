@@ -33,5 +33,5 @@ mri_watershed = function(file, outfile = NULL, retimg = TRUE, opts = "", ...) {
 #' @return Result of \code{fs_help}
 #' @export
 mri_watershed.help = function() {
-  fs_help(func_name = "mri_watershed")
+  fs_help("mri_watershed")
 }

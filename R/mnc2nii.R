@@ -44,7 +44,7 @@ mnc2nii = function(file, outfile = NULL, ...) {
     real_outfile = outfile
     outfile = paste0(outfile, ".nii")
     if (!file.exists(outfile)) {
-      stop("mnc2nii did not produce outfile specified")
+      cli::cli_abort("mnc2nii did not produce outfile specified")
     }
     file.copy(outfile, real_outfile, overwrite = TRUE)
     outfile = real_outfile
@@ -62,5 +62,5 @@ mnc2nii = function(file, outfile = NULL, ...) {
 #' @return Result of \code{fs_help}
 #' @export
 mnc2nii.help = function() {
-  fs_help(func_name = "mnc2nii", help.arg = "", bin_app = "mni/bin")
+  fs_help("mnc2nii", help.arg = "", bin_app = "mni/bin")
 }

@@ -22,5 +22,5 @@ mri_info = function(file, ...) {
 #' @return Result of \code{fs_help}
 #' @export
 mri_info.help = function() {
-  fs_help(func_name = "mri_info")
+  fs_help("mri_info")
 }

@@ -13,12 +13,11 @@ freesurfer_dir()
 fs_dir()
 }
 \value{
-Character path
+Character path to the Freesurfer home directory.
 }
 \description{
-Finds the FREESURFER_HOME from system environment or 
-\code{getOption("freesurfer.path")}
-for location of Freesurfer functions and returns it
+Finds the \code{FREESURFER_HOME} from system environment or
+\code{getOption("freesurfer.path")} for location of Freesurfer functions and returns its value.
 }
 \examples{
 if (have_fs()) {

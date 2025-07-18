@@ -7,7 +7,7 @@
 freesurfer_read3_con(fid)
 }
 \arguments{
-\item{fid}{connection to a 
+\item{fid}{connection to a
 thickness file or anything in surf/ directory from Freesurfer
 subject}
 }
@@ -15,7 +15,7 @@ subject}
 Numeric
 }
 \description{
-Reads first 3 records from a connection and 
+Reads first 3 records from a connection and
 returns the rotated value,
 for checking for other functions.
 }
@@ -25,5 +25,5 @@ if (have_fs()) {
    file = file.path(bert_dir, "lh.thickness")
    fid = file(file, open = "rb")
    out = freesurfer_read3_con(file)
-} 
+}
 }
