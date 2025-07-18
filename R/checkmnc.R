@@ -39,13 +39,13 @@ setMethod("checkmnc", "character", function(file, ...) {
   } else {
     file = checkimg(file, gzipped = FALSE, ...)
     ext = neurobase::parse_img_ext(file)
-    if ( !(ext %in% c("nii", "mnc"))) {
-      stop("File extension must be nii/nii.gz or mnc")
+    if (!(ext %in% c("nii", "mnc"))) {
+      cli::cli_abort("File extension must be nii/nii.gz or mnc")
     }
     if (ext %in% c("nii")) {
       file = nii2mnc(file, outfile = NULL)
     }
-  } 
+  }
   return(file)
 })
 

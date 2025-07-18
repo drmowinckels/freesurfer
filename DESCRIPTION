@@ -27,9 +27,10 @@ Imports:
     tools,
     R.utils,
     reshape2,
-    utils
+    utils,
+    cli
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.5)
 License: GPL-3
 Suggests:
     magrittr,
@@ -44,3 +45,4 @@ SystemRequirements: FSL, Freesurfer (https://surfer.nmr.mgh.harvard.edu/)
 VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)

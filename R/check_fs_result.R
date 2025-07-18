@@ -10,25 +10,25 @@
 #' @export
 check_fs_result = function(res, fe_before, fe_after) {
   if (res != 0 & !fe_after) {
-    stop("Command Failed, no output produced!")
+    cli::cli_abort("Command Failed, no output produced!")
   }
   if (res == 0 & !fe_after) {
-    warning("Command assumed passed, but no output produced")
-  }  
+    cli::cli_warning("Command assumed passed, but no output produced")
+  }
   if (res != 0 & fe_after & fe_before) {
-    warning(paste0(
-      " Command had non-zero exit status (probably failed),",
-      " outfile exists but existed before command was run. ",
-      " Please check output.")
+    cli::cli_warning(
+      " Command had non-zero exit status (probably failed), 
+      outfile exists but existed before command was run. 
+      Please check output."
     )
-  }  
-  
+  }
+
   if (res != 0 & fe_after & !fe_before) {
-    warning(paste0(
-      " Command had non-zero exit status (probably failed),",
-      " outfile exists and did NOT before command was run. ",
-      " Please check output.")
+    cli::cli_warning(
+      " Command had non-zero exit status (probably failed), 
+      outfile exists and did {.strong not} before command was run. 
+      Please check output."
     )
-  }  
+  }
   return(invisible(NULL))
 }

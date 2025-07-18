@@ -17,73 +17,73 @@
 freesurfer_read3 = function(file) {
   fid = file(file, open = "rb")
   b = as.integer(readBin(fid, 3, what = "raw", endian = "big"))
-  retval = bitwShiftL(b[1], 16) + bitwShiftL(b[2],8) + b[3]
+  retval = bitwShiftL(b[1], 16) + bitwShiftL(b[2], 8) + b[3]
   on.exit({
     close(fid)
   })
   return(retval)
 }
 
-#' @title Freesurfer Read 3 records 
-#' @description Reads first 3 records from a connection and 
+#' @title Freesurfer Read 3 records
+#' @description Reads first 3 records from a connection and
 #' returns the rotated value,
 #' for checking for other functions.
-#' @param fid connection to a 
+#' @param fid connection to a
 #' thickness file or anything in surf/ directory from Freesurfer
 #' subject
 #'
 #' @return Numeric
 #' @export
-#' @examples 
+#' @examples
 #' if (have_fs()) {
 #'    bert_dir = file.path(fs_subj_dir(), "bert", "surf")
 #'    file = file.path(bert_dir, "lh.thickness")
 #'    fid = file(file, open = "rb")
 #'    out = freesurfer_read3_con(file)
-#' } 
+#' }
 freesurfer_read3_con = function(fid) {
   b = as.integer(readBin(fid, 3, what = "raw", endian = "big"))
-  retval = bitwShiftL(b[1], 16) + bitwShiftL(b[2],8) + b[3]
+  retval = bitwShiftL(b[1], 16) + bitwShiftL(b[2], 8) + b[3]
   return(retval)
 }
 
 #' @title Read Freesufer Curv file
-#' @description Reads a Freesurfer curvature file according to the 
+#' @description Reads a Freesurfer curvature file according to the
 #' FREESURFER_HOME/matlab/read_curv.m file.
 #' @param file file name of a curvature file
 #'
 #' @return Numeric vector
 #' @export
 #'
-#' @examples 
+#' @examples
 #' if (have_fs()) {
 #'    bert_dir = file.path(fs_subj_dir(), "bert", "surf")
 #'    file = file.path(bert_dir, "lh.thickness")
 #'    fid = file(file, open = "rb")
 #'    out = freesurfer_read_curv(file)
-#' } 
+#' }
 freesurfer_read_curv = function(file) {
   fid = file(file, open = "rb")
   vnum = freesurfer_read3_con(fid)
-  
-  NEW_VERSION_MAGIC_NUMBER = 16777215;
+
+  NEW_VERSION_MAGIC_NUMBER = 16777215
   if (vnum == NEW_VERSION_MAGIC_NUMBER) {
     vnum = readBin(fid, 1, what = integer(), endian = "big")
     fnum = readBin(fid, 1, what = integer(), endian = "big")
     #int32
     vals_per_vertex = readBin(fid, 1, what = integer(), endian = "big")
     # float
-    curv = readBin(fid, double(), n = vnum, size = 4, endian = "big") ; 
+    curv = readBin(fid, double(), n = vnum, size = 4, endian = "big")
     close(fid)
   } else {
-    stop("Unknown version of curv file - may not implemented yet")
+    cli::cli_abort("Unknown version of curv file - may not implemented yet")
   }
   return(curv)
 }
 
 
 #' @title Read Freesurfer Surface file
-#' @description Reads a Freesurfer Surface file from 
+#' @description Reads a Freesurfer Surface file from
 #' the \code{surf/} directory
 #' from \code{recon-all}
 #' @param file surface file (e.g. \code{lh.inflated})

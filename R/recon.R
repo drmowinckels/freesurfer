@@ -186,19 +186,20 @@ recon <- function(
   } else {
     sd_opts = ""
   }
-  
+
   args = parse_opts(log_opts)
   opts = paste(
     paste0("-i", infile),
     sd_opts,
     paste0(" -subjid ", subjid),
     args,
-    opts)
-  
+    opts
+  )
+
   cmd = get_fs()
   cmd = paste(cmd, opts)
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_code(cmd)
   }
   res = system(cmd)
   return(res)

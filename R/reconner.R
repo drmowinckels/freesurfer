@@ -53,35 +53,37 @@ reconner <- function(
     sd_opts = ""
     subject_directory = file.path(fs_subj_dir(), subjid)
   }
-  
+
   #####################################
   # Processing infile
-  #####################################     
+  #####################################
   if (!is.null(infile)) {
     in_opts = paste0("-i ", infile)
     if (dir.exists(subject_directory)) {
-      warning(paste0("Subject Directory already exists - either",
-                     " use force = TRUE, or delete directory"))
-    }    
+      cli::cli_warning(
+        "Subject Directory {.path subject_directory} already exists - 
+        either use {.code force = TRUE}, or delete directory"
+      )
+    }
   } else {
     in_opts = ""
   }
-  
-  
+
   opts = paste(
     in_opts,
     sd_opts,
     paste0(" -subjid ", subjid),
-    opts)
+    opts
+  )
   if (force) {
     opts = paste(opts, "-force")
   }
-  
+
   cmd = get_fs()
   cmd = paste0(cmd, "recon-all")
   cmd = paste(cmd, opts)
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_code(cmd)
   }
   res = system(cmd)
   return(res)

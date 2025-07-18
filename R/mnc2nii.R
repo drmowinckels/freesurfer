@@ -44,7 +44,7 @@ mnc2nii = function(file, outfile = NULL, ...) {
     real_outfile = outfile
     outfile = paste0(outfile, ".nii")
     if (!file.exists(outfile)) {
-      stop("mnc2nii did not produce outfile specified")
+      cli::cli_abort("mnc2nii did not produce outfile specified")
     }
     file.copy(outfile, real_outfile, overwrite = TRUE)
     outfile = real_outfile

@@ -35,7 +35,7 @@ nu_correct = function(
 
   out_ext = neurobase::parse_img_ext(outfile)
   if (!(ext %in% c("nii", "mnc"))) {
-    stop("outfile extension must be nii/nii.gz or mnc")
+    cli::cli_abort("outfile extension must be nii/nii.gz or mnc")
   }
   tmpfile = tempfile(fileext = ".mnc")
 

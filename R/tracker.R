@@ -27,24 +27,25 @@ tracker <- function(
   } else {
     in_opts = ""
   }
-  
+
   if (!is.null(outdir)) {
     sd_opts = paste0(" -sd ", shQuote(outdir))
   } else {
     sd_opts = ""
   }
-  
+
   opts = paste(
     in_opts,
     sd_opts,
     paste0(" -s ", subjid),
-    opts)
-  
+    opts
+  )
+
   cmd = get_fs()
   cmd = paste0(cmd, "trac-all")
   cmd = paste(cmd, opts)
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_code(cmd)
   }
   res = system(cmd)
   return(res)

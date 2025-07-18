@@ -29,12 +29,10 @@ nii2mnc = function(
   #                          temporary = TRUE,
   #                          overwrite = TRUE)
   # }
-  if (is.null(outfile)) {
-    outfile = tempfile(fileext = ".mnc")
-  }
+
   out_ext = file_ext(tolower(outfile))
   if (out_ext != "mnc") {
-    stop("File format of output not MNC")
+    cli::cli_abort("File format of output not MNC")
   }
   fs_cmd(
     func = "nii2mnc",
@@ -47,7 +45,7 @@ nii2mnc = function(
     ...
   )
   if (!file.exists(outfile)) {
-    stop("nii2mnc did not produce outfile specified")
+    cli::cli_abort("nii2mnc did not produce outfile specified")
   }
   return(outfile)
 }
@@ -59,5 +57,5 @@ nii2mnc = function(
 #' @return Result of \code{fs_help}
 #' @export
 nii2mnc.help = function() {
-  fs_help(func_name = "nii2mnc", help.arg = "", bin_app = "mni/bin")
+  fs_help("nii2mnc", help.arg = "", bin_app = "mni/bin")
 }

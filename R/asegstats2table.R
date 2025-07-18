@@ -30,25 +30,24 @@ asegstats2table = function(
   subjects = NULL,
   inputs = NULL,
   outfile = NULL,
-  measure =  c("volume", "mean",
-               "std"),
+  measure = c("volume", "mean", "std"),
   sep = c("tab", "space", "comma", "semicolon"),
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE){
-  
+  verbose = TRUE
+) {
   if (is.null(subjects) & is.null(inputs)) {
-    stop("Subjects or inputs must be specified!")
+    cli::cli_abort("Subjects or inputs must be specified!")
   }
   if (!is.null(subjects) & !is.null(inputs)) {
-    stop("Both subjects and inputs should not be specified!")
-  }  
+    cli::cli_abort("Both subjects and inputs should not be specified!")
+  }
 
   args = NULL
   ###########################
   # Making Subject Vector
-  ###########################   
+  ###########################
   if (is.null(subjects) & !is.null(inputs)) {
     inputs = paste(inputs, collapse = " ")
     inputs = paste0("--inputs ", inputs)
