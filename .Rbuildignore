@@ -6,6 +6,8 @@
 .DS_Store$
 ^\.travis\.yml$
 vignettes/.*_cache
+vignettes/.*_files
+vignettes/paper*
 freesurfer_lut.R
 ^cran-comments\.md$
 revdep/
@@ -17,3 +19,4 @@ revdep/
 ^CRAN-SUBMISSION$
 ^revdep$
 ^\.github$
+^data-raw$
