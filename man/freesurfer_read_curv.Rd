@@ -22,5 +22,5 @@ if (have_fs()) {
    file = file.path(bert_dir, "lh.thickness")
    fid = file(file, open = "rb")
    out = freesurfer_read_curv(file)
-} 
+}
 }

@@ -25,6 +25,6 @@ help from Freesurfer for that function
 }
 \examples{
 if (have_fs()) {
-fs_help(func_name = "mri_watershed")
+fs_help("mri_watershed")
 }
 }

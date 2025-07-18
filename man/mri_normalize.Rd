@@ -28,6 +28,6 @@ values of the image, with white matter voxels around 110.
 \dontrun{
 if (have_fs()){
     mri_normalize("/path/to/T1.nii.gz")
-} 
+}
 }
 }

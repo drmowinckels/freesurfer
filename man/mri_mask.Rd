@@ -27,7 +27,7 @@ This function calls \code{mri_mask} to mask an image
 }
 \examples{
 if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-   img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))  
+   img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
    mask = img > 1
    res = mri_mask(img, mask)
 }

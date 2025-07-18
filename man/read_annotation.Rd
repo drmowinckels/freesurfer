@@ -34,5 +34,5 @@ if (have_fs()) {
     bert_dir = file.path(fs_subj_dir(), "bert")
     annot_file = file.path(bert_dir, "label", "lh.aparc.annot")
     res = read_annotation(annot_file)
-} 
+}
 }
