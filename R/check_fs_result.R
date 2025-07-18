@@ -1,8 +1,7 @@
-
 #' @title Check Freesurfer Result
 #' @description Checks the Freesurfer system command result and will
 #' stop or warning based on whether output files exist.
-#' @param res (numeric) Result from system command 
+#' @param res (numeric) Result from system command
 #' @param fe_before (logical) did the output file exist before the command ran
 #' @param fe_after (logical) did the output file exist after the command ran
 #'

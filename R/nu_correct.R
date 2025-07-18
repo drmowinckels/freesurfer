@@ -75,5 +75,5 @@ nu_correct = function(
 #' @return Result of \code{fs_help}
 #' @export
 nu_correct.help = function() {
-  fs_help(func_name = "nu_correct", help.arg = "-help", bin_app = "mni/bin")
+  fs_help("nu_correct", help.arg = "-help", bin_app = "mni/bin")
 }

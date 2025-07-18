@@ -62,5 +62,5 @@ mnc2nii = function(file, outfile = NULL, ...) {
 #' @return Result of \code{fs_help}
 #' @export
 mnc2nii.help = function() {
-  fs_help(func_name = "mnc2nii", help.arg = "", bin_app = "mni/bin")
+  fs_help("mnc2nii", help.arg = "", bin_app = "mni/bin")
 }

@@ -26,10 +26,6 @@
 #' cmd_mni <- get_fs(bin_app = "mni/bin")
 #' print(cmd_mni)
 #'
-#' # Generate a shell command without specifying a subdirectory
-#' cmd_base <- get_fs(bin_app = "")
-#' print(cmd_base)
-#'
 #' @seealso [get_fs_home()], [get_fs_license()], [get_fs_output()]
 #' @export
 get_fs = function(bin_app = c("bin", "mni/bin", "")) {

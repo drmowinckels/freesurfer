@@ -132,14 +132,15 @@ get_fs_output <- function() {
     "FSF_OUTPUT_FORMAT",
     "freesurfer.output_type"
   )
-  if (is.null(ret$value)) {
-    return_setting(
-      "nii.gz",
-      "Default",
-      FALSE
+  if (is.na(ret$value)) {
+    return(
+      return_setting(
+        "nii.gz",
+        "Default",
+        FALSE
+      )
     )
   }
-  ret$exists <- NULL
   ret
 }
 

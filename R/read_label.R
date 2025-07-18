@@ -1,6 +1,6 @@
-#' @title Read Label File 
+#' @title Read Label File
 #' @description Reads an \code{label} file from an individual subject
-#' 
+#'
 #' @param file label file from Freesurfer
 #'
 #' @return \code{data.frame} with 5 columns:

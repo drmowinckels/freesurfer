@@ -17,7 +17,7 @@
 #' }
 nii2mnc = function(
   file,
-  outfile = NULL,
+  outfile = tempfile(fileext = ".mnc"),
   ...
 ) {
   file = neurobase::checknii(file)

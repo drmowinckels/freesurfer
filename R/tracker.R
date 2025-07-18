@@ -1,6 +1,6 @@
 #' @title Tract Reconstruction Helper for trac-all from Freesurfer
 #' @description Wrapper for the \code{trac-all} function in Freesurfer
-#' 
+#'
 #' @param infile Input filename (dcm or nii)
 #' @param outdir Output directory
 #' @param subjid subject id, if NULL, the basename of the infile will be used
@@ -16,7 +16,6 @@ tracker <- function(
   verbose = TRUE,
   opts = ""
 ) {
-  
   if (is.null(subjid)) {
     subjid = nii.stub(infile, bn = TRUE)
     subjid = file_path_sans_ext(subjid)
