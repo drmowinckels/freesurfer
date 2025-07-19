@@ -59,10 +59,10 @@ get_fs_setting <- function(env_var, opt_var, defaults = NULL) {
       }
     }
   }
-  list(
+
+  return_setting(
     value = NA,
-    source = NA,
-    exists = NA
+    source = NA
   )
 }
 
@@ -71,12 +71,12 @@ get_fs_setting <- function(env_var, opt_var, defaults = NULL) {
 get_fs_home <- function() {
   get_fs_setting(
     "FREESURFER_HOME",
-    "freesurfer.path",
+    "freesurfer.home",
     c(
-      "/usr/local/freesurfer",
-      "/Applications/freesurfer",
       "/usr/freesurfer",
-      "/usr/bin/freesurfer"
+      "/usr/bin/freesurfer",
+      "/usr/local/freesurfer",
+      "/Applications/freesurfer"
     )
   )
 }
@@ -93,7 +93,7 @@ get_fs_license <- function() {
   if (file.exists(lp)) {
     return(return_setting(lp, "fs_dir()"))
   }
-  return_setting(NULL, "No license found.")
+  return_setting(NA, "No license found.")
 }
 
 #' @describeIn get_fs_setting Retrieve the FreeSurfer "subjects" directory
@@ -167,10 +167,16 @@ get_mni_bin <- function() {
 
 #' @noRd
 return_setting <- function(value, source, is_path = TRUE) {
+  if (is.na(value)) {
+    exists <- FALSE
+  } else {
+    exists <- file.exists(value)
+  }
+
   list(
     value = value,
     source = source,
-    exists = ifelse(is_path, file.exists(value), NA)
+    exists = ifelse(is_path, exists, NA)
   )
 }
 

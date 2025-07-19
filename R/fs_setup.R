@@ -35,12 +35,12 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 
   if (is.null(freesurferdir) || !fs_home_info$exists) {
     cli::cli_abort(
-      "Can't find Freesurfer installation. Please set {.code FREESURFER_HOME} environment variable or {.code freesurfer.path} R option."
+      "Can't find Freesurfer installation. Please set {.code FREESURFER_HOME} environment variable or {.code freesurfer.home} R option."
     )
   }
 
   # Check license
-  if (!get_fs_license()$exists) {
+  if (get_fs_license()$exists) {
     cli::cli_warn(
       "Freesurfer is found, but no license file ({.path license.txt} or {.path .license}) found!"
     )
@@ -108,7 +108,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 
 #' @title Get Freesurfer's Directory
 #' @description Finds the `FREESURFER_HOME` from system environment or
-#' `getOption("freesurfer.path")` for location of Freesurfer functions and returns its value.
+#' `getOption("freesurfer.home")` for location of Freesurfer functions and returns its value.
 #' @return Character path to the Freesurfer home directory.
 #' @aliases freesurfer_dir
 #' @export
@@ -154,12 +154,12 @@ fs_subj_dir = function() {
 #' @export
 #' @examples
 #' have_fs()
-have_fs = function(check_license = FALSE) {
-  fs_home <- get_fs_home()
+have_fs = function(check_license = TRUE) {
+  fs_home <- get_fs_home()$exists
   if (check_license) {
-    return(fs_home$exists && get_fs_license()$exists)
+    return(fs_home && get_fs_license()$exists)
   }
-  return(fs_home$exists)
+  return(fs_home)
 }
 
 
