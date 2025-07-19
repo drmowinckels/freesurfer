@@ -13,23 +13,17 @@
 fs_sitrep <- function() {
   cli::cli_h2("Freesurfer Setup Report")
 
-  get_fs_home() |>
-    alert_info("Freesurfer Directory")
+  alert_info(get_fs_home(), "Freesurfer Directory")
 
-  get_fs_source() |>
-    alert_info("Source script")
+  alert_info(get_fs_source(), "Source script")
 
-  get_fs_license() |>
-    alert_info("License File")
+  alert_info(get_fs_license(), "License File")
 
-  get_mni_bin() |>
-    alert_info("MNI functionality")
+  alert_info(get_mni_bin(), "MNI functionality")
 
-  get_fs_subdir() |>
-    alert_info("Subjects Directory", )
+  alert_info(get_fs_subdir(), "Subjects Directory", )
 
-  get_fs_output() |>
-    alert_info("Output Format")
+  alert_info(get_fs_output(), "Output Format")
 
   # --- Testing installation ---- #
 
