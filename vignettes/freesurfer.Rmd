@@ -72,7 +72,7 @@ As you can see, there are several things to make sure are in order.
 When you're running R from a shell environment, `freesurfer` will automatically use the `FREESURFER_HOME` environment variable (which is typically set during Freesurfer installation) as the path to your Freesurfer directory.
 However, if you're using R through a graphical user interface (GUI) like RStudio, environment variables and paths might not be explicitly exported, meaning `FREESURFER_HOME` might not be set.
 In such cases, `freesurfer` will try the default directories for macOS and Linux.
-If your Freesurfer installation isn't in a standard location, you can manually specify its path using `options(freesurfer.path="/path/to/freesurfer")`.
+If your Freesurfer installation isn't in a standard location, you can manually specify its path using `options(freesurfer.home="/path/to/freesurfer")`.
 Please note that Freesurfer is only available on Windows via a virtual machine.
 
 While R may detect your system variables, as mentioned above, any `options` set in either your project or user `.Rprofile`, or in the script you are running, will take precedence over the system settings.

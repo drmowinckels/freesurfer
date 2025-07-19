@@ -99,7 +99,7 @@ We can now see a display of three slices of the head: the top-left panel shows a
 You might notice that the image is not stored in the right/posterior/inferior (RPI) orientation, which is typically assumed when displaying with the `neurobase::ortho2` function.
 To correct this, we can use the `orient_rpi` function from the `neurobase` package, whose function returns a list, with the nii image in the "img" element, and the orientation in the "orientation" element.
 
-```{r mri_plot2, eval = have_both(), fig.cap = "Slices of the Bert T1 image after reorientation", fig.asp=0.8}
+```{r mri_plot2, fig.cap = "Slices of the Bert T1 image after reorientation", fig.asp=0.8}
 bert_nii_rpi = orient_rpi(bert_nii)
 
 ortho2(bert_nii_rpi$img)
