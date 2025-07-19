@@ -9,24 +9,12 @@ bibliography: ref.bib
 ---
 
 ```{r setup, include = FALSE}
-have_fs = freesurfer::have_fs()
-
 knitr::opts_chunk$set(
-  eval = have_fs,
-  echo = TRUE,
+  eval = freesurfer::have_fs(),
   prompt = FALSE,
   message = FALSE,
-  warning = FALSE,
-  fig.width = 6,
-  fig.height = 3,
-  cache = TRUE
+  warning = FALSE
 )
-
-have_fsl <- fslr::have_fsl()
-
-have_both <- function() {
-  have_fs && have_fsl
-}
 ```
 
 Welcome to this tutorial on analyzing and visualizing Freesurfer outputs using the `freesurfer` R package.

@@ -4,7 +4,7 @@
 \alias{have_fs}
 \title{Logical check if Freesurfer is accessible}
 \usage{
-have_fs(check_license = FALSE)
+have_fs(check_license = TRUE)
 }
 \arguments{
 \item{check_license}{\link{logical} Should a license file be checked for existence?}

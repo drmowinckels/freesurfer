@@ -9,30 +9,12 @@ bibliography: ref.bib
 ---
 
 ```{r setup, include = FALSE}
-have_fs = freesurfer::have_fs()
-
 knitr::opts_chunk$set(
-  eval = have_fs,
-  echo = TRUE,
+  eval = freesurfer::have_fs(),
   prompt = FALSE,
   message = FALSE,
-  warning = FALSE,
-  fig.width = 6,
-  fig.height = 3,
-  cache = TRUE
+  warning = FALSE
 )
-
-# Helper function for fslr dependency check
-have_fsl <- function() {
-  if ("fslr" %in% installed.packages()) {
-    return(fslr::have_fsl())
-  }
-  FALSE
-}
-
-have_both <- function() {
-  have_fs && have_fsl()
-}
 ```
 
 Welcome to this tutorial on core image processing with the `freesurfer` package!

@@ -32,7 +32,9 @@ Suggests:
     knitr,
     oro.nifti (>= 0.7),
     rgl,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
@@ -41,3 +43,6 @@ LazyLoad: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 SystemRequirements: FSL, Freesurfer (https://surfer.nmr.mgh.harvard.edu/)
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+

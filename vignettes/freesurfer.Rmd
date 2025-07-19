@@ -9,11 +9,8 @@ bibliography: ref.bib
 ---
 
 ```{r setup, include = FALSE}
-have_fs = freesurfer::have_fs()
-
 knitr::opts_chunk$set(
-  eval = have_fs,
-  echo = TRUE,
+  eval = freesurfer::have_fs(),
   prompt = FALSE,
   message = FALSE,
   warning = FALSE
@@ -51,7 +48,7 @@ The core of this detection process is handled by a series of functions `get_fs_h
 
 The detection process for `FREESURFER_HOME` follows a specific order:
 
-1. It looks for the R option `getOption("freesurfer.path")`.   
+1. It looks for the R option `getOption("freesurfer.home")`.   
 1. If that is not found, `freesurfer` checks your system's environment variables for `FREESURFER_HOME`.   
 1.  As a last resort, it tries common default installation paths, such as: 
     - `/usr/local/freesurfer`  
@@ -88,10 +85,11 @@ Possible options to set are:
 
 ```r
 options(
-    freesurfer.path = "/path/to/freesurfer",
+    freesurfer.home = "/path/to/freesurfer",
     freesurfer.subj_dir = "/path/to/freesurfer/subjects",
     freesurfer.output_type = "hdr",
-    freesurfer.sh = "/path/to/freesurfer/FreeSurferEnv.sh"
+    freesurfer.sh = "/path/to/freesurfer/FreeSurferEnv.sh",
+    freesurfer.mni_path = "/Applications/freesurfer/mni/Library/Perl/Updates/5.12.3"
 )
 ```
 
