@@ -148,10 +148,10 @@ asegstats2table = function(
     cli::cli_abort("Command Failed, no output produced")
   }
   if (res == 0 & !fe_after) {
-    cli::cli_warning("Command assumed passed, but no output produced")
+    cli::cli_warn("Command assumed passed, but no output produced")
   }
   if (res != 0 & fe_after & fe_before) {
-    cli::cli_warning(
+    cli::cli_warn(
       "Command {.fn asegstats2table} 
       had non-zero exit status (probably failed)
       outfile exists but existed before command was run. Please check output."
@@ -159,7 +159,7 @@ asegstats2table = function(
   }
 
   if (res != 0 & fe_after & !fe_before) {
-    cli::cli_warning(
+    cli::cli_warn(
       "Command {.fn asegstats2table} 
       had non-zero exit status (probably failed)
       outfile exists and did {.strong not} exist before command was run. Please check output."

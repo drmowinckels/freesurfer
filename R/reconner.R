@@ -59,7 +59,7 @@ reconner <- function(
   if (!is.null(infile)) {
     in_opts = paste0("-i ", infile)
     if (dir.exists(subject_directory)) {
-      cli::cli_warning(
+      cli::cli_warn(
         "Subject Directory {.path subject_directory} already exists - 
         either use {.code force = TRUE}, or delete directory"
       )

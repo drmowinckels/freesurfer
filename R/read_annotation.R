@@ -40,7 +40,7 @@ read_annotation <- function(path, verbose = TRUE) {
   if (length(bool) == 0 || is.null(bool)) {
     colortable <- data.frame(matrix(NA, ncol = 6, nrow = 0))
     names(colortable) <- c("label", "R", "G", "B", "A", "code")
-    if (verbose) cli::cli_warning('No colortable in file')
+    if (verbose) cli::cli_warn('No colortable in file')
   } else if (bool == 1) {
     # Read colortable
     numEntries <- readBin(ff, integer(), endian = "big")
