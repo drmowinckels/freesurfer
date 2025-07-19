@@ -17,7 +17,7 @@
 #'   throws an error or issues a warning. On success, the returned string can be used directly
 #'   in shell operations to load the FreeSurfer environment.
 #'
-#' @examples
+#' @examplesIf have_fs()
 #' # Generate a shell command to set up FreeSurfer with the default `bin`
 #' cmd <- get_fs(bin_app = "bin")
 #' print(cmd)

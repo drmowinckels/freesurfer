@@ -29,6 +29,7 @@ binaries like \code{bin}, \code{mni/bin}, and others, while ensuring proper init
 the MNI environment if required.
 }
 \examples{
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Generate a shell command to set up FreeSurfer with the default `bin`
 cmd <- get_fs(bin_app = "bin")
 print(cmd)
@@ -36,7 +37,7 @@ print(cmd)
 # Generate a shell command to include MNI environment setup
 cmd_mni <- get_fs(bin_app = "mni/bin")
 print(cmd_mni)
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=get_fs_home]{get_fs_home()}}, \code{\link[=get_fs_license]{get_fs_license()}}, \code{\link[=get_fs_output]{get_fs_output()}}

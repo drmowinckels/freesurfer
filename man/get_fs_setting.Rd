@@ -59,20 +59,16 @@ Functions to manage FreeSurfer configuration settings, including determining dir
 }}
 \examples{
 # Retrieve FreeSurfer home directory
-fs_home <- get_fs_home()
-print(fs_home)
+get_fs_home()
 
 # Retrieve FreeSurfer license file
-fs_license <- get_fs_license()
-print(fs_license)
+get_fs_license()
 
 # Retrieve FreeSurfer subjects directory
-fs_subdir <- get_fs_subdir()
-print(fs_subdir)
+get_fs_subdir()
 
 # Retrieve FreeSurfer output format
-fs_output <- get_fs_output()
-print(fs_output)
+get_fs_output()
 }
 \seealso{
 \code{\link[=Sys.getenv]{Sys.getenv()}}, \code{\link[=getOption]{getOption()}}, \code{\link[=file.exists]{file.exists()}}, \code{\link[=file.path]{file.path()}}
