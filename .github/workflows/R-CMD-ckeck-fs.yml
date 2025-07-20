@@ -1,0 +1,93 @@
+name: R-CMD-Check with FreeSurfer (Matrix Support)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+permissions: read-all
+concurrency:
+  group: R-CMD-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  R-CMD-check:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          # Non-Docker configurations
+          - { os: macos-latest, r: "release" }
+          - { os: windows-latest, r: "release" }
+          - { os: ubuntu-latest, r: "release" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
+          - { os: ubuntu-latest, r: "oldrel-1" }
+          # Docker-based configurations
+          - { os: ubuntu-latest, r: "latest", fs: "latest" }
+          - { os: ubuntu-latest, r: "3.5.0", fs: "latest" }
+
+    runs-on: ${{ matrix.config.os }}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      # Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Install Pandoc
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      # Common R setup for all configurations
+      - name: Setup R
+        if: !matrix.config.fs
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          use-public-rspm: true
+
+      - name: Setup R Dependencies
+        if: !matrix.config.fs
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+
+      # Run standard R CMD check (non-Docker)
+      - name: Run R CMD check (standard)
+        if: !matrix.config.fs
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
+      # FreeSurfer + Docker-based checks
+      - name: Build Docker Image for FreeSurfer
+        if: matrix.config.fs
+        run: |
+          docker build \
+            --build-arg FREESURFER_VERSION=${{ matrix.config.fs }} \
+            --build-arg R_VERSION=${{ matrix.config.r }} \
+            -t freesurfer-r-pkg-docker:${{ matrix.config.r }}-fs-${{ matrix.config.fs }} .
+
+      - name: Run R CMD Check in Docker
+        if: matrix.config.fs
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            r-pkg-docker:${{ matrix.config.r }}-fs-${{ matrix.config.fs }} \
+            bash -c "cd /workspace && R CMD check ."
+
+      - name: Archive Logs (Docker-based failure)
+        if: failure() && matrix.config.fs
+        uses: actions/upload-artifact@v3
+        with:
+          name: r-cmd-check-logs
+          path: /workspace/*.Rcheck
