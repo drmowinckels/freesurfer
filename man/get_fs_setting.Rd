@@ -10,7 +10,7 @@
 \alias{get_mni_bin}
 \title{Get FreeSurfer Configuration Settings}
 \usage{
-get_fs_setting(env_var, opt_var, defaults = NULL)
+get_fs_setting(env_var, opt_var, defaults = NULL, is_path = TRUE)
 
 get_fs_home()
 
@@ -30,6 +30,8 @@ get_mni_bin()
 \item{opt_var}{\link{character} R option name to check.}
 
 \item{defaults}{\link{character} A vector of default paths to check; used as fallbacks if the environment or options are not set (optional).}
+
+\item{is_path}{\link{logical}. Does the setting point to a path. If \code{TRUE} the returned \code{exists} element will be \code{TRUE}/\code{FALSE} depending on whether the path exists or not. `}
 }
 \value{
 A list containing the following components:

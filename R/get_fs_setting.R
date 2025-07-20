@@ -5,6 +5,7 @@
 #' @param env_var [character] Environment variable name to check.
 #' @param opt_var [character] R option name to check.
 #' @param defaults [character] A vector of default paths to check; used as fallbacks if the environment or options are not set (optional).
+#' @param is_path [logical]. Does the setting point to a path. If `TRUE` the returned `exists` element will be `TRUE`/`FALSE` depending on whether the path exists or not. `
 #'
 #' @return A list containing the following components:
 #' \describe{
