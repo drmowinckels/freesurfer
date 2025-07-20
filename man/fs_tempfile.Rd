@@ -13,18 +13,18 @@ temporary file name.}
 }
 \value{
 A character string representing the full file path to the
-        temporary file. The directory containing the file will be
-        created if it does not already exist.
+temporary file. The directory containing the file will be
+created if it does not already exist.
 }
 \description{
-The `fs_tempfile` function generates a temporary file path and ensures
+The \code{fs_tempfile} function generates a temporary file path and ensures
 that the directory containing the file exists by creating it if necessary.
 }
 \details{
 This function leverages \code{\link{tempfile}} to create a unique
-         file path within the system's temporary directory. Before
-         returning the file path, it ensures any required
-         directories are created using the \code{\link{dir.create}} function.
+file path within the system's temporary directory. Before
+returning the file path, it ensures any required
+directories are created using the \code{\link{dir.create}} function.
 }
 \examples{
 # Create a temporary file and its directory

@@ -121,9 +121,9 @@ The input is mri/wm.mgz and the output is mri/filled.mgz.
 Calls mri_fill. If the cut fails, then seed points can be supplied
 (see -cc-crs, -pons-crs, -lh-crs, -rh-crs).
 The actual points used for the cutting planes in the corpus callosum
- and pons can be found in scripts/ponscc.cut.log.
- This is the last stage of volumetric processing.
- If -noaseg is used, then aseg.mgz is not used by mri_fill.}
+and pons can be found in scripts/ponscc.cut.log.
+This is the last stage of volumetric processing.
+If -noaseg is used, then aseg.mgz is not used by mri_fill.}
 
 \item{tessellate}{This is the step where the orig surface
 (ie, surf/?h.orig.nofix) is created.

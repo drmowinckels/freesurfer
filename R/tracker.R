@@ -44,7 +44,7 @@ tracker <- function(
   cmd = paste0(cmd, "trac-all")
   cmd = paste(cmd, opts)
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_code(cmd)
   }
   res = system(cmd)
   return(res)

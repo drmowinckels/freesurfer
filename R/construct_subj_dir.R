@@ -57,9 +57,7 @@ construct_subj_dir = function(
       out_names = file.path(fol, basename(y))
       for (ix in seq(N)) {
         x = y[ix]
-        if (!file.exists(x)) {
-          stop(paste0(x))
-        }
+        check_path(x)
         out = out_names[ix]
         res[ix] = file.copy(from = x, to = out)
       }
@@ -80,9 +78,3 @@ construct_subj_dir = function(
 
   R = list(subj = subj, subj_dir = subj_root_dir, types = type_names)
 }
-#
-# aparcstats2table(subjects = subj, subj_dir = subj_dir,
-#                  measure = "thickness")
-# asegstats2table(subjects = subj, subj_dir = subj_dir,
-#                  measure = "mean")
-# out =

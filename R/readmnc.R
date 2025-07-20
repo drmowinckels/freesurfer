@@ -7,6 +7,7 @@
 #' @importFrom neurobase readnii
 #' @export
 readmnc = function(file) {
+  check_path(file)
   outfile = fs_tempfile(fileext = ".nii.gz")
   mnc2nii(file, outfile = outfile)
   ret = readnii(outfile)

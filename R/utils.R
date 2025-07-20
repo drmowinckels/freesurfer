@@ -42,3 +42,9 @@ fs_tempfile <- function(...) {
   mkdir(dirname(x))
   x
 }
+
+check_path <- function(path) {
+  if (!file.exists(path)) {
+    cli::cli_abort("File {.path path} does not exist")
+  }
+}

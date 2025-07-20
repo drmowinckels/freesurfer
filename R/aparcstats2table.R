@@ -154,5 +154,5 @@ aparcstats2table = function(
 #' @return Result of \code{fs_help}
 #' @export
 aparcstats2table.help = function() {
-  fs_help(func_name = "aparcstats2table", help.arg = "--help")
+  fs_help("aparcstats2table", help.arg = "--help")
 }

@@ -9,7 +9,7 @@ read_fs_table(file, sep = NULL, stringsAsFactors = FALSE, header = TRUE, ...)
 \arguments{
 \item{file}{(character path) filename of text file}
 
-\item{sep}{separator to override attribute of file, to 
+\item{sep}{separator to override attribute of file, to
 pass to \code{\link[utils]{read.table}}.}
 
 \item{stringsAsFactors}{(logical) passed to \code{\link{read.table}}}
@@ -37,7 +37,7 @@ if (have_fs()) {
 \dontrun{
 ### using the pipe
 if (requireNamespace("magrittr", quietly = TRUE)) {
-df_seg = asegstats2table(subjects = "bert", meas = "mean") \%>\% 
+df_seg = asegstats2table(subjects = "bert", meas = "mean") \%>\%
             read_fs_table
             }
 }

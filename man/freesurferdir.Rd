@@ -13,17 +13,16 @@ freesurfer_dir()
 fs_dir()
 }
 \value{
-Character path
+Character path to the Freesurfer home directory.
 }
 \description{
-Finds the FREESURFER_HOME from system environment or
-\code{getOption("freesurfer.path")}
-for location of Freesurfer functions and returns it
+Finds the \code{FREESURFER_HOME} from system environment or
+\code{getOption("freesurfer.home")} for location of Freesurfer functions and returns its value.
 }
 \examples{
-\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-freesurferdir()
-freesurfer_dir()
-fs_dir()
-\dontshow{\}) # examplesIf}
+if (have_fs()) {
+ freesurferdir()
+ freesurfer_dir()
+ fs_dir()
+}
 }

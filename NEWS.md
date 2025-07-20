@@ -3,6 +3,12 @@
 - Simplify management of common parameter information
 - Creates containing folder of tempfiles if necessary
 - Improved handling of running examples with @examplesIf
+- Split single vignette into several smaller vignettes with more tutorial like sctructure and language.
+  - Original vignette is saved as "paper.Rmd" and is ignored by R build.
+- Add function `fs_sitrep()` whose intent is to check, verify and output information on Freesurfer-R communication for the user.
+- Refactor of `get_fs()` as a result of `fs_sitrep()` and the need to consolidate how to check for Freesurfer system setup.
+  - New `get_fs_*` functions underlie both the approaches and provide more fine grained control for each setting.
+- Substitute `warning`, `stop`, `message` and `cat` with corresponding `cli` functions for more modern stdout and stderr output.
 
 # freesurfer 1.8.0
 

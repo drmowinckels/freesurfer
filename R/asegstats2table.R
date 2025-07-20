@@ -35,10 +35,10 @@ asegstats2table = function(
   verbose = TRUE
 ) {
   if (is.null(subjects) & is.null(inputs)) {
-    stop("Subjects or inputs must be specified!")
+    cli::cli_abort("Subjects or inputs must be specified!")
   }
   if (!is.null(subjects) & !is.null(inputs)) {
-    stop("Both subjects and inputs should not be specified!")
+    cli::cli_abort("Both subjects and inputs should not be specified!")
   }
 
   args = NULL
@@ -105,7 +105,7 @@ asegstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = fs_tempfile(fileext = ext)
+    outfile = tempfile(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 
@@ -136,33 +136,31 @@ asegstats2table = function(
 
   fe_before = file.exists(outfile)
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_text(cmd)
   }
   res = system(cmd)
   fe_after = file.exists(outfile)
 
   if (res != 0 & !fe_after) {
-    stop("Command Failed, no output produced")
+    cli::cli_abort("Command Failed, no output produced")
   }
   if (res == 0 & !fe_after) {
-    warning("Command assumed passed, but no output produced")
+    cli::cli_warn("Command assumed passed, but no output produced")
   }
   if (res != 0 & fe_after & fe_before) {
-    warning(paste0(
-      " Command asegstats2table ",
-      "had non-zero exit status (probably failed),",
-      " outfile exists but existed before command was run. ",
-      " Please check output."
-    ))
+    cli::cli_warn(
+      "Command {.fn asegstats2table} 
+      had non-zero exit status (probably failed)
+      outfile exists but existed before command was run. Please check output."
+    )
   }
 
   if (res != 0 & fe_after & !fe_before) {
-    warning(paste0(
-      " Command asegstats2table ",
-      "had non-zero exit status (probably failed),",
-      " outfile exists and did NOT before command was run. ",
-      " Please check output."
-    ))
+    cli::cli_warn(
+      "Command {.fn asegstats2table} 
+      had non-zero exit status (probably failed)
+      outfile exists and did {.strong not} exist before command was run. Please check output."
+    )
   }
   attr(outfile, "separator") = sep
   return(outfile)
@@ -175,5 +173,5 @@ asegstats2table = function(
 #' @return Result of \code{fs_help}
 #' @export
 asegstats2table.help = function() {
-  fs_help(func_name = "asegstats2table", help.arg = "--help")
+  fs_help("asegstats2table", help.arg = "--help")
 }

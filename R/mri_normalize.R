@@ -33,5 +33,5 @@ mri_normalize = function(file, outfile = NULL, retimg = TRUE, opts = "", ...) {
 #' @return Result of \code{fs_help}
 #' @export
 mri_normalize.help = function() {
-  fs_help(func_name = "mri_normalize")
+  fs_help("mri_normalize")
 }

@@ -20,6 +20,7 @@ recon_all <- function(
   opts = "-all",
   ...
 ) {
+  check_path(infile)
   reconner(
     infile = infile,
     outdir = outdir,

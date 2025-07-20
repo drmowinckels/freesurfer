@@ -34,5 +34,5 @@ mri_segment = function(
 #'
 #' @return Result of \code{fs_help}
 mri_segment.help = function() {
-  fs_help(func_name = "mri_segment")
+  fs_help("mri_segment")
 }

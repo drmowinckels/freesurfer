@@ -53,5 +53,5 @@ mris_euler_number = function(
 #' @return Result of \code{fs_help}
 #' @export
 mris_euler_number.help = function() {
-  fs_help(func_name = "mris_euler_number")
+  fs_help("mris_euler_number")
 }

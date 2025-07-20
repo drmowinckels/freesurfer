@@ -1,4 +1,5 @@
-*
-!.gitignore
-!*Rmd
-
+*.html
+*.R
+*_cache/
+*_files/
+rgl.png

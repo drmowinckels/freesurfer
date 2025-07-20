@@ -9,7 +9,7 @@ read_aseg_stats(file, lowercase = TRUE)
 \arguments{
 \item{file}{aseg.stats file from Freesurfer}
 
-\item{lowercase}{should the measures and values be lowercase (`TRUE`) or
+\item{lowercase}{should the measures and values be lowercase (\code{TRUE}) or
 kept as is?}
 }
 \value{

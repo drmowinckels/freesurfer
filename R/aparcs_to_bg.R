@@ -76,7 +76,7 @@ aparcs_to_bg = function(subjects, measure, ...) {
 
   varying_cols <- setdiff(names(tab), id.vars)
 
-  ltab_baseR <- reshape(
+  ltab <- stats::reshape(
     tab,
     varying = varying_cols,
     v.names = "value",
@@ -86,8 +86,8 @@ aparcs_to_bg = function(subjects, measure, ...) {
     direction = "long"
   )
 
-  ltab_baseR <- ltab_baseR[order(ltab_baseR[[id.vars]], ltab_baseR$variable), ]
-  row.names(ltab_baseR) <- NULL
+  ltab <- ltab[order(ltab[[id.vars]], ltab$variable), ]
+  row.names(ltab) <- NULL
 
   colnames(ltab) = c("id", "name", measure)
   return(ltab)

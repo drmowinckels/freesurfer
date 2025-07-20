@@ -1,7 +1,7 @@
 Type: Package
 Package: freesurfer
 Title: Wrapper Functions for 'Freesurfer'
-Version: 1.8.1.900
+Version: 1.8.1.902
 Authors@R: c(
     person("John", "Muschelli", , "muschellij2@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6469-1750")),
@@ -18,25 +18,30 @@ Description: Wrapper functions that interface with 'Freesurfer'
 License: GPL-3
 BugReports: https://github.com/muschellij2/freesurfer/issues
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.5)
 Imports:
+    cli,
     methods,
     neurobase,
     R.utils,
     tools,
+    stats,
     utils
 Suggests:
-    fslr (>= 2.9.2),
     knitr,
-    magrittr,
     oro.nifti (>= 0.7),
     pander,
     rgl,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: 
     knitr
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 LazyLoad: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-SystemRequirements: FSL (https://fsl.fmrib.ox.ac.uk/), FreeSurfer (https://freesurfer.net/)
+SystemRequirements: FSL, Freesurfer (https://surfer.nmr.mgh.harvard.edu/)

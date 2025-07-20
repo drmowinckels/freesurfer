@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' if (have_fs()) {
-#' fs_help(func_name = "mri_watershed")
+#' fs_help("mri_watershed")
 #' }
 fs_help = function(func_name, help.arg = "--help", extra.args = "", ...) {
   cmd = get_fs(...)
@@ -20,6 +20,6 @@ fs_help = function(func_name, help.arg = "--help", extra.args = "", ...) {
     res = system(cmd, intern = TRUE)
   })
   #     res = system2(func_name, args = args, stdout=TRUE, stderr=TRUE)
-  message(res, sep = "\n")
+  cli::cli_code(res)
   return(invisible(res))
 }

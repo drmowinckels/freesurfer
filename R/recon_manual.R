@@ -22,6 +22,7 @@ recon_con1 <- function(
   subjid,
   verbose = TRUE
 ) {
+  check_path(infile)
   reconner(
     infile = infile,
     outdir = outdir,

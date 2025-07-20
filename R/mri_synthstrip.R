@@ -8,11 +8,10 @@
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Character or nifti depending on \code{retimg}
 #' @export
-#' @examples
-#' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-#'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-#'    res = mri_synthstrip(img)
-#' }
+#' @examplesIf have_fs()
+#' mock_nifti = array(rnorm(5*5*5), dim = c(5,5,5))
+#' img = oro.nifti::nifti(mock_nifti)
+#' res = mri_synthstrip(img)
 mri_synthstrip = function(
   file,
   outfile = NULL,
@@ -51,5 +50,5 @@ synthstrip = mri_synthstrip
 #' @return Result of \code{fs_help}
 #' @export
 mri_synthstrip.help = function() {
-  fs_help(func_name = "mri_mask")
+  fs_help("mri_mask")
 }

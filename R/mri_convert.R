@@ -36,5 +36,5 @@ mri_convert = function(
 #' @return Result of \code{fs_help}
 #' @export
 mri_convert.help = function() {
-  fs_help(func_name = "mri_convert")
+  fs_help("mri_convert")
 }

@@ -128,5 +128,5 @@ mri_surf2surf = function(
 #' @return Result of \code{fs_help}
 #' @export
 mri_surf2surf.help = function() {
-  fs_help(func_name = "mri_surf2surf", help.arg = "--help")
+  fs_help("mri_surf2surf", help.arg = "--help")
 }

@@ -72,7 +72,7 @@ fs_cmd = function(
     cmd <- paste(cmd, sprintf(' %s;', opts))
   }
   if (verbose) {
-    message(cmd, "\n")
+    cli::cli_text(cmd)
   }
   res = system(cmd, intern = intern, ...)
   if (retimg) {

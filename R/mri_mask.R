@@ -37,5 +37,5 @@ mri_mask = function(file, mask, outfile = NULL, retimg = TRUE, opts = "", ...) {
 #' @return Result of \code{fs_help}
 #' @export
 mri_mask.help = function() {
-  fs_help(func_name = "mri_mask")
+  fs_help("mri_mask")
 }

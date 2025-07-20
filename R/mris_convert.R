@@ -45,5 +45,5 @@ mris_convert = function(
 #' @return Result of \code{fs_help}
 #' @export
 mris_convert.help = function() {
-  fs_help(func_name = "mris_convert")
+  fs_help("mris_convert")
 }

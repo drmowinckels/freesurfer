@@ -8,6 +8,7 @@
 #' @importFrom neurobase readnii
 #' @export
 readmgz = function(file, ...) {
+  check_path(file)
   outfile = fs_tempfile(fileext = ".nii.gz")
   dir.create(
     dirname(outfile),
