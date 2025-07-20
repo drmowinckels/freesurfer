@@ -1,6 +1,6 @@
-#' @title Read Label File 
+#' @title Read Label File
 #' @description Reads an \code{label} file from an individual subject
-#' 
+#'
 #' @param file label file from Freesurfer
 #'
 #' @return \code{data.frame} with 5 columns:
@@ -27,11 +27,11 @@ read_fs_label = function(file) {
   n_lines = as.numeric(header[2])
   header = header[-c(1:2)]
   if (length(header) != n_lines) {
-    warning("Number of lines do not match file specification! ")
-  } 
+    cli::cli_warn("Number of lines do not match file specification! ")
+  }
   ss = strsplit(header, " ")
   ss = lapply(ss, function(x) {
-    x[ !x %in% ""]
+    x[!x %in% ""]
   })
   ss = do.call("rbind", ss)
   colnames(ss) = c("vertex_num", "r_coord", "a_coord", "s_coord", "value")

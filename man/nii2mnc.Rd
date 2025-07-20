@@ -4,7 +4,7 @@
 \alias{nii2mnc}
 \title{Convert NIfTI to MNC}
 \usage{
-nii2mnc(file, outfile = NULL, ...)
+nii2mnc(file, outfile = tempfile(fileext = ".mnc"), ...)
 }
 \arguments{
 \item{file}{(character) input filename}

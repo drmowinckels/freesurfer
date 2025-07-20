@@ -21,13 +21,13 @@ mri_normalize(file, outfile = NULL, retimg = TRUE, opts = "", ...)
 Character or nifti depending on \code{retimg}
 }
 \description{
-This function calls \code{mri_normalize} to normalize the 
+This function calls \code{mri_normalize} to normalize the
 values of the image, with white matter voxels around 110.
 }
 \examples{
 \dontrun{
 if (have_fs()){
     mri_normalize("/path/to/T1.nii.gz")
-} 
+}
 }
 }
