@@ -28,12 +28,13 @@
 #' # Retrieve FreeSurfer output format
 #' get_fs_output()
 #' @export
-get_fs_setting <- function(env_var, opt_var, defaults = NULL) {
+get_fs_setting <- function(env_var, opt_var, defaults = NULL, is_path = TRUE) {
   original_opt <- getOption(opt_var)
   if (!is.null(original_opt)) {
     return(return_setting(
       original_opt,
-      "getOption"
+      "getOption",
+      is_path
     ))
   }
 
@@ -41,7 +42,8 @@ get_fs_setting <- function(env_var, opt_var, defaults = NULL) {
   if (nzchar(original_env)) {
     return(return_setting(
       original_env,
-      "Sys.getenv"
+      "Sys.getenv",
+      is_path
     ))
   }
 
@@ -50,7 +52,8 @@ get_fs_setting <- function(env_var, opt_var, defaults = NULL) {
       if (file.exists(def_path)) {
         return(return_setting(
           def_path,
-          "Default"
+          "Default",
+          is_path
         ))
       }
     }
@@ -58,7 +61,8 @@ get_fs_setting <- function(env_var, opt_var, defaults = NULL) {
 
   return_setting(
     value = NA,
-    source = NA
+    source = NA,
+    is_path
   )
 }
 
@@ -101,9 +105,12 @@ get_fs_subdir <- function() {
     file.path(fs_dir(), "subjects")
   )
 
-  if (ret$source == "Default") {
-    ret$source = "fs_dir()"
+  if (!is.na(ret$source)) {
+    if (ret$source == "Default") {
+      ret$source = "fs_dir()"
+    }
   }
+
   ret
 }
 
@@ -126,7 +133,8 @@ get_fs_source <- function() {
 get_fs_output <- function() {
   ret <- get_fs_setting(
     "FSF_OUTPUT_FORMAT",
-    "freesurfer.output_type"
+    "freesurfer.output_type",
+    is_path = FALSE
   )
   if (is.na(ret$value)) {
     return(
@@ -148,6 +156,11 @@ get_mni_bin <- function() {
     "freesurfer.mni_path",
     file.path(fs_dir(), "mni")
   )
+
+  if (!ret$exists) {
+    return(ret)
+  }
+
   mni <- list.files(
     pattern = "MNI[.]pm",
     path = ret$value,
@@ -163,7 +176,7 @@ get_mni_bin <- function() {
 
 #' @noRd
 return_setting <- function(value, source, is_path = TRUE) {
-  if (is.na(value)) {
+  if (all(is.na(value))) {
     exists <- FALSE
   } else {
     exists <- file.exists(value)
