@@ -13,21 +13,23 @@
 #'  }
 #' @export
 #'
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'  file = file.path(fs_subj_dir(), "bert", "label", "lh.BA1.label")
 #'  if (!file.exists(file)) {
 #'  file = file.path(fs_subj_dir(), "bert", "label", "lh.BA1_exvivo.label")
 #'  }
 #'  out = read_fs_label(file)
-#' }
 read_fs_label = function(file) {
   header = readLines(con = file)
   comment = header[1]
   n_lines = as.numeric(header[2])
   header = header[-c(1:2)]
   if (length(header) != n_lines) {
+<<<<<<< HEAD
     cli::cli_warn("Number of lines do not match file specification! ")
+=======
+    warning("Number of lines do not match file specification! ")
+>>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
   }
   ss = strsplit(header, " ")
   ss = lapply(ss, function(x) {

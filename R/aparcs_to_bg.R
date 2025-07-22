@@ -2,29 +2,24 @@
 #' @description Converts Freesurfer aparcs table to brainGraph naming
 #' convention, relying on \code{\link{aparcstats2table}}
 #'
-#' @param subjects subjects to analyze, 
+#' @param subjects subjects to analyze,
 #' passed to \code{\link{aparcstats2table}}
-#' @param measure measure to be analyzed, 
+#' @param measure measure to be analyzed,
 #' passed to \code{\link{aparcstats2table}}
 #' @param ... additional arguments passed to \code{\link{aparcstats2table}}
 #'
 #' @return Long \code{data.frame}
 #' @export
 #' @importFrom reshape2 melt
-#' @examples
-#' if (have_fs()) {
-#'    fs_subj_dir() 
-#'    df = aparcs_to_bg(subjects = "bert", measure = "thickness")
-#'    print(head(df))
-#' }
-aparcs_to_bg = function(subjects, 
-                        measure,
-                        ...) {
-  file = aparcstats2table(subjects = subjects , 
-                          measure = measure, ...)
+#' @examplesIf have_fs()
+#' fs_subj_dir()
+#' df = aparcs_to_bg(subjects = "bert", measure = "thickness")
+#' print(head(df))
+aparcs_to_bg = function(subjects, measure, ...) {
+  file = aparcstats2table(subjects = subjects, measure = measure, ...)
   # nstart = substr(hemi, 1, 1)
   tab = read_fs_table(file)
-  
+
   x = colnames(tab)
   x = gsub("[.]", "_", x)
   x = gsub(paste0("_", measure), "", x)
@@ -74,12 +69,12 @@ aparcs_to_bg = function(subjects,
   x = gsub("Hippocampus", "HIPP", x)
   x = gsub("Amygdala", "AMYG", x)
   x = gsub("Accumbens.area", "ACCU", x)
-  
-  colnames(tab) = x 
-  x = x[ !grepl("Mean", x)]
+
+  colnames(tab) = x
+  x = x[!grepl("Mean", x)]
   tab = tab[, x]
   id.vars = x[1]
-  ltab = reshape2::melt(tab, id.vars= id.vars)  
+  ltab = reshape2::melt(tab, id.vars = id.vars)
   colnames(ltab) = c("id", "name", measure)
   return(ltab)
 }

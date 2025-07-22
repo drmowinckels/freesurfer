@@ -57,10 +57,11 @@ This function calls \code{aparcstats2table} to
 convert parcellation statistics to a table
 }
 \examples{
-if (have_fs()) {
-   fs_subj_dir()
-   outfile = aparcstats2table(subjects = "bert",
-                    hemi = "lh",
-                    meas = "thickness")
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+fs_subj_dir()
+outfile = aparcstats2table(
+   subjects = "bert",
+   hemi = "lh",
+   meas = "thickness")
+\dontshow{\}) # examplesIf}
 }

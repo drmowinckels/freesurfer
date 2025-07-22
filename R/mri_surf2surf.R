@@ -18,16 +18,14 @@
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @return Name of output file
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    out = mri_surf2surf(
+#' @examplesIf have_fs()
+#' out = mri_surf2surf(
 #'    subject = 'bert',
 #'    target_subject = 'fsaverage',
 #'    trg_type  = 'curv',
 #'    src_type  = 'curv',
 #'    hemi = "rh",
 #'    sval = "thickness")
-#' }
 mri_surf2surf = function(
   subject = NULL,
   target_subject = NULL,

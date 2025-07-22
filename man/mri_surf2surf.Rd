@@ -53,13 +53,13 @@ This function calls Freesurfer \code{mri_surf2surf} to
 resample one cortical surface onto another
 }
 \examples{
-if (have_fs()) {
-   out = mri_surf2surf(
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+out = mri_surf2surf(
    subject = 'bert',
    target_subject = 'fsaverage',
    trg_type  = 'curv',
    src_type  = 'curv',
    hemi = "rh",
    sval = "thickness")
-}
+\dontshow{\}) # examplesIf}
 }

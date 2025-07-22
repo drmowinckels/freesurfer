@@ -9,13 +9,11 @@
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @return Name of output file
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'  bert_surf_dir = file.path(fs_subj_dir(), "bert", "surf")
 #'  asc_file = mris_convert(
 #'  infile = file.path(bert_surf_dir, "lh.white")
 #'  )
-#' }
 mris_convert = function(
   infile,
   outfile = NULL,

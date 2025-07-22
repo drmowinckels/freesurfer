@@ -10,8 +10,13 @@ fs_imgext()
 Character string representing the file extension for the output type.
 }
 \description{
+<<<<<<< HEAD
 Runs \code{get_fs_output()} to extract the Freesurfer output type
 and then gets the corresponding file extension (such as \code{.nii.gz}).
+=======
+Runs \code{get_fs_output()} to extract FSLOUTPUTTYPE and then
+gets corresponding extension (such as .nii.gz)
+>>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
 }
 \examples{
 fs_imgext()
