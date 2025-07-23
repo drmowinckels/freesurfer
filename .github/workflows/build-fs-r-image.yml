@@ -45,6 +45,7 @@ jobs:
 
           # Build the Docker image
           docker build \
+            --file .github/setup/Dockerfile \
             --build-arg R_VERSION=${{ github.event.inputs.r_version }} \
             --build-arg FS_VERSION=${{ github.event.inputs.fs_version }} \
             -t $FULL_IMAGE_NAME .
