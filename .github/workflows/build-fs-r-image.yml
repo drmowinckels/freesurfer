@@ -47,8 +47,6 @@ jobs:
             echo "exists=false" >> $GITHUB_ENV
             echo "exists=false" # sets step output variable for downstream use
           fi
-        outputs:
-          exists: ${{ steps.check.run }}
 
 
   build-base-image:
