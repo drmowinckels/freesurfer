@@ -6,7 +6,7 @@ on:
       r_version:
         description: "R version"
         required: true
-        default: "release"
+        default: "4.5.0"
       fs_version:
         description: "FreeSurfer version"
         required: true
@@ -18,8 +18,8 @@ on:
         type: boolean
 
 permissions:
-  contents: read # Needed to checkout the repository
-  packages: write # Needed to push images to GHCR
+  contents: read 
+  packages: write 
 
 concurrency:
   group: build-docker-image-r-${{ github.event.inputs.r_version }}-fs-${{ github.event.inputs.fs_version }}
