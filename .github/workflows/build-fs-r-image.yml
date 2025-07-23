@@ -40,12 +40,9 @@ jobs:
         id: check
         run: |
           FULL_BASE_IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/freesurfer-base:${{ github.event.inputs.fs_version }}"
+          echo "exists=false" >> $GITHUB_OUTPUT
           if docker pull $FULL_BASE_IMAGE_NAME; then
-            echo "exists=true" >> $GITHUB_ENV
-            echo "exists=true" # sets step output variable for downstream use
-          else
-            echo "exists=false" >> $GITHUB_ENV
-            echo "exists=false" # sets step output variable for downstream use
+            echo "exists=true" >> $GITHUB_OUTPUT
           fi
 
 
