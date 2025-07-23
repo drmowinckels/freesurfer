@@ -124,6 +124,7 @@ freesurferdir = function() {
 #' @export
 freesurfer_dir = freesurferdir
 
+
 #' @rdname freesurferdir
 #' @export
 fs_dir = freesurferdir

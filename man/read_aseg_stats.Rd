@@ -9,7 +9,11 @@ read_aseg_stats(file, lowercase = TRUE)
 \arguments{
 \item{file}{aseg.stats file from Freesurfer}
 
+<<<<<<< HEAD
 \item{lowercase}{should the measures and values be lowercase (\code{TRUE}) or
+=======
+\item{lowercase}{should the measures and values be lowercase (`TRUE`) or
+>>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
 kept as is?}
 }
 \value{

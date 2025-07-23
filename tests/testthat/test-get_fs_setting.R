@@ -1,0 +1,377 @@
+local_fs_unset <- function(env = parent.frame()) {
+  withr::local_options(
+    freesurfer.home = NULL,
+    freesurfer.subj_dir = NULL,
+    freesurfer.output_type = NULL,
+    freesurfer.sh = NULL,
+    freesurfer.mni_path = NULL,
+    .local_envir = env
+  )
+
+  withr::local_envvar(
+    FSF_OUTPUT_FORMAT = "",
+    FREESURFER_HOME = "",
+    SUBJECTS_DIR = "",
+    FREESURFER_SH = "",
+    .local_envir = env
+  )
+}
+
+test_that("get_fs_setting correctly uses R options if set", {
+  local_fs_unset()
+  opt_name <- "freesurfer.test_option"
+  value <- "/this/weird/path"
+
+  withr::local_options(freesurfer.test_option = value)
+
+  result <- get_fs_setting(env_var = "TEST_ENV_VAR", opt_var = opt_name)
+  expect_equal(result$value, value)
+  expect_equal(result$source, "getOption")
+  expect_false(result$exists)
+
+  # -- create dir for exists tests
+  value <- withr::local_tempdir()
+  withr::local_options(freesurfer.test_option = value)
+
+  result <- get_fs_setting(env_var = "TEST_ENV_VAR", opt_var = opt_name)
+  expect_equal(result$value, value)
+  expect_equal(result$source, "getOption")
+  expect_true(result$exists)
+})
+
+test_that("get_fs_setting correctly uses environment variables if set", {
+  local_fs_unset()
+  env_var <- "FREESURFER_TEST_ENV"
+  value <- "/path/to/env_value"
+
+  withr::local_envvar(FREESURFER_TEST_ENV = value)
+
+  result <- get_fs_setting(env_var = env_var, opt_var = "irrelevant.option")
+  expect_equal(result$value, value)
+  expect_equal(result$source, "Sys.getenv")
+  expect_false(result$exists)
+
+  # -- create dir for exists tests
+  value <- withr::local_tempdir()
+  withr::local_envvar(FREESURFER_TEST_ENV = value)
+
+  result <- get_fs_setting(env_var = env_var, opt_var = "irrelevant.option")
+  expect_equal(result$value, value)
+  expect_equal(result$source, "Sys.getenv")
+  expect_true(result$exists)
+})
+
+test_that("get_fs_setting falls back to defaults if neither option nor environment variable is set", {
+  local_fs_unset()
+  temp_dir <- withr::local_tempdir()
+
+  result <- get_fs_setting(
+    env_var = "MISSING_ENV_VAR",
+    opt_var = "missing.option",
+    defaults = c("NA/path", temp_dir)
+  )
+  expect_equal(result$value, temp_dir)
+  expect_equal(result$source, "Default")
+  expect_true(result$exists)
+})
+
+test_that("get_fs_setting returns NA when all options fail", {
+  local_fs_unset()
+  result <- get_fs_setting(
+    env_var = "MISSING_ENV_VAR",
+    opt_var = "missing.option",
+    defaults = c("non_existent_path")
+  )
+  expect_true(is.na(result$value))
+  expect_true(is.na(result$source))
+  expect_false(result$exists)
+})
+
+test_that("get_fs_setting returns options over envvar", {
+  local_fs_unset()
+  opt_name <- "freesurfer.test_option"
+  opt_val <- withr::local_tempdir("opt")
+  withr::local_options(freesurfer.test_option = opt_val)
+
+  env_name <- "FREESURFER_TEST_ENV"
+  env_val <- withr::local_tempdir("env")
+  withr::local_envvar(FREESURFER_TEST_ENV = env_val)
+
+  result <- get_fs_setting(env_var = env_name, opt_var = opt_name)
+  expect_equal(result$value, opt_val)
+  expect_equal(result$source, "getOption")
+  expect_true(result$exists)
+})
+
+test_that("get_fs_home retrieves value from R option", {
+  local_fs_unset()
+  withr::local_options(freesurfer.home = "/mock/path/from/option")
+  result <- get_fs_home()
+  expect_equal(result$value, "/mock/path/from/option")
+  expect_equal(result$source, "getOption")
+  expect_false(result$exists) #
+})
+
+test_that("get_fs_home retrieves value from environment variable", {
+  local_fs_unset()
+  withr::local_envvar(FREESURFER_HOME = "/mock/path/from/env")
+  result <- get_fs_home()
+  expect_equal(result$value, "/mock/path/from/env")
+  expect_equal(result$source, "Sys.getenv")
+  expect_false(result$exists)
+})
+
+test_that("get_fs_home retrieves value from default paths", {
+  local_fs_unset()
+  mock_default_path <- withr::local_tempdir("mock_fs_home")
+
+  withr::local_envvar(FREESURFER_HOME = "")
+  withr::local_options(freesurfer.home = NULL)
+
+  local_mocked_bindings(
+    get_fs_home = function() {
+      get_fs_setting(
+        "FREESURFER_HOME",
+        "freesurfer.home",
+        c("/unused/mock/default/path", mock_default_path)
+      )
+    }
+  )
+
+  result <- get_fs_home()
+  expect_equal(result$value, mock_default_path)
+  expect_equal(result$source, "Default")
+  expect_true(result$exists)
+})
+
+test_that("get_fs_home handles missing values gracefully", {
+  local_fs_unset()
+  withr::local_envvar(FREESURFER_HOME = "")
+  withr::local_options(freesurfer.home = NULL)
+  local_mocked_bindings(
+    get_fs_home = function() {
+      get_fs_setting(
+        "FREESURFER_HOME",
+        "freesurfer.home",
+        c("/unused/mock/default/path", "/nonexistent/path")
+      )
+    }
+  )
+
+  result <- get_fs_home()
+  expect_true(is.na(result$value))
+  expect_false(result$exists)
+})
+
+
+test_that("get_fs_license prioritizes correct license file paths", {
+  local_fs_unset()
+  temp_dir <- withr::local_tempdir()
+  withr::local_options(freesurfer.home = temp_dir)
+
+  # No license file
+  result <- get_fs_license()
+  expect_true(is.na(result$value))
+  expect_equal(result$source, "No license found.")
+  expect_false(result$exists)
+
+  # When .license exists
+  path <- file.path(fs_dir(), ".license")
+  writeLines("FS license", path)
+  result <- get_fs_license()
+  expect_equal(result$value, path)
+  expect_equal(result$source, "fs_dir()")
+  expect_true(result$exists)
+  unlink(path)
+
+  # When license.txt exists
+  path <- file.path(fs_dir(), "license.txt")
+  writeLines("FS license", path)
+  result <- get_fs_license()
+  expect_equal(result$value, path)
+  expect_equal(result$source, "fs_dir()")
+  expect_true(result$exists)
+})
+
+
+test_that("get_fs_output returns correct output format", {
+  local_fs_unset()
+
+  result <- get_fs_output()
+  expect_equal(result$value, "nii.gz")
+  expect_equal(result$source, "Default")
+
+  # -- picks up env var
+  format <- "nii"
+  withr::local_envvar(FSF_OUTPUT_FORMAT = format)
+  result <- get_fs_output()
+  expect_equal(result$value, format)
+  expect_equal(result$source, "Sys.getenv")
+
+  # picks up option over envvar
+  format <- "hdr"
+  withr::local_envvar(FSF_OUTPUT_FORMAT = "mcn")
+  withr::local_options(freesurfer.output_type = format)
+  result <- get_fs_output()
+  expect_equal(result$value, format)
+  expect_equal(result$source, "getOption")
+})
+
+test_that("get_mni_bin does not find path when not there", {
+  local_fs_unset()
+  local_mocked_bindings(
+    get_fs_home = function() {
+      list(
+        value = dirname(temp_bin),
+        source = "Default",
+        exists = TRUE
+      )
+    }
+  )
+
+  # correct file, but not inside /mni
+  temp_bin <- withr::local_tempfile(pattern = "MNI", fileext = ".pm")
+  result <- get_mni_bin()
+  expect_false(result$exists)
+})
+
+test_that("get_mni_bin identifies default path", {
+  local_fs_unset()
+
+  temp_dir <- withr::local_tempdir()
+  local_mocked_bindings(
+    get_fs_home = function() {
+      list(
+        value = temp_dir,
+        source = "Default",
+        exists = TRUE
+      )
+    }
+  )
+
+  temp_bin <- file.path(temp_dir, "mni", "MNI.pm")
+  dir.create(dirname(temp_bin))
+  writeLines("bin", temp_bin)
+  expect_true(file.exists(temp_bin))
+
+  result <- get_mni_bin()
+  expect_equal(result$value, dirname(temp_bin))
+  expect_true(result$exists)
+})
+
+test_that("get_mni_bin identifies option", {
+  local_fs_unset()
+
+  temp_dir <- withr::local_tempdir()
+  local_mocked_bindings(
+    get_fs_home = function() {
+      list(
+        value = temp_dir,
+        source = "Default",
+        exists = TRUE
+      )
+    }
+  )
+
+  temp_bin <- file.path(temp_dir, "mni", "MNI.pm")
+  withr::local_options(freesurfer.mni_path = dirname(temp_bin))
+  dir.create(dirname(temp_bin))
+  writeLines("bin", temp_bin)
+  expect_true(file.exists(temp_bin))
+
+  result <- get_mni_bin()
+  expect_equal(result$value, dirname(temp_bin))
+  expect_true(result$exists)
+})
+
+
+test_that("get_mni_bin returns several paths when present", {
+  local_fs_unset()
+
+  temp_dir <- withr::local_tempdir()
+  local_mocked_bindings(
+    get_fs_home = function() {
+      list(
+        value = temp_dir,
+        source = "Default",
+        exists = TRUE
+      )
+    }
+  )
+
+  temp_bin <- c(
+    file.path(temp_dir, "mni", "v2", "MNI.pm"),
+    file.path(temp_dir, "mni", "v3", "MNI.pm")
+  )
+
+  withr::local_options(freesurfer.mni_path = file.path(temp_dir, "mni"))
+  sapply(dirname(temp_bin), dir.create, recursive = TRUE)
+  sapply(temp_bin, function(x) writeLines("bin", x))
+
+  result <- get_mni_bin()
+  expect_length(result$value, length(temp_bin))
+  expect_true(all(result$exists))
+})
+
+
+test_that("get_fs_subdir retrieves value from R option", {
+  local_fs_unset()
+
+  withr::local_options(freesurfer.subj_dir = "/mock/path/from/option")
+  result <- get_fs_subdir()
+  expect_equal(result$value, "/mock/path/from/option")
+  expect_equal(result$source, "getOption")
+  expect_false(result$exists) # Since this is a mock path
+})
+
+test_that("get_fs_subdir retrieves value from environment variable", {
+  local_fs_unset()
+
+  withr::local_envvar(SUBJECTS_DIR = "/mock/path/from/env")
+  result <- get_fs_subdir()
+  expect_equal(result$value, "/mock/path/from/env")
+  expect_equal(result$source, "Sys.getenv")
+  expect_false(result$exists) # Since this is a mock path
+})
+
+test_that("get_fs_subdir retrieves value from default fs_dir() + '/subjects'", {
+  local_fs_unset()
+
+  mock_fs_dir <- withr::local_tempdir()
+  local_mocked_bindings(
+    get_fs_home = function() {
+      list(
+        value = mock_fs_dir,
+        source = "Default",
+        exists = TRUE
+      )
+    }
+  )
+
+  mock_subjects_dir <- file.path(mock_fs_dir, "subjects")
+  dir.create(mock_subjects_dir)
+
+  result <- get_fs_subdir()
+  expect_equal(result$value, mock_subjects_dir)
+  expect_equal(result$source, "fs_dir()")
+  expect_true(result$exists) # Since the directory was created
+})
+
+test_that("get_fs_subdir handles missing values gracefully", {
+  local_fs_unset()
+
+  local_mocked_bindings(
+    get_fs_home = function() {
+      list(
+        value = NA,
+        source = NA,
+        exists = FALSE
+      )
+    }
+  )
+
+  result <- get_fs_subdir()
+  expect_true(is.na(result$value))
+  expect_true(is.na(result$source))
+  expect_false(result$exists)
+})
