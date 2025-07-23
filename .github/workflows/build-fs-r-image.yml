@@ -10,7 +10,7 @@ on:
       fs_version:
         description: "FreeSurfer version"
         required: true
-        default: "7.4.1"
+        default: "8.0.0"
       push:
         description: "Push image to GitHub Container Registry?"
         required: true

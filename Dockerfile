@@ -1,57 +1,48 @@
-ARG R_VERSION="4.4.1"
+# Stage 1: FreeSurfer installation
+FROM debian:bullseye-slim AS freesurfer-base
+ARG FS_VERSION=8.0.0
 
-# Start with the Rocker R-version image
-FROM rocker/r-ver:${R_VERSION}
+# Install necessary dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    wget \
+    gnupg \
+    ca-certificates \
+    build-essential \
+    libxt-dev \
+    libglu1-mesa-dev \
+    curl
 
 # Set environment variables for FreeSurfer
-ENV FREESURFER_HOME=/opt/freesurfer
-# FIX TYPO HERE: FREESURSER_HOME -> FREESURFER_HOME
-ENV PATH="${PATH}:${FREESURFER_HOME}/bin:${FREESURFER_HOME}/mni/bin"
-ENV SUBJECTS_DIR="${FREESURFER_HOME}/subjects"
-ENV MNI_DIR="${FREESURFER_HOME}/mni"
+ENV FREESURFER_HOME=/usr/local/freesurfer
+ENV SUBJECTS_DIR=/usr/local/freesurfer/subjects
+ENV FS_LICENSE=/usr/local/freesurfer/license.txt
 
-# Install system dependencies for FreeSurfer
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    build-essential \
-    libgomp1 \
-    tcsh \
-    libjpeg-dev \
-    libtiff-dev \
-    libpng-dev \
-    libglu1-mesa \
-    libsm6 \
-    libice6 \
-    libxrender1 \
-    libxtst6 \
-    libxi6 \
-    libxmu6 \
-    libxxf86vm1 \
-    libxft2 \
-    libfreetype6 \
-    libgl1 \
-    libfontconfig1 \
-    libglu1-mesa-dev \
-    wget \
-    unzip \
-    ca-certificates \
-    software-properties-common && \
+# Download and install FreeSurfer using the deb package
+RUN wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/freesurfer_ubuntu20-${FS_VERSION}_amd64.deb \
+    -O freesurfer.deb && \
+    apt-get install -y ./freesurfer.deb && \
+    rm freesurfer.deb
+
+# Stage 2: Main image for specific R version
+FROM freesurfer-base AS r-freesurfer
+ARG R_VERSION=4.2.0
+
+# Install R
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3F32EE77E331692F && \
+    echo "deb http://cran.r-project.org/bin/linux/debian bullseye-cran40/" > /etc/apt/sources.list.d/cran.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends r-base=${R_VERSION}* && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Verify installations
+RUN R --version && \
+    freeview --version
 
-# === FreeSurfer Installation ===
-ARG FS_VERSION="7.4.1" 
-RUN mkdir -p /opt/freesurfer_downloads && \
-    wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/freesurfer-linux-ubuntu22_amd64-${FS_VERSION}.tar.gz -O /opt/freesurfer_downloads/freesurfer.tar.gz && \
-    tar -xzf /opt/freesurfer_downloads/freesurfer.tar.gz -C /opt && \
-    mv /opt/freesurfer-linux-ubuntu22_amd64-${FS_VERSION} /opt/freesurfer && \
-    rm -rf /opt/freesurfer_downloads && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Set working directory
+WORKDIR /data
 
-RUN mkdir -p ${FREESURFER_HOME}
-RUN touch ${FREESURFER_HOME}/.license
-WORKDIR /app
-
-RUN R -e "install.packages(c('devtools', 'pak'), repos = 'https://cloud.r-project.org')"
-
+# Expose necessary ports and set the default command
+EXPOSE 8080
+CMD ["R"]

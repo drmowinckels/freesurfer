@@ -21,4 +21,3 @@ revdep/
 man-roxygen
 ^data-raw$
 Dockerfile
-*docker*
