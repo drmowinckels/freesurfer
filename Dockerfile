@@ -12,7 +12,8 @@ RUN apt-get update && \
     libxt-dev \
     libglu1-mesa-dev \
     curl \
-    language-pack-en
+    locales \
+    locales-all
 
 # Set environment variables for FreeSurfer
 ENV FREESURFER_HOME=/usr/local/freesurfer
