@@ -62,8 +62,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { r: "latest", fs: "latest" }
-          - { r: "3.5.0", fs: "latest" }
+          - { r: "4.5.0", fs: "8.0.0" }
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

@@ -7,7 +7,6 @@
 get_fs(bin_app = c("bin", "mni/bin", ""))
 }
 \arguments{
-<<<<<<< HEAD
 \item{bin_app}{\link{character} A vector of options for the binary application directory.
 Possible options include:
 \itemize{
@@ -15,11 +14,6 @@ Possible options include:
 \item \code{"mni/bin"}: Includes MNI initialization.
 \item \code{""}: Base directory with no specific subdirectories.
 }}
-=======
-\item{bin_app}{Should \code{bin} be added to the freesurfer path?
-All executables are assumed to be in \code{FREESURFER_HOME/bin/}.  If not, and
-\code{bin_app = ""}, they will be assumed to be in \code{FREESURFER_HOME/}.}
->>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
 }
 \value{
 \link{character} A bash command string that includes environment setup for FreeSurfer.
@@ -28,7 +22,6 @@ throws an error or issues a warning. On success, the returned string can be used
 in shell operations to load the FreeSurfer environment.
 }
 \description{
-<<<<<<< HEAD
 This function generates a bash command string to set up the environment for using FreeSurfer.
 It ensures the required FreeSurfer installation, license, and environment setup files are
 validated and included in the command string. The function handles different FreeSurfer
@@ -38,28 +31,12 @@ the MNI environment if required.
 \examples{
 \dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Generate a shell command to set up FreeSurfer with the default `bin`
-cmd <- get_fs(bin_app = "bin")
-print(cmd)
+get_fs(bin_app = "bin")
 
 # Generate a shell command to include MNI environment setup
-cmd_mni <- get_fs(bin_app = "mni/bin")
-print(cmd_mni)
+get_fs(bin_app = "mni/bin")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=get_fs_home]{get_fs_home()}}, \code{\link[=get_fs_license]{get_fs_license()}}, \code{\link[=get_fs_output]{get_fs_output()}}
-=======
-Finds the Freesurfer from system environment or \code{getOption("freesurfer.path")}
-for location of Freesurfer functions
-}
-\note{
-This will use \code{Sys.getenv("FREESURFER_HOME")} before \code{getOption("freesurfer.path")}.
-If the directory is not found for Freesurfer in \code{Sys.getenv("FreesurferDIR")} and
-\code{getOption("freesurfer.path")}, it will try the default directory \code{/usr/local/freesurfer}.
-}
-\examples{
-\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-get_fs()
-\dontshow{\}) # examplesIf}
->>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
 }

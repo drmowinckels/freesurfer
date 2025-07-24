@@ -26,11 +26,7 @@ read_fs_label = function(file) {
   n_lines = as.numeric(header[2])
   header = header[-c(1:2)]
   if (length(header) != n_lines) {
-<<<<<<< HEAD
     cli::cli_warn("Number of lines do not match file specification! ")
-=======
-    warning("Number of lines do not match file specification! ")
->>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
   }
   ss = strsplit(header, " ")
   ss = lapply(ss, function(x) {

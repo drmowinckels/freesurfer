@@ -21,15 +21,15 @@ This Dockerfile can be used locally to create a Docker image that includes both 
 To build the Docker image, you can use the following command:
 
 ```sh
-R_VERSION=3.5.0
-FS_VERSION=8.0.0
+rver=4.0.0
+fsver=8.0.0
 
 docker buildx build \
   --platform linux/amd64 \
   --file .github/setup/Dockerfile \
-  --build-arg FS_VERSION=${FS_VERSION} \
-  --build-arg R_VERSION=${R_VERSION} \
-  -t r-freesurfer:r_${R_VERSION}-fs_${FS_VERSION} .
+  --build-arg FS_VERSION=${fsver} \
+  --build-arg R_VERSION=${rver} \
+  -t r-freesurfer:r_${rver}-fs_${fsver} .
 ```
 
 To run the Docker container, you can use the following command:
@@ -37,6 +37,6 @@ To run the Docker container, you can use the following command:
 ```sh
 docker run --rm -it \
   -v /path/to/your/data:/data \
-  r-freesurfer:r${R_VERSION}-fs_${FS_VERSION} \
+  r-freesurfer:r${rver}-fs_${fsver} \
   bash
 ```

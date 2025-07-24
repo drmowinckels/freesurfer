@@ -30,7 +30,6 @@ Imports:
 Suggests:
     knitr,
     oro.nifti (>= 0.7),
-    pander,
     rgl,
     rmarkdown,
     testthat (>= 3.0.0),

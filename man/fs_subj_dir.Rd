@@ -10,16 +10,11 @@ fs_subj_dir()
 Character path to the Freesurfer subjects directory.
 }
 \description{
-<<<<<<< HEAD
 Finds the \code{SUBJECTS_DIR} from system environment or
 \code{getOption("freesurfer.subj_dir")} and returns its value.
-=======
-Finds the SUBJECTS_DIR from system environment or
-\code{getOption("fs.subj_dir")} for subjects dir
->>>>>>> a9fbf4b (use roxygen @examplesIf for tests)
 }
 \examples{
-\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-fs_subj_dir()
-\dontshow{\}) # examplesIf}
+if (have_fs()) {
+   fs_subj_dir()
+}
 }
