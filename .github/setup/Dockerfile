@@ -23,6 +23,7 @@ RUN apt-get update && \
 RUN echo "deb http://archive.ubuntu.com/ubuntu focal main universe" > /etc/apt/sources.list.d/focal.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
+    libc6-dev \
     libncurses5 \
     libffi7 \
     libc6=2.31-0ubuntu9.9 && \
