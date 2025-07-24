@@ -50,20 +50,7 @@ RUN freeview --version
 
 # Stage 2: Final Image with R
 FROM freesurfer-base AS freesurfer-r
-
-# Reuse environment variables
-ENV FREESURFER_HOME=/usr/local/freesurfer
-ENV SUBJECTS_DIR=${FREESURFER_HOME}/subjects
-ENV LC_ALL=en_US.UTF-8
-ENV LANG=en_US.UTF-8
-ENV TZ=UTC
-
-## Set a default user as in the base FreeSurfer stage
-RUN useradd -s /bin/bash -m docker \
-    && usermod -a -G staff docker
-
-## This was not needed before but we need it now
-ENV DEBIAN_FRONTEND=noninteractive
+ARG R_VERSION=4.3.1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -83,10 +70,12 @@ RUN wget -q -O - https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.as
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         littler \
-        r-base \
-        r-base-dev \
-        r-recommended \
         r-cran-docopt \
+        r-cran-littler \
+		r-base=${R_VERSION}-* \
+		r-base-dev=${R_VERSION}-* \
+        r-base-core=${R_VERSION}-* \
+		r-recommended=${R_VERSION}-* \
     && chown root:staff "/usr/local/lib/R/site-library" \
     && chmod g+ws "/usr/local/lib/R/site-library" \
     && ln -s /usr/lib/R/site-library/littler/examples/install.r /usr/local/bin/install.r \
