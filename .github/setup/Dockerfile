@@ -1,5 +1,5 @@
 # Stage 1: FreeSurfer Base
-FROM ubuntu:jammy AS freesurfer-base
+FROM ubuntu:22.04 AS freesurfer-base
 ARG FS_VERSION=8.0.0
 
 ## Set a default user. Available via runtime flag `--user docker`
@@ -23,6 +23,11 @@ RUN apt-get update \
         gnupg \
         curl \
         ca-certificates \
+        build-essential \
+        libxt-dev \
+        libglu1-mesa-dev \
+        libncurses6 \
+        libffi8 \
         locales \
         locales-all
 
@@ -39,7 +44,7 @@ ENV FREESURFER_HOME=/usr/local/freesurfer
 ENV SUBJECTS_DIR=${FREESURFER_HOME}/subjects
 
 # Download and install FreeSurfer
-RUN wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/freesurfer_ubuntu20-${FS_VERSION}_amd64.deb -O freesurfer.deb \
+RUN wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/freesurfer_ubuntu22-${FS_VERSION}_amd64.deb -O freesurfer.deb \
     && apt-get install -y ./freesurfer.deb \
     && rm freesurfer.deb
 
@@ -49,14 +54,6 @@ RUN freeview --version
 # Stage 2: Final Image with R
 FROM freesurfer-base AS freesurfer-r
 ARG R_VERSION=4.3.1
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        build-essential \
-        libxt-dev \
-        libglu1-mesa-dev \
-        libncurses6 \
-        libffi8 
 
 # Add R-related repositories
 RUN wget -q -O - https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
