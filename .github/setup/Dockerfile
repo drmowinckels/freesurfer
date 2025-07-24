@@ -38,11 +38,9 @@ ENV TZ=UTC
 ENV FREESURFER_HOME=/usr/local/freesurfer
 ENV SUBJECTS_DIR=${FREESURFER_HOME}/subjects
 
-# Download FreeSurfer
-RUN wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/freesurfer_ubuntu20${FS_VERSION}_amd64.deb -O freesurfer.deb 
-
-# Install FreeSurfer
-RUN apt-get install -y ./freesurfer.deb \
+# Download and install FreeSurfer
+RUN wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/freesurfer_ubuntu20-${FS_VERSION}_amd64.deb -O freesurfer.deb \
+    && apt-get install -y ./freesurfer.deb \
     && rm freesurfer.deb
 
 # Verify FreeSurfer installation
