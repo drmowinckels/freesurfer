@@ -15,11 +15,25 @@ RUN apt-get update && \
     libglu1-mesa-dev \
     curl \
     locales \
-    locales-all \
-    libncurses5 \
-    libffi7 \
-    libc6 && \
+    locales-all && \
     apt-get clean
+
+# Install dependencies based on Ubuntu version
+RUN head -n 1 /etc/os-release && \
+    if grep -q 'Ubuntu 20' /etc/os-release; then \
+        apt-get install -y --no-install-recommends \
+        libncurses5 \
+        libffi7 && \
+        apt-get clean; \
+    elif grep -q 'Ubuntu 22' /etc/os-release || grep -q 'Ubuntu 24' /etc/os-release; then \
+        apt-get install -y --no-install-recommends \
+        libncurses6 \
+        libffi8 && \
+        apt-get clean; \
+    else \
+        echo "Unsupported OS version" && exit 1; \
+    fi
+
 
 # Set environment variables for FreeSurfer
 ENV FREESURFER_HOME=/usr/local/freesurfer
