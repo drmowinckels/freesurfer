@@ -128,7 +128,7 @@ jobs:
 
       - name: Archive Logs (Docker-based failure)
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: r-cmd-check-logs
           path: /workspace/*.Rcheck
