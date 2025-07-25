@@ -8,10 +8,9 @@
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Character or nifti depending on \code{retimg}
 #' @export
-#' @examples \dontrun{
-#' if (have_fs()){
-#'     mri_watershed("/path/to/T1.nii.gz")
-#' }
+#' @examples
+#' \dontrun{
+#' mri_watershed("/path/to/T1.nii.gz")
 #' }
 mri_watershed = function(file, outfile = NULL, retimg = TRUE, opts = "", ...) {
   res = fs_cmd(

@@ -26,8 +26,6 @@ from an image, usually for skull stripping.
 }
 \examples{
 \dontrun{
-if (have_fs()){
-    mri_watershed("/path/to/T1.nii.gz")
-}
+mri_watershed("/path/to/T1.nii.gz")
 }
 }

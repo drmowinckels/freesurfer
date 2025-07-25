@@ -21,7 +21,7 @@ Reads in a surface file from Freesurfer and
 converts it into triangles
 }
 \examples{
-if (have_fs()) {
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 infile = file.path(fs_subj_dir(),
                    "bert", "surf", "rh.pial")
 right_triangles = surface_to_triangles(infile = infile)
@@ -48,5 +48,5 @@ if (requireNamespace("rgl", quietly = TRUE)) {
   rgl::triangles3d(right_triangles,
   color = rainbow(nrow(right_triangles)))
 }
-}
+\dontshow{\}) # examplesIf}
 }

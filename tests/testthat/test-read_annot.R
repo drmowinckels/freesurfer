@@ -9,10 +9,6 @@
 #' @param include_colortable Logical. Whether to include a color table in the file.
 #'
 #' @return Nothing. Writes a file at the specified path.
-#' @export
-#' @examples
-#' temp_file <- tempfile(fileext = ".annot")
-#' write_annotation(temp_file, num_vertices = 5, include_colortable = TRUE)
 mock_annotation <- function(path, num_vertices, include_colortable = TRUE) {
   ff <- file(path, "wb")
   on.exit(close(ff))

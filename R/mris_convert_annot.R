@@ -7,8 +7,7 @@
 #'
 #' @return Result of \code{\link{mris_convert}}
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'  bert_dir = file.path(fs_subj_dir(), "bert")
 #'  gii_file = mris_convert_annot(
 #'  infile = file.path(bert_dir, "surf", "lh.white"),
@@ -20,7 +19,6 @@
 #'  annot = gii_file,
 #'  ext = ".gii"
 #'  )
-#' }
 mris_convert_annot = function(
   annot,
   opts = "",

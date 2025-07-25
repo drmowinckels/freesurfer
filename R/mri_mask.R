@@ -8,12 +8,10 @@
 #' @param ... additional arguments passed to \code{\link{fs_cmd}}.
 #' @return Character or nifti depending on \code{retimg}
 #' @export
-#' @examples
-#' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-#'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-#'    mask = img > 1
-#'    res = mri_mask(img, mask)
-#' }
+#' @examplesIf have_fs()
+#' img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
+#' mask = img > 1
+#' res = mri_mask(img, mask)
 mri_mask = function(file, mask, outfile = NULL, retimg = TRUE, opts = "", ...) {
   mask = checkimg(mask)
 

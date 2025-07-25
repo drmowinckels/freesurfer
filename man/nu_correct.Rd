@@ -26,8 +26,6 @@ to correct for non-uniformity
 }
 \examples{
 \dontrun{
-if (have_fs()){
-    nu_correct("/path/to/T1.nii.gz")
-}
+nu_correct("/path/to/T1.nii.gz")
 }
 }

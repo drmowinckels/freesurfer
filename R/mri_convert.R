@@ -6,11 +6,9 @@
 #' @param ... Additional arguments to pass to \code{\link{fs_cmd}}
 #' @return Result of \code{system} command
 #' @export
-#' @examples
-#' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-#'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-#'    res = mri_convert(img, outfile = temp_file(fileext = ".mgz"))
-#' }
+#' @examplesIf have_fs()
+#' img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
+#' res = mri_convert(img, outfile = temp_file(fileext = ".mgz"))
 mri_convert = function(
   file,
   outfile,

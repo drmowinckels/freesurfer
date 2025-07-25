@@ -5,11 +5,9 @@
 #' paths and options are determined.
 #'
 #' @export
-#' @examples
-#' \dontrun{
+#' @examplesIf have_fs()
 #' # Report all Freesurfer settings
 #' fs_sitrep()
-#' }
 fs_sitrep <- function() {
   cli::cli_h2("Freesurfer Setup Report")
 

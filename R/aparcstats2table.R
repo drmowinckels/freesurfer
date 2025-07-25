@@ -135,12 +135,10 @@ aparcstats2table = function(
   ###########################
   # Add the Subjects DIR Stuff to the command first
   ###########################
-  cmd = paste0(get_fs(), "aparcstats2table")
-  cmd = paste0(cmd_pre, cmd)
+  cmd = paste0(cmd_pre, get_fs(), "aparcstats2table")
 
   args = paste(args, collapse = " ")
-  cmd = paste(cmd, args)
-  cmd = paste(cmd, opts)
+  cmd = paste(cmd, args, opts)
 
   run_check_fs_cmd(cmd = cmd, outfile = outfile, verbose = verbose, ...)
 
@@ -157,3 +155,75 @@ aparcstats2table = function(
 aparcstats2table.help = function() {
   fs_help("aparcstats2table", help.arg = "--help")
 }
+
+# aparcstats2table <- function(
+#   subjects,
+#   outfile = NULL,
+#   hemi = c("lh", "rh"),
+#   measure = c(
+#     "area",
+#     "volume",
+#     "thickness",
+#     "thicknessstd",
+#     "meancurv",
+#     "gauscurv",
+#     "foldind",
+#     "curvind"
+#   ),
+#   sep = c("tab", "space", "comma", "semicolon"),
+#   parc = c("aparc", "aparc.a2009s"),
+#   skip = FALSE,
+#   subj_dir = NULL,
+#   opts = "",
+#   verbose = get_fs_verbosity(),
+#   ...
+# ) {
+#   # Validation
+#   stopifnot(length(subjects) > 0, is.character(subjects))
+
+#   # Argument Mapping
+#   sep_map <- list(
+#     tab = list(ext = ".tsv", delim = "\t"),
+#     space = list(ext = ".txt", delim = " "),
+#     comma = list(ext = ".csv", delim = ","),
+#     semicolon = list(ext = ".csv", delim = ";")
+#   )
+#   sep_values <- sep_map[[match.arg(sep)]]
+#   ext <- sep_values$ext
+#   sep <- sep_values$delim
+
+#   # Construct Command Arguments
+#   command_args <- c(
+#     paste0("--hemi ", match.arg(hemi)),
+#     paste0("--subjects ", paste(subjects, collapse = " ")),
+#     paste0("--delimiter ", sep),
+#     paste0("--parc ", match.arg(parc)),
+#     if (verbose) "--debug",
+#     paste0("--measure ", match.arg(measure)),
+#     if (skip) "--skip",
+#     paste0(
+#       "--tablefile ",
+#       if (is.null(outfile)) temp_file(fileext = ext) else outfile
+#     )
+#   )
+
+#   # Environmental Configurations
+#   if (!is.null(subj_dir)) {
+#     withr::local_envvar(SUBJECTS_DIR = normalizePath(subj_dir))
+#   }
+
+#   # Run Command
+#   cmd <- paste(
+#     get_fs(),
+#     "aparcstats2table",
+#     paste(command_args, collapse = " "),
+#     opts
+#   )
+#   if (verbose) {
+#     message("Executing Command: ", cmd)
+#   }
+#   run_check_fs_cmd(cmd = cmd, outfile = outfile, verbose = verbose, ...)
+
+#   attr(outfile, "separator") <- sep
+#   return(outfile)
+# }

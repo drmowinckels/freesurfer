@@ -9,10 +9,9 @@
 #' @return Object of class nifti depending on \code{retimg}
 #' @importFrom neurobase parse_img_ext readnii
 #' @export
-#' @examples \dontrun{
-#' if (have_fs()){
-#'     nu_correct("/path/to/T1.nii.gz")
-#' }
+#' @examples
+#' \dontrun{
+#' nu_correct("/path/to/T1.nii.gz")
 #' }
 nu_correct = function(
   file,

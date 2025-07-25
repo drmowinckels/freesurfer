@@ -23,10 +23,8 @@ This function calls \code{mris_euler_number} to
 calculate the Euler Number
 }
 \examples{
-\dontrun{
-if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-   img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-   res = mris_euler_number(img, outfile = temp_file(fileext = ".mgz"))
-}
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
+res = mris_euler_number(img, outfile = temp_file(fileext = ".mgz"))
+\dontshow{\}) # examplesIf}
 }

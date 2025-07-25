@@ -26,19 +26,14 @@ This function reads output from a Freesurfer table command,
 e.g. \code{aparcstats2table}, \code{asegstats2table}
 }
 \examples{
-if (have_fs()) {
-   outfile = aparcstats2table(subjects = "bert",
-                    hemi = "lh",
-                    meas = "thickness")
-   df = read_fs_table(outfile)
-   seg_outfile = asegstats2table(subjects = "bert", meas = "mean")
-   df_seg = read_fs_table(seg_outfile)
-}
-\dontrun{
-### using the pipe
-if (requireNamespace("magrittr", quietly = TRUE)) {
-df_seg = asegstats2table(subjects = "bert", meas = "mean") \%>\%
-            read_fs_table
-            }
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+outfile = aparcstats2table(
+   subjects = "bert",
+   hemi = "lh",
+   meas = "thickness"
+)
+df = read_fs_table(outfile)
+seg_outfile = asegstats2table(subjects = "bert", meas = "mean")
+df_seg = read_fs_table(seg_outfile)
+\dontshow{\}) # examplesIf}
 }

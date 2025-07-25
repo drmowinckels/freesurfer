@@ -28,7 +28,9 @@
 #' - `opts` and `frontopts` let you define custom options fielded before or after the file inputs.
 #' - If opts_after_outfile is `TRUE`, the `opts` string will be placed after the output file in the command.
 #'
-#' @examplesIf interactive() && have_fs()
+#' @examples
+#' \dontrun{
+#'
 #' # Basic usage
 #' fs_cmd(
 #'   func = "mri_convert",
@@ -51,7 +53,7 @@
 #'   file = "input.mgz",
 #'   retimg = TRUE
 #' )
-#'
+#' }
 #' @importFrom neurobase checkimg check_outfile readnii nii.stub
 #' @importFrom cli cli_warn cli_code
 #' @export

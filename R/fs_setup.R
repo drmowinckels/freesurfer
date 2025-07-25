@@ -110,12 +110,10 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 #' @return Character path to the Freesurfer home directory.
 #' @aliases freesurfer_dir
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'  freesurferdir()
 #'  freesurfer_dir()
 #'  fs_dir()
-#' }
 freesurferdir = function() {
   get_fs_home()
 }
@@ -134,10 +132,8 @@ fs_dir = freesurferdir
 #' `getOption("freesurfer.subj_dir")` and returns its value.
 #' @return Character path to the Freesurfer subjects directory.
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'    fs_subj_dir()
-#' }
 fs_subj_dir = function() {
   get_fs_subdir()
 }
@@ -174,60 +170,4 @@ fs_imgext = function() {
     "nii" = ".nii"
   )
   return(ext)
-}
-
-
-#' @title Determine Freesurfer Subjects Directory
-#' @description Finds the SUBJECTS_DIR from system environment or
-#' \code{getOption("fs.subj_dir")} for subjects dir
-#' @return SUBJECTS_DIR, such as \code{${FREESURFER_HOME}/subjects}
-#'
-#' @export
-#' @examplesIf have_fs()
-#' fs_subj_dir()
-fs_subj_dir = function() {
-  fs_out = Sys.getenv("SUBJECTS_DIR")
-  if (fs_out == "") {
-    fs_out = getOption("fs.subj_dir")
-  }
-  if (is.null(fs_out)) {
-    warning(
-      "SUBJECTS_DIR not set, setting to ",
-      paste0("file.path(set_fs_subj_dir(), 'subjects')")
-    )
-    res = suppressWarnings(try(
-      set_fs_subj_dir(),
-      silent = TRUE
-    ))
-    if (inherits(res, "try-error")) {
-      fs_out = NA
-    } else {
-      fs_out = res
-    }
-
-    # fs_out = file.path(fs_dir(), "subjects")
-  }
-  if (!is.na(fs_out)) {
-    if (fs_out == "") {
-      fs_out = NA
-    }
-  }
-  return(fs_out)
-}
-
-#' @title Set Freesurfer Subjects Directory
-#' @description Sets the SUBJECTS_DIR variable in the system environment or
-#' \code{options("fs.subj_dir" = x)}
-#' @param x path to SUBJECTS_DIR defaults to \code{file.path(fs_dir(), "subjects")}
-#' @return No return value, called for side effects (`SUBJECTS_DIR`
-#' environment variable set, and `fs.subj_dir` option set)
-#'
-#' @export
-set_fs_subj_dir = function(x = file.path(fs_dir(), "subjects")) {
-  if (!file.exists(x)) {
-    stop("Path to set subj_dir does not exist, erroring out!")
-  }
-  options("fs.subj_dir" = x)
-  Sys.setenv("SUBJECTS_DIR" = x)
-  return(x)
 }

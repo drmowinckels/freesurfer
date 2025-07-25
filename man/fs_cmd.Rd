@@ -63,7 +63,8 @@ command-line arguments, and optionally process images in memory.
 }
 }
 \examples{
-\dontshow{if (interactive() && have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontrun{
+
 # Basic usage
 fs_cmd(
   func = "mri_convert",
@@ -86,5 +87,5 @@ img <- fs_cmd(
   file = "input.mgz",
   retimg = TRUE
 )
-\dontshow{\}) # examplesIf}
+}
 }

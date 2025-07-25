@@ -26,8 +26,6 @@ values of the image, with white matter voxels around 110.
 }
 \examples{
 \dontrun{
-if (have_fs()){
-    mri_normalize("/path/to/T1.nii.gz")
-}
+mri_normalize("/path/to/T1.nii.gz")
 }
 }

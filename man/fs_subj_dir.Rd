@@ -5,26 +5,16 @@
 \title{Determine Freesurfer Subjects Directory}
 \usage{
 fs_subj_dir()
-
-fs_subj_dir()
 }
 \value{
 Character path to the Freesurfer subjects directory.
-
-SUBJECTS_DIR, such as \code{${FREESURFER_HOME}/subjects}
 }
 \description{
 Finds the \code{SUBJECTS_DIR} from system environment or
 \code{getOption("freesurfer.subj_dir")} and returns its value.
-
-Finds the SUBJECTS_DIR from system environment or
-\code{getOption("fs.subj_dir")} for subjects dir
 }
 \examples{
-if (have_fs()) {
-   fs_subj_dir()
-}
 \dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-fs_subj_dir()
+   fs_subj_dir()
 \dontshow{\}) # examplesIf}
 }

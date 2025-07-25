@@ -15,7 +15,8 @@
 #' that contains the subject name), and the types of objects copied
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' library(freesurfer)
 #' label = "/Applications/freesurfer/subjects/bert/label/aparc.annot.a2009s.ctab"
 #' mri = c(
@@ -24,7 +25,11 @@
 #' stats = c("/Applications/freesurfer/subjects/bert/stats/lh.aparc.stats",
 #'           "/Applications/freesurfer/subjects/bert/stats/aseg.stats")
 #' surf = "/Applications/freesurfer/subjects/bert/surf/lh.thickness"
-#' touch = NULL
+#' construct_subj_dir(
+#'   label = label,
+#'   mri = mri,
+#'   stats = stats,
+#'   surf = surf)
 #' }
 construct_subj_dir = function(
   label = NULL,
@@ -33,7 +38,7 @@ construct_subj_dir = function(
   surf = NULL,
   touch = NULL,
   subj = NULL,
-  subj_root_dir = tempdir()
+  subj_root_dir = tempdir(check = TRUE)
 ) {
   if (is.null(subj)) {
     subj = basename(temp_file())

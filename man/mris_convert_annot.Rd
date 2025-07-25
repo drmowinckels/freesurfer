@@ -21,7 +21,7 @@ This function call \code{mris_convert},
 using the \code{--annot} option
 }
 \examples{
-if (have_fs()) {
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
  bert_dir = file.path(fs_subj_dir(), "bert")
  gii_file = mris_convert_annot(
  infile = file.path(bert_dir, "surf", "lh.white"),
@@ -33,5 +33,5 @@ if (have_fs()) {
  annot = gii_file,
  ext = ".gii"
  )
-}
+\dontshow{\}) # examplesIf}
 }

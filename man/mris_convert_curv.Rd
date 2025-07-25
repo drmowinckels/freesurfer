@@ -26,7 +26,7 @@ does curvature conversions and you may need to paste the prefix to get
 the correct filename, as seen in the example.
 }
 \examples{
-if (have_fs()) {
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
  bert_surf_dir = file.path(fs_subj_dir(), "bert", "surf")
  asc_file = mris_convert_curv(
  infile = file.path(bert_surf_dir, "lh.white"),
@@ -39,5 +39,5 @@ if (have_fs()) {
  res = read_fs_table(asc_file, header = FALSE)
  colnames(res) = c("index", "coord_1", "coord_2", "coord_3", "value")
  head(res)
-}
+\dontshow{\}) # examplesIf}
 }

@@ -12,22 +12,15 @@
 #' @return \code{data.frame} from the file
 #' @importFrom utils read.table
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    outfile = aparcstats2table(subjects = "bert",
-#'                     hemi = "lh",
-#'                     meas = "thickness")
-#'    df = read_fs_table(outfile)
-#'    seg_outfile = asegstats2table(subjects = "bert", meas = "mean")
-#'    df_seg = read_fs_table(seg_outfile)
-#' }
-#' \dontrun{
-#' ### using the pipe
-#' if (requireNamespace("magrittr", quietly = TRUE)) {
-#' df_seg = asegstats2table(subjects = "bert", meas = "mean") %>%
-#'             read_fs_table
-#'             }
-#' }
+#' @examplesIf have_fs()
+#' outfile = aparcstats2table(
+#'    subjects = "bert",
+#'    hemi = "lh",
+#'    meas = "thickness"
+#' )
+#' df = read_fs_table(outfile)
+#' seg_outfile = asegstats2table(subjects = "bert", meas = "mean")
+#' df_seg = read_fs_table(seg_outfile)
 read_fs_table = function(
   file,
   sep = NULL,

@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE
 )
-
 ```
 
 Freesurfer is a widely-used software package for processing and analyzing anatomical neuroimaging data [@fischl2012freesurfer].
@@ -68,6 +67,11 @@ This function provides useful information about which issues may be present rega
 Ideally all checks should pass with a green tick.
 Any red ticks or warnings should be addressed to ensure smooth use of this package.
 As you can see, there are several things to make sure are in order.
+As a minimun, you should have the  `freesurfer.home` option or `FREESURFER_HOME` variable set.
+If you see a red tick for `freesurfer.home` or `FREESURFER_HOME`, it means that the package cannot find your Freesurfer installation.
+However, as long as this is set and has a green tick, the remaining options are likely set to sensible defaults.
+
+### Setting Up Freesurfer Options
 
 When you're running R from a shell environment, `freesurfer` will automatically use the `FREESURFER_HOME` environment variable (which is typically set during Freesurfer installation) as the path to your Freesurfer directory.
 However, if you're using R through a graphical user interface (GUI) like RStudio, environment variables and paths might not be explicitly exported, meaning `FREESURFER_HOME` might not be set.

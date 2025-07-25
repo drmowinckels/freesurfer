@@ -6,14 +6,12 @@
 #'
 #' @return Result of \code{\link{mris_convert}}
 #' @export
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #'  bert_dir = file.path(fs_subj_dir(), "bert")
 #'  asc_file = mris_convert_normals(
 #'  infile = file.path(bert_dir, "surf", "lh.white")
 #'  )
 #' readLines(asc_file, n = 6)
-#' }
 mris_convert_normals = function(
   opts = "",
   ...

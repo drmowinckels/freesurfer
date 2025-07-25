@@ -7,12 +7,9 @@
 #' @param ... Additional arguments to pass to \code{\link{fs_cmd}}
 #' @return Result of \code{system} command
 #' @export
-#' @examples \dontrun{
-#' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
-#'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-#'    res = mris_euler_number(img, outfile = temp_file(fileext = ".mgz"))
-#' }
-#' }
+#' @examplesIf have_fs()
+#' img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
+#' res = mris_euler_number(img, outfile = temp_file(fileext = ".mgz"))
 mris_euler_number = function(
   file,
   outfile = NULL,
