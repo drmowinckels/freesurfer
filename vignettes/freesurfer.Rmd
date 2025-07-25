@@ -90,7 +90,19 @@ options(
     freesurfer.license = "/path/to/freesurfer/.license",
     freesurfer.output_type = "hdr",
     freesurfer.sh = "/path/to/freesurfer/FreeSurferEnv.sh",
-    freesurfer.mni_path = "/Applications/freesurfer/mni/Library/Perl/Updates/5.12.3"
+    freesurfer.mni_dir = "/Applications/freesurfer/mni/Library/Perl/Updates/5.12.3",
+    freesurfer.verbose = TRUE
+)
+
+# or using environment variables
+Sys.setenv(
+    FREESURFER_HOME = "/path/to/freesurfer",
+    FREESURFER_SUBJ_DIR = "/path/to/freesurfer/subjects",
+    FS_LICENSE = "/path/to/freesurfer/.license",
+    FSF_OUTPUT_FORMAT = "hdr",
+    FREESURFER_SH = "/path/to/freesurfer/FreeSurferEnv.sh",
+    MNI_DIR = "/Applications/freesurfer/mni/Library/Perl/Updates/5.12.3",
+    FREESURFER_VERBOSE = TRUE
 )
 ```
 
@@ -98,6 +110,7 @@ But if you are more comfortable using environment variables, you can also both h
 You can open these with functions like `usethis::edit_r_environ("user")` and `usethis::edit_r_environ("project)`
 
 Once the options are set, restart your R session, and try another `fs_sitrep()` which should now use the options you have provided.
+The `freesurfer.verbose` option is particularly useful for debugging, as it will print out additional information about the Freesurfer commands being executed.
 
 
 ### Check if Freesurfer is installed
@@ -126,7 +139,7 @@ If it's not explicitly set, it typically defaults to `nii.gz`.
 You can also retrieve the corresponding file extension with `fs_imgext()`.
 
 ```{r fs_output_example}
-get_fs_output()$value
+get_fs_output()
 fs_imgext()
 ```
 

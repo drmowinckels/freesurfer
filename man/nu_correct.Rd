@@ -4,7 +4,7 @@
 \alias{nu_correct}
 \title{Use Freesurfers Non-Uniformity Correction}
 \usage{
-nu_correct(file, mask = NULL, opts = "", verbose = TRUE, ...)
+nu_correct(file, mask = NULL, opts = "", verbose = get_fs_verbosity(), ...)
 }
 \arguments{
 \item{file}{(character) input filename}

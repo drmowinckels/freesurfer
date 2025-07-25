@@ -18,7 +18,7 @@ nu_correct = function(
   file,
   mask = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 ) {
   file = checkimg(file)
@@ -29,7 +29,7 @@ nu_correct = function(
   }
   # no.outfile = FALSE
   # if (is.null(outfile)) {
-  outfile = fs_tempfile(fileext = ".nii")
+  outfile = temp_file(fileext = ".nii")
   # no.outfile = TRUE
   # }
 
@@ -37,7 +37,7 @@ nu_correct = function(
   if (!(ext %in% c("nii", "mnc"))) {
     cli::cli_abort("outfile extension must be nii/nii.gz or mnc")
   }
-  tmpfile = fs_tempfile(fileext = ".mnc")
+  tmpfile = temp_file(fileext = ".mnc")
 
   opts = trimws(opts)
   if (!is.null(mask)) {
@@ -53,8 +53,6 @@ nu_correct = function(
     outfile = tmpfile,
     frontopts = opts,
     retimg = FALSE,
-    samefile = FALSE,
-    add_ext = FALSE,
     verbose = verbose,
     bin_app = "mni/bin",
     ...

@@ -27,7 +27,7 @@
 #' @seealso [get_fs_home()], [get_fs_license()], [get_fs_output()]
 #' @export
 get_fs = function(bin_app = c("bin", "mni/bin", "")) {
-  fs_home_info <- get_fs_home()
+  fs_home_info <- get_fs_home(simplify = FALSE)
   freesurferdir <- fs_home_info$value
   cmd <- NULL
 
@@ -38,7 +38,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   }
 
   # Check license
-  if (get_fs_license()$exists) {
+  if (!get_fs_license(simplify = FALSE)$exists) {
     cli::cli_warn(
       "Freesurfer is found, but no license file ({.path license.txt} or {.path .license}) found!"
     )
@@ -67,7 +67,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   }
 
   # Source FreeSurferEnv.sh
-  sourcer <- get_fs_source()
+  sourcer <- get_fs_source(simplify = FALSE)
 
   sh_file_cmd <- ifelse(
     sourcer$exists,
@@ -95,7 +95,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
     "",
     sh_file_cmd,
     "FSF_OUTPUT_FORMAT=",
-    get_fs_output()$value,
+    get_fs_output,
     "; ",
     "export FSF_OUTPUT_FORMAT; ",
     "${FREESURFER_HOME}/",
@@ -117,7 +117,7 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 #'  fs_dir()
 #' }
 freesurferdir = function() {
-  get_fs_home()$value
+  get_fs_home()
 }
 
 #' @rdname freesurferdir
@@ -139,7 +139,7 @@ fs_dir = freesurferdir
 #'    fs_subj_dir()
 #' }
 fs_subj_dir = function() {
-  get_fs_subdir()$value
+  get_fs_subdir()
 }
 
 #' @title Logical check if Freesurfer is accessible
@@ -150,11 +150,12 @@ fs_subj_dir = function() {
 #' @examples
 #' have_fs()
 have_fs = function(check_license = TRUE) {
-  fs_home <- get_fs_home()$exists
+  fs_home <- get_fs_home(simplify = FALSE)
   if (check_license) {
-    return(fs_home && get_fs_license()$exists)
+    lic <- get_fs_license(simplify = FALSE)
+    return(fs_home$exists && lic$exists)
   }
-  return(fs_home)
+  return(fs_home$exists)
 }
 
 
@@ -166,5 +167,67 @@ have_fs = function(check_license = TRUE) {
 #' @examples
 #' fs_imgext()
 fs_imgext = function() {
-  paste0(".", get_fs_output()$value)
+  ext = switch(
+    get_fs_output(),
+    "hdr" = ".hdr",
+    "nii.gz" = ".nii.gz",
+    "nii" = ".nii"
+  )
+  return(ext)
+}
+
+
+#' @title Determine Freesurfer Subjects Directory
+#' @description Finds the SUBJECTS_DIR from system environment or
+#' \code{getOption("fs.subj_dir")} for subjects dir
+#' @return SUBJECTS_DIR, such as \code{${FREESURFER_HOME}/subjects}
+#'
+#' @export
+#' @examplesIf have_fs()
+#' fs_subj_dir()
+fs_subj_dir = function() {
+  fs_out = Sys.getenv("SUBJECTS_DIR")
+  if (fs_out == "") {
+    fs_out = getOption("fs.subj_dir")
+  }
+  if (is.null(fs_out)) {
+    warning(
+      "SUBJECTS_DIR not set, setting to ",
+      paste0("file.path(set_fs_subj_dir(), 'subjects')")
+    )
+    res = suppressWarnings(try(
+      set_fs_subj_dir(),
+      silent = TRUE
+    ))
+    if (inherits(res, "try-error")) {
+      fs_out = NA
+    } else {
+      fs_out = res
+    }
+
+    # fs_out = file.path(fs_dir(), "subjects")
+  }
+  if (!is.na(fs_out)) {
+    if (fs_out == "") {
+      fs_out = NA
+    }
+  }
+  return(fs_out)
+}
+
+#' @title Set Freesurfer Subjects Directory
+#' @description Sets the SUBJECTS_DIR variable in the system environment or
+#' \code{options("fs.subj_dir" = x)}
+#' @param x path to SUBJECTS_DIR defaults to \code{file.path(fs_dir(), "subjects")}
+#' @return No return value, called for side effects (`SUBJECTS_DIR`
+#' environment variable set, and `fs.subj_dir` option set)
+#'
+#' @export
+set_fs_subj_dir = function(x = file.path(fs_dir(), "subjects")) {
+  if (!file.exists(x)) {
+    stop("Path to set subj_dir does not exist, erroring out!")
+  }
+  options("fs.subj_dir" = x)
+  Sys.setenv("SUBJECTS_DIR" = x)
+  return(x)
 }

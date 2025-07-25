@@ -7,9 +7,9 @@
 #' @return Object of class \code{nifti}
 #' @importFrom neurobase readnii
 #' @export
-readmgz = function(file, ...) {
+read_mgz = function(file, ...) {
   check_path(file)
-  outfile = fs_tempfile(fileext = ".nii.gz")
+  outfile = temp_file(fileext = ".nii.gz")
   dir.create(
     dirname(outfile),
     showWarnings = FALSE,
@@ -19,6 +19,6 @@ readmgz = function(file, ...) {
   readnii(outfile)
 }
 
-#' @rdname readmgz
+#' @rdname read_mgz
 #' @export
-readmgh = readmgz
+read_mgh = read_mgz

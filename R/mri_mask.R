@@ -24,7 +24,7 @@ mri_mask = function(file, mask, outfile = NULL, retimg = TRUE, opts = "", ...) {
     frontopts = opts,
     opts = mask,
     retimg = retimg,
-    samefile = FALSE,
+
     ...
   )
   return(res)

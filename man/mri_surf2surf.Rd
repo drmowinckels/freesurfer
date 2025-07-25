@@ -15,7 +15,7 @@ mri_surf2surf(
   sval = c("thickness"),
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 )
 }

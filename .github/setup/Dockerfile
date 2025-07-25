@@ -48,8 +48,7 @@ RUN wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}
     && apt-get install -y ./freesurfer.deb \
     && rm freesurfer.deb
 
-# Verify FreeSurfer installation
-RUN freeview --version
+CMD ["bash"]
 
 # Stage 2: Final Image with R
 FROM freesurfer-base AS freesurfer-r
@@ -67,10 +66,10 @@ RUN apt-get update \
         littler \
         r-cran-docopt \
         r-cran-littler \
-		r-base=${R_VERSION}-* \
-		r-base-dev=${R_VERSION}-* \
-        r-base-core=${R_VERSION}-* \
-		r-recommended=${R_VERSION}-* \
+		r-base=${R_VERSION} \
+		r-base-dev=${R_VERSION} \
+        r-base-core=${R_VERSION} \
+		r-recommended=${R_VERSION} \
     && chown root:staff "/usr/local/lib/R/site-library" \
     && chmod g+ws "/usr/local/lib/R/site-library" \
     && ln -s /usr/lib/R/site-library/littler/examples/install.r /usr/local/bin/install.r \

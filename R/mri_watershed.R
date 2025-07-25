@@ -20,7 +20,7 @@ mri_watershed = function(file, outfile = NULL, retimg = TRUE, opts = "", ...) {
     outfile = outfile,
     frontopts = opts,
     retimg = retimg,
-    samefile = FALSE,
+
     ...
   )
   return(res)

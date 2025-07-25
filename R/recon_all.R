@@ -16,7 +16,7 @@ recon_all <- function(
   infile = NULL,
   outdir = NULL,
   subjid = NULL,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = "-all",
   ...
 ) {

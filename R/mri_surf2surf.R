@@ -33,7 +33,7 @@ mri_surf2surf = function(
   sval = c("thickness"),
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 ) {
   ###########################
@@ -76,7 +76,7 @@ mri_surf2surf = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = fs_tempfile()
+    outfile = temp_file()
   }
   args = c(args, paste0("--tval ", outfile))
   outfile = file.path(dirname(outfile), paste0(xhemi, ".", basename(outfile)))

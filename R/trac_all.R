@@ -14,7 +14,7 @@ trac_all <- function(
   infile,
   outdir = NULL,
   subjid,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = ""
 ) {
   tracker(

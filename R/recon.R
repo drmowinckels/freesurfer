@@ -130,7 +130,7 @@ recon <- function(
   cortparc2 = TRUE,
   parcstats2 = TRUE,
   aparc2aseg = TRUE,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = ""
 ) {
   if (is.null(subjid)) {
@@ -200,6 +200,5 @@ recon <- function(
   if (verbose) {
     cli::cli_code(cmd)
   }
-  res = system(cmd)
-  return(res)
+  try_cmd(cmd)
 }

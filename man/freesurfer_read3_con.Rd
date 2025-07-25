@@ -20,10 +20,10 @@ returns the rotated value,
 for checking for other functions.
 }
 \examples{
-if (have_fs()) {
-   bert_dir = file.path(fs_subj_dir(), "bert", "surf")
-   file = file.path(bert_dir, "lh.thickness")
-   fid = file(file, open = "rb")
-   out = freesurfer_read3_con(file)
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+bert_dir = file.path(fs_subj_dir(), "bert", "surf")
+file = file.path(bert_dir, "lh.thickness")
+fid = file(file, open = "rb")
+out = freesurfer_read3_con(file)
+\dontshow{\}) # examplesIf}
 }

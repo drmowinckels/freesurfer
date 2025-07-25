@@ -18,11 +18,9 @@
 #' @return Character filename of output file, with the
 #' attribute of the separator
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    outfile = asegstats2table(subjects = "bert",
-#'                     meas = "mean")
-#' }
+#' @examplesIf have_fs()
+#' outfile = asegstats2table(subjects = "bert",
+#'   meas = "mean")
 asegstats2table = function(
   subjects = NULL,
   inputs = NULL,
@@ -32,7 +30,7 @@ asegstats2table = function(
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE
+  verbose = get_fs_verbosity()
 ) {
   if (is.null(subjects) & is.null(inputs)) {
     cli::cli_abort("Subjects or inputs must be specified!")
@@ -105,7 +103,7 @@ asegstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ext)
+    outfile = temp_file(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 
@@ -138,7 +136,7 @@ asegstats2table = function(
   if (verbose) {
     cli::cli_text(cmd)
   }
-  res = system(cmd)
+  res = try_cmd(cmd)
   fe_after = file.exists(outfile)
 
   if (res != 0 & !fe_after) {

@@ -19,7 +19,7 @@ mris_convert = function(
   outfile = NULL,
   ext = ".asc",
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 ) {
   ######################################################

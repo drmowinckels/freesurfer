@@ -21,7 +21,7 @@ setGeneric("checkmnc", function(file, ...) standardGeneric("checkmnc"))
 #' @export
 setMethod("checkmnc", "nifti", function(file, ...) {
   file = neurobase::checkimg(file, gzipped = FALSE, ...)
-  outfile = fs_tempfile(fileext = ".mnc")
+  outfile = temp_file(fileext = ".mnc")
   outfile = nii2mnc(file, outfile)
   return(outfile)
 })

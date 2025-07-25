@@ -13,7 +13,7 @@ tracker <- function(
   infile,
   outdir = NULL,
   subjid,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = ""
 ) {
   if (is.null(subjid)) {
@@ -46,6 +46,5 @@ tracker <- function(
   if (verbose) {
     cli::cli_code(cmd)
   }
-  res = system(cmd)
-  return(res)
+  try_cmd(cmd)
 }

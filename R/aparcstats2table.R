@@ -21,9 +21,10 @@
 #' @examplesIf have_fs()
 #' fs_subj_dir()
 #' outfile = aparcstats2table(
-#'    subjects = "bert",
-#'    hemi = "lh",
-#'    meas = "thickness")
+#'   subjects = "bert",
+#'   hemi = "lh",
+#'   meas = "thickness"
+#' )
 aparcstats2table = function(
   subjects,
   outfile = NULL,
@@ -43,7 +44,7 @@ aparcstats2table = function(
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 ) {
   ###########################
@@ -67,10 +68,10 @@ aparcstats2table = function(
 
   ext = switch(
     sep,
-    "tab" = ".txt",
+    "tab" = ".tsv",
     "space" = ".txt",
     "comma" = ".csv",
-    "semicolon" = ".txt"
+    "semicolon" = ".csv"
   )
   sep = switch(
     sep,
@@ -112,7 +113,7 @@ aparcstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = fs_tempfile(fileext = ext)
+    outfile = temp_file(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 

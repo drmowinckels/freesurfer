@@ -40,7 +40,7 @@ recon(
   cortparc2 = TRUE,
   parcstats2 = TRUE,
   aparc2aseg = TRUE,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = ""
 )
 }

@@ -15,7 +15,7 @@ aparcstats2table(
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 )
 }
@@ -60,8 +60,9 @@ convert parcellation statistics to a table
 \dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 fs_subj_dir()
 outfile = aparcstats2table(
-   subjects = "bert",
-   hemi = "lh",
-   meas = "thickness")
+  subjects = "bert",
+  hemi = "lh",
+  meas = "thickness"
+)
 \dontshow{\}) # examplesIf}
 }

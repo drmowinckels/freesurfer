@@ -30,7 +30,7 @@ nii2mnc = function(
   #                          overwrite = TRUE)
   # }
   if (is.null(outfile)) {
-    outfile = fs_tempfile(fileext = ".mnc")
+    outfile = temp_file(fileext = ".mnc")
   }
   out_ext = file_ext(tolower(outfile))
   if (out_ext != "mnc") {
@@ -41,8 +41,6 @@ nii2mnc = function(
     file = file,
     outfile = outfile,
     retimg = FALSE,
-    samefile = FALSE,
-    add_ext = FALSE,
     bin_app = "mni/bin",
     ...
   )

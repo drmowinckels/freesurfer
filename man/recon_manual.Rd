@@ -10,7 +10,7 @@
 \alias{autorecon3}
 \title{Reconstruction from Motion Correction to Skull Strip}
 \usage{
-recon_con1(infile, outdir = NULL, subjid, verbose = TRUE)
+recon_con1(infile, outdir = NULL, subjid, verbose = get_fs_verbosity())
 
 autorecon1(infile, outdir = NULL, subjid, verbose = TRUE)
 

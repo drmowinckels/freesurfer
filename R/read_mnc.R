@@ -6,9 +6,9 @@
 #' @return Object of class \code{nifti}
 #' @importFrom neurobase readnii
 #' @export
-readmnc = function(file) {
+read_mnc = function(file) {
   check_path(file)
-  outfile = fs_tempfile(fileext = ".nii.gz")
+  outfile = temp_file(fileext = ".nii.gz")
   mnc2nii(file, outfile = outfile)
   ret = readnii(outfile)
 

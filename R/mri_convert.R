@@ -9,7 +9,7 @@
 #' @examples
 #' if (have_fs() && requireNamespace("oro.nifti", quietly = TRUE)) {
 #'    img = oro.nifti::nifti(array(rnorm(5*5*5), dim = c(5,5,5)))
-#'    res = mri_convert(img, outfile = fs_tempfile(fileext = ".mgz"))
+#'    res = mri_convert(img, outfile = temp_file(fileext = ".mgz"))
 #' }
 mri_convert = function(
   file,
@@ -23,8 +23,6 @@ mri_convert = function(
     outfile = outfile,
     frontopts = opts,
     retimg = FALSE,
-    samefile = FALSE,
-    add_ext = FALSE,
     ...
   )
 }

@@ -17,7 +17,7 @@ reconner <- function(
   infile = NULL,
   outdir = NULL,
   subjid = NULL,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = "-all",
   force = FALSE
 ) {
@@ -84,6 +84,5 @@ reconner <- function(
   if (verbose) {
     cli::cli_code(cmd)
   }
-  res = system(cmd)
-  return(res)
+  try_cmd(cmd)
 }

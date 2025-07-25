@@ -22,7 +22,7 @@ mri_segment = function(
     outfile = outfile,
     frontopts = opts,
     retimg = retimg,
-    samefile = FALSE,
+
     ...
   )
   return(res)

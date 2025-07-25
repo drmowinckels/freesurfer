@@ -36,10 +36,10 @@ construct_subj_dir = function(
   subj_root_dir = tempdir()
 ) {
   if (is.null(subj)) {
-    subj = basename(fs_tempfile())
+    subj = basename(temp_file())
   }
   base_dir = file.path(subj_root_dir, subj)
-  dir.create(base_dir)
+  mkdir(base_dir)
 
   L = list(label = label, mri = mri, stats = stats, surf = surf, touch = touch)
   # REMOVE NULL
@@ -48,7 +48,7 @@ construct_subj_dir = function(
   type_names = fol_names = names(L)
   fol_names = file.path(base_dir, fol_names)
 
-  sapply(fol_names, dir.create)
+  sapply(fol_names, mkdir)
 
   res = mapply(
     function(y, fol) {
@@ -76,5 +76,11 @@ construct_subj_dir = function(
   res = unlist(res)
   stopifnot(all(res))
 
-  R = list(subj = subj, subj_dir = subj_root_dir, types = type_names)
+  invisible(
+    list(
+      subj = subj,
+      subj_dir = subj_root_dir,
+      types = type_names
+    )
+  )
 }
