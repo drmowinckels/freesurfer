@@ -8,10 +8,16 @@ on:
     branches:
       - main
       - master
+
 permissions: read-all
+
 concurrency:
   group: R-CMD-check-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  RGL_USE_NULL: "TRUE"
+
 jobs:
   R-CMD-check:
     strategy:
