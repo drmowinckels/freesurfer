@@ -63,7 +63,7 @@ jobs:
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
   R-CMD-check-fs:
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+   # if: ${{ github.event_name == 'workflow_dispatch' }}
     strategy:
       fail-fast: false
       matrix:
