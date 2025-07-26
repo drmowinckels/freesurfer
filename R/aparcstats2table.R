@@ -11,23 +11,20 @@
 #' @param skip (logical) if subject does not have parcellation,
 #' should the command skip that subject (\code{TRUE}) or error
 #' (\code{FALSE})
-#' @param subj_dir (character path) if a different subjects directory
-#' is to be used other than \code{SUBJECTS_DIR} from shell, it can be
-#' specified here.  Use with care as if the command fail, it may not reset
-#' the \code{SUBJECTS_DIR} back correctly after the error
-#' @param opts (character) additional options to \code{aparcstats2table}
-#' @param verbose (logical) print diagnostic messages
+#' @template subj_dir
+#' @template opts
+#' @template verbose
 #' @param ... Additional arguments to pass to \code{\link{system}}
 #' @return Character filename of output file, with the
 #' attribute of the separator
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    fs_subj_dir()
-#'    outfile = aparcstats2table(subjects = "bert",
-#'                     hemi = "lh",
-#'                     meas = "thickness")
-#' }
+#' @examplesIf have_fs()
+#' fs_subj_dir()
+#' outfile = aparcstats2table(
+#'   subjects = "bert",
+#'   hemi = "lh",
+#'   meas = "thickness"
+#' )
 aparcstats2table = function(
   subjects,
   outfile = NULL,
@@ -47,7 +44,7 @@ aparcstats2table = function(
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 ) {
   ###########################
@@ -71,10 +68,10 @@ aparcstats2table = function(
 
   ext = switch(
     sep,
-    "tab" = ".txt",
+    "tab" = ".tsv",
     "space" = ".txt",
     "comma" = ".csv",
-    "semicolon" = ".txt"
+    "semicolon" = ".csv"
   )
   sep = switch(
     sep,
@@ -116,7 +113,7 @@ aparcstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ext)
+    outfile = temp_file(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 
@@ -138,12 +135,10 @@ aparcstats2table = function(
   ###########################
   # Add the Subjects DIR Stuff to the command first
   ###########################
-  cmd = paste0(get_fs(), "aparcstats2table")
-  cmd = paste0(cmd_pre, cmd)
+  cmd = paste0(cmd_pre, get_fs(), "aparcstats2table")
 
   args = paste(args, collapse = " ")
-  cmd = paste(cmd, args)
-  cmd = paste(cmd, opts)
+  cmd = paste(cmd, args, opts)
 
   run_check_fs_cmd(cmd = cmd, outfile = outfile, verbose = verbose, ...)
 
@@ -160,3 +155,75 @@ aparcstats2table = function(
 aparcstats2table.help = function() {
   fs_help("aparcstats2table", help.arg = "--help")
 }
+
+# aparcstats2table <- function(
+#   subjects,
+#   outfile = NULL,
+#   hemi = c("lh", "rh"),
+#   measure = c(
+#     "area",
+#     "volume",
+#     "thickness",
+#     "thicknessstd",
+#     "meancurv",
+#     "gauscurv",
+#     "foldind",
+#     "curvind"
+#   ),
+#   sep = c("tab", "space", "comma", "semicolon"),
+#   parc = c("aparc", "aparc.a2009s"),
+#   skip = FALSE,
+#   subj_dir = NULL,
+#   opts = "",
+#   verbose = get_fs_verbosity(),
+#   ...
+# ) {
+#   # Validation
+#   stopifnot(length(subjects) > 0, is.character(subjects))
+
+#   # Argument Mapping
+#   sep_map <- list(
+#     tab = list(ext = ".tsv", delim = "\t"),
+#     space = list(ext = ".txt", delim = " "),
+#     comma = list(ext = ".csv", delim = ","),
+#     semicolon = list(ext = ".csv", delim = ";")
+#   )
+#   sep_values <- sep_map[[match.arg(sep)]]
+#   ext <- sep_values$ext
+#   sep <- sep_values$delim
+
+#   # Construct Command Arguments
+#   command_args <- c(
+#     paste0("--hemi ", match.arg(hemi)),
+#     paste0("--subjects ", paste(subjects, collapse = " ")),
+#     paste0("--delimiter ", sep),
+#     paste0("--parc ", match.arg(parc)),
+#     if (verbose) "--debug",
+#     paste0("--measure ", match.arg(measure)),
+#     if (skip) "--skip",
+#     paste0(
+#       "--tablefile ",
+#       if (is.null(outfile)) temp_file(fileext = ext) else outfile
+#     )
+#   )
+
+#   # Environmental Configurations
+#   if (!is.null(subj_dir)) {
+#     withr::local_envvar(SUBJECTS_DIR = normalizePath(subj_dir))
+#   }
+
+#   # Run Command
+#   cmd <- paste(
+#     get_fs(),
+#     "aparcstats2table",
+#     paste(command_args, collapse = " "),
+#     opts
+#   )
+#   if (verbose) {
+#     message("Executing Command: ", cmd)
+#   }
+#   run_check_fs_cmd(cmd = cmd, outfile = outfile, verbose = verbose, ...)
+
+#   attr(outfile, "separator") <- sep
+#   return(outfile)
+# }

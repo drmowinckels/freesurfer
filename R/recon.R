@@ -3,8 +3,8 @@
 #' implemented.
 #'
 #' @param infile Input filename (dcm or nii)
-#' @param outdir Output directory
-#' @param subjid subject id
+#' @template outdir
+#' @template subjid
 #' @param motioncor When there are multiple source volumes, this step will
 #' correct for small motions between them and then average them together.
 #' The input are the volumes found in file(s) mri/orig/XXX.mgz. The output
@@ -89,8 +89,8 @@
 #' @param cortparc2 see cortparc argument
 #' @param parcstats2 see cortparc2 argument
 #' @param aparc2aseg Maps the cortical labels from the automatic cortical parcellation (aparc) to the automatic segmentation volume (aseg). The result can be used as the aseg would.
-#' @param verbose print diagnostic messages
-#' @param opts Additional options
+#' @template verbose
+#' @template opts
 #'
 #' @return Result of \code{\link{system}}
 #' @export
@@ -130,7 +130,7 @@ recon <- function(
   cortparc2 = TRUE,
   parcstats2 = TRUE,
   aparc2aseg = TRUE,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = ""
 ) {
   if (is.null(subjid)) {
@@ -200,6 +200,5 @@ recon <- function(
   if (verbose) {
     cli::cli_code(cmd)
   }
-  res = system(cmd)
-  return(res)
+  try_cmd(cmd)
 }

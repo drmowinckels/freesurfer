@@ -8,12 +8,10 @@
 #'
 #' @return Numeric
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    bert_dir = file.path(fs_subj_dir(), "bert", "surf")
-#'    file = file.path(bert_dir, "lh.thickness")
-#'    out = freesurfer_read3(file)
-#' }
+#' @examplesIf have_fs()
+#' bert_dir = file.path(fs_subj_dir(), "bert", "surf")
+#' file = file.path(bert_dir, "lh.thickness")
+#' out = freesurfer_read3(file)
 freesurfer_read3 = function(file) {
   fid = file(file, open = "rb")
   b = as.integer(readBin(fid, 3, what = "raw", endian = "big"))
@@ -34,13 +32,11 @@ freesurfer_read3 = function(file) {
 #'
 #' @return Numeric
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    bert_dir = file.path(fs_subj_dir(), "bert", "surf")
-#'    file = file.path(bert_dir, "lh.thickness")
-#'    fid = file(file, open = "rb")
-#'    out = freesurfer_read3_con(file)
-#' }
+#' @examplesIf have_fs()
+#' bert_dir = file.path(fs_subj_dir(), "bert", "surf")
+#' file = file.path(bert_dir, "lh.thickness")
+#' fid = file(file, open = "rb")
+#' out = freesurfer_read3_con(file)
 freesurfer_read3_con = function(fid) {
   b = as.integer(readBin(fid, 3, what = "raw", endian = "big"))
   retval = bitwShiftL(b[1], 16) + bitwShiftL(b[2], 8) + b[3]
@@ -55,13 +51,11 @@ freesurfer_read3_con = function(fid) {
 #' @return Numeric vector
 #' @export
 #'
-#' @examples
-#' if (have_fs()) {
-#'    bert_dir = file.path(fs_subj_dir(), "bert", "surf")
-#'    file = file.path(bert_dir, "lh.thickness")
-#'    fid = file(file, open = "rb")
-#'    out = freesurfer_read_curv(file)
-#' }
+#' @examplesIf have_fs()
+#' bert_dir = file.path(fs_subj_dir(), "bert", "surf")
+#' file = file.path(bert_dir, "lh.thickness")
+#' fid = file(file, open = "rb")
+#' out = freesurfer_read_curv(file)
 freesurfer_read_curv = function(file) {
   fid = file(file, open = "rb")
   vnum = freesurfer_read3_con(fid)
@@ -91,11 +85,9 @@ freesurfer_read_curv = function(file) {
 #' @return List of length 2: vertices and faces are the elements
 #' @export
 #'
-#' @examples
-#' if (have_fs()) {
-#'    fname = file.path(fs_subj_dir(), "bert", "surf", "lh.inflated")
-#'    out = freesurfer_read_surf(fname)
-#' }
+#' @examplesIf have_fs()
+#' fname = file.path(fs_subj_dir(), "bert", "surf", "lh.inflated")
+#' out = freesurfer_read_surf(fname)
 freesurfer_read_surf = function(file) {
   fid = file(file, open = "rb")
 

@@ -40,16 +40,16 @@ recon(
   cortparc2 = TRUE,
   parcstats2 = TRUE,
   aparc2aseg = TRUE,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = ""
 )
 }
 \arguments{
 \item{infile}{Input filename (dcm or nii)}
 
-\item{outdir}{Output directory}
+\item{outdir}{Character, Path to output directory.}
 
-\item{subjid}{subject id}
+\item{subjid}{subject id, if NULL, the basename of the infile will be used}
 
 \item{motioncor}{When there are multiple source volumes, this step will
 correct for small motions between them and then average them together.
@@ -167,9 +167,9 @@ topology fixer will create the surface ?h.orig.}
 
 \item{aparc2aseg}{Maps the cortical labels from the automatic cortical parcellation (aparc) to the automatic segmentation volume (aseg). The result can be used as the aseg would.}
 
-\item{verbose}{print diagnostic messages}
+\item{verbose}{(logical) print diagnostic messages}
 
-\item{opts}{Additional options}
+\item{opts}{Character. Additional options to Freesurfer function.}
 }
 \value{
 Result of \code{\link{system}}

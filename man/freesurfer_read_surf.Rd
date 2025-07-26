@@ -18,8 +18,8 @@ the \code{surf/} directory
 from \code{recon-all}
 }
 \examples{
-if (have_fs()) {
-   fname = file.path(fs_subj_dir(), "bert", "surf", "lh.inflated")
-   out = freesurfer_read_surf(fname)
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+fname = file.path(fs_subj_dir(), "bert", "surf", "lh.inflated")
+out = freesurfer_read_surf(fname)
+\dontshow{\}) # examplesIf}
 }

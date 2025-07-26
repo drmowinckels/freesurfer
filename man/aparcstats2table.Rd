@@ -15,7 +15,7 @@ aparcstats2table(
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   ...
 )
 }
@@ -42,7 +42,7 @@ is to be used other than \code{SUBJECTS_DIR} from shell, it can be
 specified here.  Use with care as if the command fail, it may not reset
 the \code{SUBJECTS_DIR} back correctly after the error}
 
-\item{opts}{(character) additional options to \code{aparcstats2table}}
+\item{opts}{Character. Additional options to Freesurfer function.}
 
 \item{verbose}{(logical) print diagnostic messages}
 
@@ -57,10 +57,12 @@ This function calls \code{aparcstats2table} to
 convert parcellation statistics to a table
 }
 \examples{
-if (have_fs()) {
-   fs_subj_dir()
-   outfile = aparcstats2table(subjects = "bert",
-                    hemi = "lh",
-                    meas = "thickness")
-}
+\dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+fs_subj_dir()
+outfile = aparcstats2table(
+  subjects = "bert",
+  hemi = "lh",
+  meas = "thickness"
+)
+\dontshow{\}) # examplesIf}
 }

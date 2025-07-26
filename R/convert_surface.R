@@ -12,12 +12,10 @@
 #'
 #' @note This was adapted from the gist:
 #' \url{https://gist.github.com/mm--/4a4fc7badacfad874102}
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "rh.pial")
 #' res = convert_surface(infile = infile)
-#' }
 convert_surface = function(infile, ...) {
   ########
   # adapted from
@@ -65,8 +63,7 @@ convert_surface = function(infile, ...) {
 #' to the number of faces (not the triplets - total faces)
 #' @export
 #'
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "rh.pial")
 #' right_triangles = surface_to_triangles(infile = infile)
@@ -93,7 +90,6 @@ convert_surface = function(infile, ...) {
 #'   rgl::triangles3d(right_triangles,
 #'   color = rainbow(nrow(right_triangles)))
 #' }
-#' }
 surface_to_triangles = function(infile, ...) {
   splits = convert_surface(infile, ...)
 
@@ -116,17 +112,16 @@ surface_to_triangles = function(infile, ...) {
 #' @return Character filename of output file
 #' @export
 #'
-#' @examples
-#' if (have_fs()) {
+#' @examplesIf have_fs()
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "rh.pial")
 #' res = surface_to_obj(infile = infile)
-#' }
+
 surface_to_obj = function(infile, outfile = NULL, ...) {
   splits = convert_surface(infile, ...)
 
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ".obj")
+    outfile = temp_file(fileext = ".obj")
   }
   scipen = getOption("scipen")
   on.exit({

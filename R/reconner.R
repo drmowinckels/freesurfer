@@ -4,10 +4,10 @@
 #' @note If you set \code{infile = NULL}, then you can omit the
 #' \code{-i} flag in \code{recon-all}
 #' @param infile Input filename (dcm or nii)
-#' @param outdir Output directory
-#' @param subjid subject id
-#' @param verbose print diagnostic messages
-#' @param opts Additional options
+#' @template outdir
+#' @template subjid
+#' @template verbose
+#' @template opts
 #' @param force Force running of the reconstruction
 #'
 #' @return Result of \code{\link{system}}
@@ -17,7 +17,7 @@ reconner <- function(
   infile = NULL,
   outdir = NULL,
   subjid = NULL,
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts = "-all",
   force = FALSE
 ) {
@@ -84,6 +84,5 @@ reconner <- function(
   if (verbose) {
     cli::cli_code(cmd)
   }
-  res = system(cmd)
-  return(res)
+  try_cmd(cmd)
 }

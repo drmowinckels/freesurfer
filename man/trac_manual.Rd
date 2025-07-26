@@ -6,7 +6,7 @@
 \alias{trac_path}
 \title{Tract Reconstruction for Each Step}
 \usage{
-trac_prep(infile, outdir = NULL, subjid, verbose = TRUE)
+trac_prep(infile, outdir = NULL, subjid, verbose = get_fs_verbosity())
 
 trac_bedpost(infile, outdir = NULL, subjid, verbose = TRUE)
 
@@ -15,11 +15,11 @@ trac_path(infile, outdir = NULL, subjid, verbose = TRUE)
 \arguments{
 \item{infile}{Input filename (dcm or nii)}
 
-\item{outdir}{Output directory}
+\item{outdir}{Character, Path to output directory.}
 
-\item{subjid}{subject id}
+\item{subjid}{subject id, if NULL, the basename of the infile will be used}
 
-\item{verbose}{print diagnostic messages}
+\item{verbose}{(logical) print diagnostic messages}
 }
 \value{
 Result of \code{\link{system}}

@@ -11,21 +11,16 @@
 #' @param skip (logical) if subject does not have parcellation,
 #' should the command skip that subject (\code{TRUE}) or error
 #' (\code{FALSE})
-#' @param subj_dir (character path) if a different subjects directory
-#' is to be used other than \code{SUBJECTS_DIR} from shell, it can be
-#' specified here.  Use with care as if the command fail, it may not reset
-#' the \code{SUBJECTS_DIR} back correctly after the error
-#' @param opts (character) additional options to \code{asegstats2table}
-#' @param verbose (logical) print diagnostic messages
+#' @template subj_dir
+#' @template opts
+#' @template verbose
 #'
 #' @return Character filename of output file, with the
 #' attribute of the separator
 #' @export
-#' @examples
-#' if (have_fs()) {
-#'    outfile = asegstats2table(subjects = "bert",
-#'                     meas = "mean")
-#' }
+#' @examplesIf have_fs()
+#' outfile = asegstats2table(subjects = "bert",
+#'   meas = "mean")
 asegstats2table = function(
   subjects = NULL,
   inputs = NULL,
@@ -35,7 +30,7 @@ asegstats2table = function(
   skip = FALSE,
   subj_dir = NULL,
   opts = "",
-  verbose = TRUE
+  verbose = get_fs_verbosity()
 ) {
   if (is.null(subjects) & is.null(inputs)) {
     cli::cli_abort("Subjects or inputs must be specified!")
@@ -108,7 +103,7 @@ asegstats2table = function(
   # Making output file if not specified
   ###########################
   if (is.null(outfile)) {
-    outfile = tempfile(fileext = ext)
+    outfile = temp_file(fileext = ext)
   }
   args = c(args, paste0("--tablefile ", outfile))
 
@@ -141,7 +136,7 @@ asegstats2table = function(
   if (verbose) {
     cli::cli_text(cmd)
   }
-  res = system(cmd)
+  res = try_cmd(cmd)
   fe_after = file.exists(outfile)
 
   if (res != 0 & !fe_after) {

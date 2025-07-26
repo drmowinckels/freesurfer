@@ -31,12 +31,10 @@ the MNI environment if required.
 \examples{
 \dontshow{if (have_fs()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Generate a shell command to set up FreeSurfer with the default `bin`
-cmd <- get_fs(bin_app = "bin")
-print(cmd)
+get_fs(bin_app = "bin")
 
 # Generate a shell command to include MNI environment setup
-cmd_mni <- get_fs(bin_app = "mni/bin")
-print(cmd_mni)
+get_fs(bin_app = "mni/bin")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
