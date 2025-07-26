@@ -73,6 +73,9 @@ docker run --rm \
 
 ## GitHub Actions CI Integration
 
+This setup integrates with GitHub Actions to automate testing of the FreeSurfer R package across different operating systems and configurations.
+Note that all the images with Freesurfer are too large to be run on the standard GitHub Actions runners, and would need to be run on runners with[ larger disk space](https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners#changing-the-image-of-a-larger-runner) or on self-hosted runners.
+
 ### Workflow File
 The GitHub Actions workflow (`.github/workflows/R-CMD-check.yml`) is designed to:
 1. Test R packages across multiple OS configurations.
