@@ -1,5 +1,5 @@
 
-FROM freesurfer-base:8.0.0
+FROM freesurfer-base:7.4.1
 
 LABEL maintainer="freesurfer R package developers" \
       description="FreeSurfer with R and littler installed for R package management. R is configured to use Posit Package Manager for packages. This image is primarily used for building and testing R packages that depend on FreeSurfer, and includes pandoc, devtools, and pak."

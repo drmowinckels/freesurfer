@@ -40,6 +40,15 @@ docker build -f Dockerfile-r -t freesurfer-r:fs_8.0.0-r_4.5.1 .
     - `r_4.5.1` is the R version.
     - `fs_8.0.0` indicates FreeSurfer version 8.0.0.
 
+### Pushing to GitHub Container Registry
+After building the Docker image, it is recommended to tag and push it to the GitHub Container Registry for easy access in CI/CD pipelines.
+To push the built image to the GitHub Container Registry, use the following commands:
+
+```bash
+docker tag freesurfer-r:fs_7.4.1-r_4.5.1 ghcr.io/drmowinckels/freesurfer-r:fs_7.4.1-r_4.5.1
+
+docker push ghcr.io/drmowinckels/freesurfer-r:fs_7.4.1-r_4.5.1
+```
 ---
 
 ## Running the Image and Testing
