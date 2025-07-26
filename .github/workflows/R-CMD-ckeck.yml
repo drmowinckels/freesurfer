@@ -8,6 +8,7 @@ on:
     branches:
       - main
       - master
+  workflow_dispatch:
 
 permissions: read-all
 
@@ -63,12 +64,15 @@ jobs:
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
   R-CMD-check-fs:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     strategy:
       fail-fast: false
       matrix:
         config:
           - { r: "4.5.1", fs: "8.0.0" }
-    runs-on: ubuntu-latest
+    # Needs large runner, image is 34GB!
+    # https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners
+    runs-on: ubuntu-latest 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
