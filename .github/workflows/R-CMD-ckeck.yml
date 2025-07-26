@@ -67,7 +67,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { r: "4.5.0", fs: "8.0.0" }
+          - { r: "4.5.1", fs: "8.0.0" }
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -77,54 +77,32 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-
       # FreeSurfer + Docker-based checks
       - name: Check if Docker Image Exists
         id: image_check
         run: |
           IMAGE_TAG="r_${{ matrix.config.r }}-fs_${{ matrix.config.fs }}"
-          FULL_IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/r-freesurfer:${IMAGE_TAG}"
+          FULL_IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/freesurfer-r:${IMAGE_TAG}"
           echo "Checking if image exists: $FULL_IMAGE_NAME"
           echo "image_exists=false" >> $GITHUB_ENV
           if docker pull $FULL_IMAGE_NAME; then
             echo "image_exists=true" >> $GITHUB_ENV
           fi
 
-      - name: Trigger Image Build Workflow
-        if: env.image_exists == 'false'
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-            await github.rest.actions.createWorkflowDispatch({
-              owner,
-              repo,
-              workflow_id: "build-fs-r-image.yml",
-              ref: "master",
-              inputs: {
-                r_version: process.env.MATRIX_CONFIG_R,
-                fs_version: process.env.MATRIX_CONFIG_FS,
-                push: true
-              }
-            });
-
-      - name: Pull or Wait for Image Build Completion
+      - name: Pull Image
         run: |
-          echo "Ensuring the Docker image is available..."
-          IMAGE_TAG="r_${{ matrix.config.r }}-fs_${{ matrix.config.fs }}"
-          FULL_IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/r-freesurfer:${IMAGE_TAG}"
-          while ! docker pull $FULL_IMAGE_NAME; do
-            echo "Image not available yet. Retrying in 600 seconds..."
-            sleep 600
-          done
+          IMAGE_TAG="fs_${{ matrix.config.fs }}-r_${{ matrix.config.r }}"
+          FULL_IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/freesurfer-r:${IMAGE_TAG}"
+          docker pull $FULL_IMAGE_NAME
 
       - name: Run R CMD Check in Docker
         run: |
           docker run --rm \
           -v ${{ github.workspace }}:/workspace \
-          ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/r-freesurfer:r_${{ matrix.config.r }}-fs_${{ matrix.config.fs }} \
-          bash -c "cd /workspace && R CMD check ."
+          ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/freesurfer-r:r_${{ matrix.config.r }}-fs_${{ matrix.config.fs }} \
+          bash -c "cd /workspace \
+            && Rscript -e 'pak::local_install_deps(dependencies = TRUE)' \
+            && Rscript -e 'devtools::check()'"
 
       - name: Archive Logs (Docker-based failure)
         if: failure()

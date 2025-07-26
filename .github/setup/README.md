@@ -1,42 +1,91 @@
+# Building a Complete Docker Image for FreeSurfer R Package Testing
 
-# Docker Freesurfer R
+This guide provides step-by-step instructions to build a complete Docker image for testing the FreeSurfer R package. 
+The image comprises two Docker files that are built in stages, starting from a FreeSurfer base image and extending it to include R and supporting tools.
 
-This folder contains a Dockerfile to build a Docker image that includes both Freesurfer and R.
-This image is useful for neuroimaging workflows that require both Freesurfer for structural MRI processing and R for statistical analysis or visualization.
+---
 
-The Docker image is built in a [github action](../workflows/build-fs-r-image.yml) and can be used to ensure a consistent testing of the functionality of the `freesurfer` R package.
-The Dockerfile is designed to be flexible, allowing you to specify different versions of R and Freesurfer at build time using build arguments.
+## Docker Files Structure
+1. **Stage 1: FreeSurfer Base**
+   - Defined in `Dockerfile-fs`.
+   - Sets up FreeSurfer in an Ubuntu 22.04 (jammy) environment.
+2. **Stage 2: FreeSurfer + R**
+   - Defined in `Dockerfile-r`.
+   - Builds on top of the FreeSurfer base image, adding R and tools for R package testing.
 
-## Local use
+---
 
-This Dockerfile can be used locally to create a Docker image that includes both Freesurfer and R.
+## Building the Docker Image
 
-### Prerequisites
-- Docker installed on your machine.
-- Docker Buildx enabled (for multi-platform builds).
+### Step 1: Build FreeSurfer Base Image
+The first stage involves building the FreeSurfer base image using `Dockerfile-fs`.
 
-
-### Usage
-
-To build the Docker image, you can use the following command:
-
-```sh
-rver=4.0.0
-fsver=8.0.0
-
-docker buildx build \
-  --platform linux/amd64 \
-  --file .github/setup/Dockerfile \
-  --build-arg FS_VERSION=${fsver} \
-  --build-arg R_VERSION=${rver} \
-  -t r-freesurfer:r_${rver}-fs_${fsver} .
+```bash
+docker build -f Dockerfile-fs -t freesurfer-base:8.0.0 .
 ```
 
-To run the Docker container, you can use the following command:
+### Step 2: Build FreeSurfer + R Image
+The second stage extends the FreeSurfer base with R tools and libraries using `Dockerfile-r`.
 
-```sh
-docker run --rm -it \
-  -v /path/to/your/data:/data \
-  r-freesurfer:r${rver}-fs_${fsver} \
-  bash
+```bash
+docker build -f Dockerfile-r -t freesurfer-r:fs_8.0.0-r_4.5.1 .
 ```
+
+---
+
+## Image Tagging Convention
+
+- Format: `<language>-<framework>:<version>`
+  - Example: `freesurfer-r:fs_8.0.0-r_4.5.1` where:
+    - `r_4.5.1` is the R version.
+    - `fs_8.0.0` indicates FreeSurfer version 8.0.0.
+
+---
+
+## Running the Image and Testing
+
+Start the Docker container and run tests for the FreeSurfer R package.
+
+```bash
+docker run --rm \
+    -v $(pwd):/workspace \
+    freesurfer-r:fs_8.0.0-r_4.5.1 \
+    bash -c "cd /workspace \
+      && Rscript -e 'pak::local_install_deps(dependencies = TRUE)' \
+      && Rscript -e 'devtools::check()'"
+```
+
+- `$(pwd)`: Mounts the current working directory to `/workspace` inside the container.
+- Run two commands in the container:
+  - Install dependencies with `pak`.
+  - Perform an R CMD check with `devtools`.
+
+---
+
+## GitHub Actions CI Integration
+
+### Workflow File
+The GitHub Actions workflow (`.github/workflows/R-CMD-check.yml`) is designed to:
+1. Test R packages across multiple OS configurations.
+2. Use Docker to run FreeSurfer-specific tests.
+
+### Key CI Steps
+#### Non-Docker Builds
+- Runs jobs on MacOS, Windows, and Ubuntu using specific R versions.
+
+#### Docker-Based Checks
+- Leverages FreeSurfer-specific Docker images:
+  1. Pulls the appropriate `freesurfer-r` image.
+  2. Executes R CMD check inside the container.
+
+---
+
+## Troubleshooting
+
+- **Docker Image Not Found**: Ensure the `freesurfer-base:8.0.0` and `freesurfer-r` images are built locally or available in the container registry.
+  - Freesurfer is too large to be built in CI, so it must be built locally.
+- **Package Not Found Errors**: Check the `Rscript` commands to ensure packages are being installed correctly.
+
+---
+
+This setup ensures a consistent and reproducible environment for developing and testing the FreeSurfer R package, supporting both local development and CI pipelines.
