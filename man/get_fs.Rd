@@ -4,7 +4,7 @@
 \alias{get_fs}
 \title{Generate FreeSurfer Command Line Environment Setup}
 \usage{
-get_fs(bin_app = c("bin", "mni/bin", ""))
+get_fs(bin_app = c("bin", "mni/bin"))
 }
 \arguments{
 \item{bin_app}{\link{character} A vector of options for the binary application directory.

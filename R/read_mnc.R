@@ -10,7 +10,5 @@ read_mnc = function(file) {
   check_path(file)
   outfile = temp_file(fileext = ".nii.gz")
   mnc2nii(file, outfile = outfile)
-  ret = readnii(outfile)
-
-  return(ret)
+  readnii(outfile)
 }

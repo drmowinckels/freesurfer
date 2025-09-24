@@ -4,10 +4,12 @@
 \alias{freesurfer_read_surf}
 \title{Read Freesurfer Surface file}
 \usage{
-freesurfer_read_surf(file)
+freesurfer_read_surf(file, verbose = get_fs_verbosity())
 }
 \arguments{
 \item{file}{surface file (e.g. \code{lh.inflated})}
+
+\item{verbose}{(logical) print diagnostic messages}
 }
 \value{
 List of length 2: vertices and faces are the elements

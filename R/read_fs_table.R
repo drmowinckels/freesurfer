@@ -24,20 +24,21 @@
 read_fs_table = function(
   file,
   sep = NULL,
-  stringsAsFactors = FALSE,
   header = TRUE,
   ...
 ) {
   check_path(file)
   if (is.null(sep)) {
-    sep = attr(file, "separator")
+    sep = attr(file, "delimiter")
   }
   x = utils::read.table(
     file = file,
     header = header,
     sep = sep,
-    stringsAsFactors = stringsAsFactors,
     ...
   )
   return(x)
 }
+
+#' @rdname read_fs_table
+read_stats_table <- read_fs_table

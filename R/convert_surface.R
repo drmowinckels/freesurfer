@@ -28,6 +28,13 @@ convert_surface = function(infile, ...) {
 
   ## Get the number of vertices and the number of faces
   infos <- as.numeric(unlist(strsplit(lines[1], " ")))
+  if (is.na(infos)) {
+    cli::cli_abort(c(
+      "Invalid header in {infile}",
+      "The first line should contain two numbers: number of vertices and faces."
+    ))
+  }
+
   ## Skip header
   splits <- split(
     lines,
@@ -63,33 +70,31 @@ convert_surface = function(infile, ...) {
 #' to the number of faces (not the triplets - total faces)
 #' @export
 #'
-#' @examplesIf have_fs()
+#' @examplesIf have_fs() && requireNamespace("rgl", quietly = TRUE)
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "rh.pial")
 #' right_triangles = surface_to_triangles(infile = infile)
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "lh.pial")
 #' left_triangles = surface_to_triangles(infile = infile)
-#' if (requireNamespace("rgl", quietly = TRUE)) {
-#'   rgl::open3d()
-#'   rgl::triangles3d(right_triangles,
-#'   color = rainbow(nrow(right_triangles)))
-#'   rgl::triangles3d(left_triangles,
-#'   color = rainbow(nrow(left_triangles)))
-#' }
+#' rgl::open3d()
+#' rgl::triangles3d(right_triangles,
+#' color = rainbow(nrow(right_triangles)))
+#' rgl::triangles3d(left_triangles,
+#' color = rainbow(nrow(left_triangles)))
+#'
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "rh.inflated")
 #' right_triangles = surface_to_triangles(infile = infile)
 #' infile = file.path(fs_subj_dir(),
 #'                    "bert", "surf", "lh.inflated")
 #' left_triangles = surface_to_triangles(infile = infile)
-#' if (requireNamespace("rgl", quietly = TRUE)) {
-#'   rgl::open3d()
-#'   rgl::triangles3d(left_triangles,
-#'   color = rainbow(nrow(left_triangles)))
-#'   rgl::triangles3d(right_triangles,
-#'   color = rainbow(nrow(right_triangles)))
-#' }
+#' rgl::open3d()
+#' rgl::triangles3d(left_triangles,
+#' color = rainbow(nrow(left_triangles)))
+#' rgl::triangles3d(right_triangles,
+#' color = rainbow(nrow(right_triangles)))
+#'
 surface_to_triangles = function(infile, ...) {
   splits = convert_surface(infile, ...)
 

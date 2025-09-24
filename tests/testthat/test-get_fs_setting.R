@@ -268,11 +268,13 @@ test_that("get_mni_bin identifies option", {
   withr::local_options(freesurfer.mni_path = dirname(temp_bin))
   dir.create(dirname(temp_bin))
   writeLines("bin", temp_bin)
-  expect_true(file.exists(temp_bin))
 
   result <- get_mni_bin(simplify = FALSE)
-  expect_equal(result$value, dirname(temp_bin))
   expect_true(result$exists)
+  expect_equal(result$value, dirname(temp_bin))
+
+  result2 <- get_mni_bin(simplify = TRUE)
+  expect_equal(result$value, result2)
 })
 
 
@@ -365,4 +367,188 @@ test_that("get_fs_subdir handles missing values gracefully", {
   expect_true(is.na(result$value))
   expect_true(is.na(result$source))
   expect_false(result$exists)
+})
+
+
+test_that("return_setting correctly handles valid paths", {
+  # Create temporary files for path testing
+  temp_files <- c(
+    withr::local_tempfile(),
+    withr::local_tempfile()
+  )
+  k <- sapply(temp_files, file.create)
+
+  # Test valid paths
+  result <- return_setting(
+    value = temp_files,
+    source = "env",
+    is_path = TRUE
+  )
+  expect_equal(result$value, temp_files)
+  expect_equal(result$source, "env")
+  expect_equal(result$exists, c(TRUE, TRUE))
+})
+
+test_that("return_setting correctly handles NA values", {
+  # Test with NA values
+  result <- return_setting(
+    value = c(NA, NA),
+    source = "env",
+    is_path = TRUE
+  )
+  expect_equal(result$value, c(NA, NA))
+  expect_equal(result$source, "env")
+  expect_equal(result$exists, c(FALSE, FALSE))
+})
+
+test_that("return_setting handles non-path scenarios", {
+  # Test when is_path is FALSE
+  result <- return_setting(
+    value = c("example_value"),
+    source = "default",
+    is_path = FALSE
+  )
+  expect_equal(result$value, "example_value")
+  expect_equal(result$source, "default")
+  expect_equal(result$exists, NA)
+})
+
+test_that("return_single selects the first valid existing value", {
+  # Mock setting with valid existing entries
+  setting <- list(
+    value = c("valid_path_1", "valid_path_2"),
+    source = "test",
+    exists = c(FALSE, TRUE)
+  )
+  result <- return_single(setting)
+  expect_equal(result$value, "valid_path_2")
+  expect_equal(result$exists, TRUE)
+})
+
+test_that("return_single handles cases with no existing paths", {
+  # Mock setting with no valid existing entries
+  setting <- list(
+    value = c("invalid_path_1", "invalid_path_2"),
+    source = "test",
+    exists = c(FALSE, FALSE)
+  )
+
+  result <- return_single(setting)
+  expect_true(is.na(result$value))
+  expect_true(is.na(result$exists))
+})
+
+test_that("return_single asis when there is only one", {
+  # Mock setting with no valid existing entries
+  setting <- list(
+    value = "invalid_path_1",
+    source = "test",
+    exists = c(FALSE)
+  )
+
+  result <- return_single(setting)
+  expect_equal(result$value, "invalid_path_1")
+  expect_false(result$exists)
+})
+
+# -- verbosity tests
+
+test_that("get_fs_verbosity deals envvar", {
+  local_fs_unset()
+  withr::local_envvar(
+    FREESURFER_VERBOSE = TRUE
+  )
+
+  expect_true(get_fs_verbosity())
+
+  result <- get_fs_verbosity(simplify = FALSE)
+  expect_true(result$value)
+  expect_equal(result$source, "Sys.getenv")
+  expect_true(is.na(result$exists))
+
+  withr::local_envvar(
+    FREESURFER_VERBOSE = FALSE
+  )
+
+  expect_false(get_fs_verbosity())
+
+  result <- get_fs_verbosity(simplify = FALSE)
+  expect_false(result$value)
+  expect_equal(result$source, "Sys.getenv")
+  expect_true(is.na(result$exists))
+})
+
+test_that("get_fs_verbosity deals with NA", {
+  # Mock get_fs_setting with a valid value
+  local_mocked_bindings(
+    get_fs_setting = function(var, option, is_path) {
+      return(list(value = NA, source = "Default", exists = NA))
+    }
+  )
+
+  # Case 3: Non-NA value with simplify = TRUE
+  expect_true(get_fs_verbosity(simplify = TRUE))
+
+  # Case 4: Non-NA value with simplify = FALSE
+  result <- get_fs_verbosity(simplify = FALSE)
+  expect_true(result$value)
+  expect_equal(result$source, "Default")
+})
+
+# ---- source ----
+test_that("get_fs_source behaves correctly", {
+  # Mocking get_fs_setting and fs_dir
+  local_mocked_bindings(
+    get_fs_setting = function(var, option, default) {
+      return(list(value = NA, source = NA, exists = FALSE))
+    },
+    fs_dir = function() {
+      return("/mocked/path")
+    }
+  )
+
+  # Case 1: NA value with simplify = TRUE
+  expect_true(is.na(get_fs_source(simplify = TRUE)))
+
+  # Case 2: NA value with simplify = FALSE
+  result <- get_fs_source(simplify = FALSE)
+  expect_type(result, "list")
+  expect_true(is.na(result$value))
+  expect_true(is.na(result$source))
+  expect_false(result$exists)
+
+  # Mock get_fs_setting with a valid value and custom source
+  local_mocked_bindings(
+    get_fs_setting = function(var, option, default) {
+      return(list(
+        value = "/mocked/path/FreeSurferEnv.sh",
+        source = "EnvVar",
+        exists = TRUE
+      ))
+    }
+  )
+
+  # Case 3: Non-NA value with simplify = TRUE
+  expect_equal(get_fs_source(simplify = TRUE), "/mocked/path/FreeSurferEnv.sh")
+
+  # Case 4: Non-NA value with simplify = FALSE
+  result <- get_fs_source(simplify = FALSE)
+  expect_type(result, "list")
+  expect_equal(result$value, "/mocked/path/FreeSurferEnv.sh")
+  expect_equal(result$source, "EnvVar")
+  expect_true(result$exists)
+
+  # Case 5: Default source should map to fs_dir()
+  local_mocked_bindings(
+    get_fs_setting = function(var, option, default) {
+      return(list(
+        value = "/mocked/path/FreeSurferEnv.sh",
+        source = "Default",
+        exists = TRUE
+      ))
+    }
+  )
+
+  result <- get_fs_source(simplify = FALSE)
+  expect_equal(result$source, "fs_dir()")
 })

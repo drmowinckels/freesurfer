@@ -32,7 +32,7 @@ trac_bedpost <- function(
   infile,
   outdir = NULL,
   subjid,
-  verbose = TRUE
+  verbose = get_fs_verbosity()
 ) {
   reconner(
     infile = infile,
@@ -50,7 +50,7 @@ trac_path <- function(
   infile,
   outdir = NULL,
   subjid,
-  verbose = TRUE
+  verbose = get_fs_verbosity()
 ) {
   reconner(
     infile = infile,

@@ -155,12 +155,12 @@ Let's demonstrate this by reading in the left and right pial surfaces of the bra
 
 ```{r, include=FALSE}
 library(rgl)
-
+rgl.useNULL()
 knitr::knit_hooks$set(webgl = hook_webgl)
 ```
 
 ```{r rgl_prep, results='hide', webgl=TRUE}
-
+rgl.useNULL()
 library(rgl)
 right_file = file.path(
   fs_subj_dir(),
@@ -199,6 +199,7 @@ view3d(0, -70)
 ```
 
 ```{r rgl_plot, webgl=TRUE, echo=FALSE, fig.cap="3D rendering of the pial surfaces of the left and right hemispheres from Freesurfer output, displayed using rgl."}
+rgl.useNULL()
 
 # Open an rgl window
 open3d()

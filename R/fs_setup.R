@@ -26,10 +26,10 @@
 #'
 #' @seealso [get_fs_home()], [get_fs_license()], [get_fs_output()]
 #' @export
-get_fs = function(bin_app = c("bin", "mni/bin", "")) {
+get_fs = function(bin_app = c("bin", "mni/bin")) {
   fs_home_info <- get_fs_home(simplify = FALSE)
   freesurferdir <- fs_home_info$value
-  cmd <- NULL
+  cmd <- ""
 
   if (is.null(freesurferdir) || !fs_home_info$exists) {
     cli::cli_abort(
@@ -38,14 +38,14 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   }
 
   # Check license
-  if (!get_fs_license(simplify = FALSE)$exists) {
+  if (!get_fs_license(simplify = FALSE)$exists && get_fs_verbosity()) {
     cli::cli_warn(
       "Freesurfer is found, but no license file ({.path license.txt} or {.path .license}) found!"
     )
   }
 
   bin_app <- match.arg(bin_app)
-  bin_app_path <- paste0(bin_app, "/")
+  start_up_path <- file.path("${FREESURFER_HOME}", bin_app)
   add_home <- ifelse(
     grepl("Default", fs_home_info$source),
     TRUE,
@@ -54,14 +54,13 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
 
   # Handle MNI Perl startup if 'mni' is in bin_app
   if (grepl("mni", bin_app)) {
-    start_up_path <- get_mni_bin() |>
-      return_single()
-    start_up_path <- start_up_path$value
+    start_up_path <- get_mni_bin(simplify = FALSE)
+    start_up_path <- return_single(start_up_path)$value
     if (!is.na(start_up_path)) {
-      cmd <- paste0(
-        "export PERL5LIB=$PERL5LIB:",
-        shQuote(start_up_path),
-        " ; "
+      cmd <- c(
+        cmd,
+        "export PERL5LIB=$PERL5LIB",
+        sprintf("export MNI_DIR=%s", shQuote(start_up_path))
       )
     }
   }
@@ -82,24 +81,23 @@ get_fs = function(bin_app = c("bin", "mni/bin", "")) {
   # Construct the main command string
   if (!add_home) {
     return(
-      paste0(cmd, sh_file_cmd)
+      paste(c(cmd, sh_file_cmd), sep = "; ")
     )
   }
 
-  paste0(
-    cmd,
-    sprintf(
-      "export FREESURFER_HOME=%s; ",
-      shQuote(freesurferdir)
+  paste(
+    c(
+      cmd,
+      sprintf(
+        "export FREESURFER_HOME=%s",
+        shQuote(freesurferdir)
+      ),
+      sh_file_cmd,
+      sprintf("export FSF_OUTPUT_FORMAT=%s", get_fs_output()),
+      paste0(start_up_path, "/")
     ),
-    "",
-    sh_file_cmd,
-    "FSF_OUTPUT_FORMAT=",
-    get_fs_output,
-    "; ",
-    "export FSF_OUTPUT_FORMAT; ",
-    "${FREESURFER_HOME}/",
-    bin_app_path
+    collapse = "; ",
+    sep = "; "
   )
 }
 
@@ -163,11 +161,10 @@ have_fs = function(check_license = TRUE) {
 #' @examples
 #' fs_imgext()
 fs_imgext = function() {
-  ext = switch(
+  switch(
     get_fs_output(),
     "hdr" = ".hdr",
     "nii.gz" = ".nii.gz",
     "nii" = ".nii"
   )
-  return(ext)
 }

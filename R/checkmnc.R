@@ -28,23 +28,20 @@ setMethod("checkmnc", "nifti", function(file, ...) {
 
 #' @rdname checkmnc-methods
 #' @aliases checkmnc,character-method
-#' @importFrom R.utils gzip
-#'
 #' @export
 setMethod("checkmnc", "character", function(file, ...) {
   ### add vector capability
   if (length(file) > 1) {
     file = sapply(file, checkmnc, ...)
     return(file)
-  } else {
-    file = checkimg(file, gzipped = FALSE, ...)
-    ext = neurobase::parse_img_ext(file)
-    if (!(ext %in% c("nii", "mnc"))) {
-      cli::cli_abort("File extension must be nii/nii.gz or mnc")
-    }
-    if (ext %in% c("nii")) {
-      file = nii2mnc(file, outfile = NULL)
-    }
+  }
+  file = checkimg(file, gzipped = FALSE, ...)
+  ext = neurobase::parse_img_ext(file)
+  if (!(ext %in% c("nii", "mnc"))) {
+    cli::cli_abort("File extension must be nii/nii.gz or mnc")
+  }
+  if (ext %in% c("nii")) {
+    file = nii2mnc(file, outfile = NULL)
   }
   return(file)
 })
@@ -62,6 +59,4 @@ setMethod("checkmnc", "list", function(file, ...) {
 #' @rdname checkmnc-methods
 #' @aliases ensure_mnc
 #' @export
-ensure_mnc = function(file, ...) {
-  checkmnc(file = file, ...)
-}
+ensure_mnc = checkmnc

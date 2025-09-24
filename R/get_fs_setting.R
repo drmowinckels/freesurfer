@@ -141,8 +141,10 @@ get_fs_source <- function(simplify = TRUE) {
     "freesurfer.sh",
     file.path(fs_dir(), "FreeSurferEnv.sh")
   )
-  if (ret$source == "Default") {
-    ret$source = "fs_dir()"
+  if (!is.na(ret$source)) {
+    if (ret$source == "Default") {
+      ret$source = "fs_dir()"
+    }
   }
   if (simplify) {
     return(ret$value)
@@ -159,6 +161,9 @@ get_fs_verbosity <- function(simplify = TRUE) {
     is_path = FALSE
   )
   if (is.na(ret$value)) {
+    if (simplify) {
+      return(TRUE)
+    }
     return(
       list(
         value = TRUE,
@@ -167,6 +172,7 @@ get_fs_verbosity <- function(simplify = TRUE) {
       )
     )
   }
+  ret$value <- as.logical(ret$value)
 
   if (simplify) {
     return(ret$value)
@@ -204,19 +210,27 @@ get_mni_bin <- function(simplify = TRUE) {
     file.path(fs_dir(), "mni")
   )
 
-  if (ret$exists) {
-    mni <- list.files(
-      pattern = "MNI[.]pm",
-      path = ret$value,
-      full.names = TRUE,
-      recursive = TRUE
-    )
-
-    ret <- return_setting(
-      dirname(mni),
-      ret$source
+  if (!ret$exists) {
+    return(
+      list(
+        value = NA,
+        source = "No MNI directory found",
+        exists = FALSE
+      )
     )
   }
+
+  mni <- list.files(
+    pattern = "MNI[.]pm",
+    path = ret$value,
+    full.names = TRUE,
+    recursive = TRUE
+  )
+
+  ret <- return_setting(
+    dirname(mni),
+    ret$source
+  )
 
   if (simplify) {
     return(ret$value)
@@ -226,20 +240,29 @@ get_mni_bin <- function(simplify = TRUE) {
 
 #' @noRd
 return_setting <- function(value, source, is_path = TRUE) {
-  if (all(is.na(value))) {
-    exists <- FALSE
+  exists <- if (is_path) {
+    if (all(is.na(value))) {
+      rep(FALSE, length(value))
+    } else {
+      file.exists(value)
+    }
   } else {
-    exists <- file.exists(value)
+    NA
   }
 
   list(
     value = value,
     source = source,
-    exists = ifelse(is_path, exists, NA)
+    exists = exists
   )
 }
 
+#' @noRd
 return_single <- function(setting) {
+  if (length(setting$value) == 1 || all(is.na(setting$value))) {
+    return(setting)
+  }
+
   idx <- which(setting$exists)[1]
   setting$value <- setting$value[idx]
   setting$exists <- setting$exists[idx]

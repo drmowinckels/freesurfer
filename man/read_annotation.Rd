@@ -4,7 +4,7 @@
 \alias{read_annotation}
 \title{Read Freesurfer annotation file}
 \usage{
-read_annotation(path, verbose = TRUE)
+read_annotation(path, verbose = get_fs_verbosity())
 }
 \arguments{
 \item{path}{path to annotation file, usually with extension \code{annot}}

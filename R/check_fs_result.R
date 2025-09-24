@@ -8,13 +8,13 @@
 #' @return No return value, called for side effects
 #' @noRd
 check_fs_result = function(res, fe_before, fe_after) {
-  if (res != 0 & !fe_after) {
+  if ((length(res) == 1 && res != 0) && !fe_after) {
     cli::cli_abort("Command Failed, no output produced!")
   }
-  if (res == 0 & !fe_after) {
+  if ((length(res) > 1 || res == 0) & !fe_after) {
     cli::cli_warn("Command assumed passed, but no output produced")
   }
-  if (res != 0 & fe_after & fe_before) {
+  if ((length(res) == 1 && res != 0) & fe_after & fe_before) {
     cli::cli_warn(
       "Command had non-zero exit status (probably failed), 
       outfile exists but existed before command was run. 
@@ -22,7 +22,7 @@ check_fs_result = function(res, fe_before, fe_after) {
     )
   }
 
-  if (res != 0 & fe_after & !fe_before) {
+  if ((length(res) == 1 && res != 0) & fe_after & !fe_before) {
     cli::cli_warn(
       "Command had non-zero exit status (probably failed), 
       outfile exists and did {.strong not} before command was run. 
@@ -46,12 +46,12 @@ check_fs_result = function(res, fe_before, fe_after) {
 #' @return Invisible NULL
 #' @noRd
 run_check_fs_cmd = function(cmd, outfile, verbose = get_fs_verbosity(), ...) {
-  fe_before = file.exists(outfile)
+  fe_before = check_path(outfile, error = FALSE)
   if (verbose) {
     cli::cli_code(cmd)
   }
   res = try_cmd(cmd, ...)
-  fe_after = file.exists(outfile)
+  fe_after = check_path(outfile, error = FALSE)
 
   check_fs_result(res = res, fe_before = fe_before, fe_after = fe_after)
   invisible(NULL)

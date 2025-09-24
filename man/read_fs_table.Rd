@@ -2,9 +2,12 @@
 % Please edit documentation in R/read_fs_table.R
 \name{read_fs_table}
 \alias{read_fs_table}
+\alias{read_stats_table}
 \title{Read Freesurfer Table Output}
 \usage{
-read_fs_table(file, sep = NULL, stringsAsFactors = FALSE, header = TRUE, ...)
+read_fs_table(file, sep = NULL, header = TRUE, ...)
+
+read_stats_table(file, sep = NULL, header = TRUE, ...)
 }
 \arguments{
 \item{file}{(character path) filename of text file}
@@ -12,11 +15,11 @@ read_fs_table(file, sep = NULL, stringsAsFactors = FALSE, header = TRUE, ...)
 \item{sep}{separator to override attribute of file, to
 pass to \code{\link[utils]{read.table}}.}
 
-\item{stringsAsFactors}{(logical) passed to \code{\link{read.table}}}
-
 \item{header}{Is there a header in the data}
 
 \item{...}{additional arguments to \code{\link{read.table}}}
+
+\item{stringsAsFactors}{(logical) passed to \code{\link{read.table}}}
 }
 \value{
 \code{data.frame} from the file

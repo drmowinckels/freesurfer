@@ -28,6 +28,7 @@ Imports:
     stats,
     utils
 Suggests:
+    covr,
     knitr,
     oro.nifti (>= 0.7),
     rgl,
@@ -43,4 +44,4 @@ LazyData: true
 LazyLoad: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-SystemRequirements: FSL (https://fsl.fmrib.ox.ac.uk/), FreeSurfer (https://freesurfer.net/)
+SystemRequirements: FreeSurfer (https://freesurfer.net/)

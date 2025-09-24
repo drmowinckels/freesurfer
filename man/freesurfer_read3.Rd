@@ -26,3 +26,4 @@ file = file.path(bert_dir, "lh.thickness")
 out = freesurfer_read3(file)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

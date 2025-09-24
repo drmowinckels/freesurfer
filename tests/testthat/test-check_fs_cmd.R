@@ -1,4 +1,3 @@
-# Temporarily override cli functions for testing
 test_that("check_fs_result handles all scenarios", {
   # Case 1: Non-zero result, output does not exist
   expect_error(

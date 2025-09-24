@@ -12,7 +12,7 @@ fs_cmd(
   reorient = FALSE,
   intern = FALSE,
   opts = "",
-  verbose = TRUE,
+  verbose = get_fs_verbosity(),
   opts_after_outfile = FALSE,
   frontopts = "",
   bin_app = "bin",

@@ -22,7 +22,7 @@
 #' bert_dir = file.path(fs_subj_dir(), "bert")
 #' annot_file = file.path(bert_dir, "label", "lh.aparc.annot")
 #' res = read_annotation(annot_file)
-read_annotation <- function(path, verbose = TRUE) {
+read_annotation <- function(path, verbose = get_fs_verbosity()) {
   check_path(path)
 
   ff <- file(path, "rb")

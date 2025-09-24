@@ -8,9 +8,9 @@
 \usage{
 trac_prep(infile, outdir = NULL, subjid, verbose = get_fs_verbosity())
 
-trac_bedpost(infile, outdir = NULL, subjid, verbose = TRUE)
+trac_bedpost(infile, outdir = NULL, subjid, verbose = get_fs_verbosity())
 
-trac_path(infile, outdir = NULL, subjid, verbose = TRUE)
+trac_path(infile, outdir = NULL, subjid, verbose = get_fs_verbosity())
 }
 \arguments{
 \item{infile}{Input filename (dcm or nii)}
