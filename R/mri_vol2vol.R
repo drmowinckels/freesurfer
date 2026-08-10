@@ -1,18 +1,7 @@
 #' Resample a Volume into Another Volume's Space with FreeSurfer
 #'
-#' @description
-#' Calls FreeSurfer's `mri_vol2vol` to resample a "moving" volume onto the voxel
-#' grid of a "target" volume, using either an explicit registration or the
-#' volumes' own headers (`--regheader`).
-#'
-#' @details
-#' Runtime FreeSurfer CLI help is available via the helper function
-#' \code{mri_vol2vol.help()}. When called, that helper will attempt to fetch and
-#' display the underlying FreeSurfer command-line help if FreeSurfer is
-#' installed on the system.
-#'
-#' This is a thin wrapper around [fs_flag_cmd()]; anything not exposed as an
-#' argument can be passed through `opts`.
+#' Calls FreeSurfer's `mri_vol2vol` to resample the moving volume `mov` onto the
+#' voxel grid of the target volume `targ`.
 #'
 #' @param mov Character; the moving volume to resample (`--mov`).
 #' @param targ Character; the target volume whose grid to resample onto
@@ -20,25 +9,17 @@
 #' @param outfile Character; output volume (`--o`). Defaults to a temporary
 #'   `.nii.gz` file.
 #' @param reg Character; a registration file (`.lta`/`.dat`) mapping `mov` to
-#'   `targ` (`--reg`). Ignored when `regheader = TRUE`.
-#' @param regheader Logical; use the volumes' headers to compute the
-#'   registration (`--regheader`) instead of a `reg` file. Default `FALSE`.
+#'   `targ` (`--reg`), or the string `"header"` to derive the registration from
+#'   the volumes' headers (`--regheader`).
 #' @param interp Character; interpolation method (`--interp`): one of
 #'   `"trilin"`, `"nearest"` or `"cubic"`.
 #' @template opts
-#' @param verbose Logical; print the assembled command before running it.
+#' @template verbose
 #' @param ... Additional arguments passed to [fs_flag_cmd()].
 #'
 #' @return The output filename, invisibly.
-#'
-#' @section FreeSurfer Command Help:
-#' When FreeSurfer is installed and available, detailed command-line help for
-#' the underlying `mri_vol2vol` command can be accessed via
-#' `mri_vol2vol.help()`.
-#'
 #' @seealso [fs_flag_cmd()] for the underlying flag-based command wrapper;
 #'   [mri_convert()] for format conversion.
-#'
 #' @name mri_vol2vol
 #' @export
 #'
@@ -46,19 +27,15 @@
 #' \dontrun{
 #' # Resample a parcellation into an aseg's space using the headers
 #' mri_vol2vol(
-#'   mov = "parcellation.nii.gz",
-#'   targ = "aseg.mgz",
-#'   outfile = "parcellation_in_aseg.nii.gz",
-#'   regheader = TRUE,
-#'   interp = "nearest"
+#'   "parcellation.nii.gz", "aseg.mgz",
+#'   reg = "header", interp = "nearest"
 #' )
 #' }
 mri_vol2vol <- function(
   mov,
   targ,
+  reg,
   outfile = NULL,
-  reg = NULL,
-  regheader = FALSE,
   interp = c("trilin", "nearest", "cubic"),
   opts = "",
   verbose = get_fs_verbosity(),
@@ -68,19 +45,20 @@ mri_vol2vol <- function(
   if (is.null(outfile)) {
     outfile <- temp_file(fileext = ".nii.gz")
   }
-  if (!regheader && is.null(reg)) {
+  if (missing(reg) || is.null(reg)) {
     cli::cli_abort(
-      "Provide a registration via {.arg reg} or set {.arg regheader = TRUE}."
+      "Supply {.arg reg}: a registration file, or {.val header} (--regheader)."
     )
   }
+  header <- identical(reg, "header")
 
   fs_flag_cmd(
     func = "mri_vol2vol",
     args = list(
       mov = mov,
       targ = targ,
-      reg = if (regheader) NULL else reg,
-      regheader = regheader,
+      reg = if (header) NULL else reg,
+      regheader = header,
       interp = interp,
       o = outfile
     ),

@@ -1,5 +1,5 @@
 describe("mri_vol2vol", {
-  it("passes the mov/targ/reg/interp/o flags to fs_flag_cmd", {
+  it("passes a reg file through to fs_flag_cmd", {
     captured <- NULL
     local_mocked_bindings(
       fs_flag_cmd = function(func, args, outfile, ...) {
@@ -11,8 +11,8 @@ describe("mri_vol2vol", {
     mri_vol2vol(
       mov = "m.nii",
       targ = "t.mgz",
-      outfile = "o.nii",
       reg = "r.lta",
+      outfile = "o.nii",
       interp = "nearest"
     )
 
@@ -25,7 +25,7 @@ describe("mri_vol2vol", {
     expect_false(captured$args$regheader)
   })
 
-  it("uses --regheader and drops reg when regheader = TRUE", {
+  it("turns reg = 'header' into --regheader and drops --reg", {
     captured <- NULL
     local_mocked_bindings(
       fs_flag_cmd = function(func, args, outfile, ...) {
@@ -37,8 +37,8 @@ describe("mri_vol2vol", {
     mri_vol2vol(
       mov = "m.nii",
       targ = "t.mgz",
-      outfile = "o.nii",
-      regheader = TRUE
+      reg = "header",
+      outfile = "o.nii"
     )
 
     expect_true(captured$regheader)
@@ -54,14 +54,14 @@ describe("mri_vol2vol", {
       }
     )
 
-    mri_vol2vol("m.nii", "t.mgz", outfile = "o.nii", regheader = TRUE)
+    mri_vol2vol("m.nii", "t.mgz", reg = "header", outfile = "o.nii")
     expect_identical(captured$interp, "trilin")
   })
 
-  it("errors when neither reg nor regheader is supplied", {
+  it("errors when reg is not supplied", {
     expect_error(
       mri_vol2vol("m.nii", "t.mgz", outfile = "o.nii"),
-      "regheader"
+      "reg"
     )
   })
 })

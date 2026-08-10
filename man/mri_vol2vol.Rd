@@ -8,9 +8,8 @@
 mri_vol2vol(
   mov,
   targ,
+  reg,
   outfile = NULL,
-  reg = NULL,
-  regheader = FALSE,
   interp = c("trilin", "nearest", "cubic"),
   opts = "",
   verbose = get_fs_verbosity(),
@@ -25,21 +24,19 @@ mri_vol2vol.help(...)
 \item{targ}{Character; the target volume whose grid to resample onto
 (\code{--targ}).}
 
+\item{reg}{Character; a registration file (\code{.lta}/\code{.dat}) mapping \code{mov} to
+\code{targ} (\code{--reg}), or the string \code{"header"} to derive the registration from
+the volumes' headers (\code{--regheader}).}
+
 \item{outfile}{Character; output volume (\code{--o}). Defaults to a temporary
 \code{.nii.gz} file.}
-
-\item{reg}{Character; a registration file (\code{.lta}/\code{.dat}) mapping \code{mov} to
-\code{targ} (\code{--reg}). Ignored when \code{regheader = TRUE}.}
-
-\item{regheader}{Logical; use the volumes' headers to compute the
-registration (\code{--regheader}) instead of a \code{reg} file. Default \code{FALSE}.}
 
 \item{interp}{Character; interpolation method (\code{--interp}): one of
 \code{"trilin"}, \code{"nearest"} or \code{"cubic"}.}
 
 \item{opts}{Character. Additional options to Freesurfer function.}
 
-\item{verbose}{Logical; print the assembled command before running it.}
+\item{verbose}{(logical) print diagnostic messages}
 
 \item{...}{Additional arguments passed to \code{\link[=fs_help]{fs_help()}}}
 }
@@ -47,41 +44,21 @@ registration (\code{--regheader}) instead of a \code{reg} file. Default \code{FA
 The output filename, invisibly.
 }
 \description{
-Calls FreeSurfer's \code{mri_vol2vol} to resample a "moving" volume onto the voxel
-grid of a "target" volume, using either an explicit registration or the
-volumes' own headers (\code{--regheader}).
-}
-\details{
-Runtime FreeSurfer CLI help is available via the helper function
-\code{mri_vol2vol.help()}. When called, that helper will attempt to fetch and
-display the underlying FreeSurfer command-line help if FreeSurfer is
-installed on the system.
-
-This is a thin wrapper around \code{\link[=fs_flag_cmd]{fs_flag_cmd()}}; anything not exposed as an
-argument can be passed through \code{opts}.
+Calls FreeSurfer's \code{mri_vol2vol} to resample the moving volume \code{mov} onto the
+voxel grid of the target volume \code{targ}.
 }
 \section{Functions}{
 \itemize{
 \item \code{mri_vol2vol.help()}: Display FreeSurfer help for mri_vol2vol
 
 }}
-\section{FreeSurfer Command Help}{
-
-When FreeSurfer is installed and available, detailed command-line help for
-the underlying \code{mri_vol2vol} command can be accessed via
-\code{mri_vol2vol.help()}.
-}
-
 \examples{
 \dontshow{if (have_fs()) withAutoprint(\{ # examplesIf}
 \dontrun{
 # Resample a parcellation into an aseg's space using the headers
 mri_vol2vol(
-  mov = "parcellation.nii.gz",
-  targ = "aseg.mgz",
-  outfile = "parcellation_in_aseg.nii.gz",
-  regheader = TRUE,
-  interp = "nearest"
+  "parcellation.nii.gz", "aseg.mgz",
+  reg = "header", interp = "nearest"
 )
 }
 \dontshow{\}) # examplesIf}

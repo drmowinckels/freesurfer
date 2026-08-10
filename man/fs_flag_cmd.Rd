@@ -9,51 +9,33 @@ fs_flag_cmd(
   args = list(),
   outfile = NULL,
   opts = "",
-  subj_dir = NULL,
-  bin_app = c("bin", "mni/bin"),
   verbose = get_fs_verbosity(),
   ...
 )
 }
 \arguments{
-\item{func}{Character; the FreeSurfer command to run, e.g. \code{"mri_vol2vol"}.}
+\item{func}{Character; the FreeSurfer command, e.g. \code{"mri_vol2vol"}.}
 
-\item{args}{Named list of command flags (see Details). Order is preserved.}
+\item{args}{Named list of command flags: \code{name = value} becomes
+\verb{--name <value>}, \code{TRUE} becomes a bare \code{--name}, and \code{NULL} or \code{FALSE} are
+dropped. Order is preserved and values are quoted with \code{\link[base:shQuote]{base::shQuote()}}.}
 
-\item{outfile}{Character; the file the command is expected to create. It is
-checked after the command runs; supply it even when it is also one of the
-\code{args} (for example the \code{--o} flag).}
+\item{outfile}{Character; the file the command is expected to create, checked
+after it runs.}
 
 \item{opts}{Character. Additional options to Freesurfer function.}
 
-\item{subj_dir}{Character; optional \code{SUBJECTS_DIR} to export for the command.
-The previous value is restored on exit.}
+\item{verbose}{(logical) print diagnostic messages}
 
-\item{bin_app}{Character; FreeSurfer binary sub-directory, passed to
-\code{\link[=get_fs]{get_fs()}}.}
-
-\item{verbose}{Logical; print the assembled command before running it.}
-
-\item{...}{Additional arguments passed to \code{\link[=run_check_fs_cmd]{run_check_fs_cmd()}} (for example
-\code{timeout_seconds}).}
+\item{...}{Additional arguments passed to \code{\link[=run_check_fs_cmd]{run_check_fs_cmd()}}.}
 }
 \value{
 The \code{outfile}, invisibly.
 }
 \description{
-Wrapper for FreeSurfer command-line tools that take \verb{--flag value} style
-arguments (for example \code{mri_vol2vol} or \code{mri_surf2surf}). This is the
-flag-based counterpart to \code{\link[=fs_cmd]{fs_cmd()}}, which handles commands that take
-positional \verb{<input> <output>} arguments. The command is assembled from a
-named list of flags and run with the FreeSurfer environment set up via
-\code{\link[=get_fs]{get_fs()}}, then the expected \code{outfile} is checked with \code{\link[=run_check_fs_cmd]{run_check_fs_cmd()}}.
-}
-\details{
-Each element of \code{args} becomes a \verb{--<name> <value>} flag, in the order given.
-A logical \code{TRUE} value produces a bare boolean flag (\verb{--<name>}); a \code{NULL} or
-\code{FALSE} value is dropped. Non-boolean values are quoted with
-\code{\link[base:shQuote]{base::shQuote()}}, so paths containing spaces are handled. Multi-token flag
-values (for example a coordinate range) are better passed through \code{opts}.
+The flag-based counterpart to \code{\link[=fs_cmd]{fs_cmd()}}, for FreeSurfer tools that take
+\verb{--flag value} arguments (such as \code{mri_vol2vol}). The command is assembled
+from a named list of flags and run with the FreeSurfer environment set up.
 }
 \examples{
 \dontshow{if (have_fs()) withAutoprint(\{ # examplesIf}
@@ -65,7 +47,6 @@ fs_flag_cmd(
     mov = "mov.nii.gz",
     targ = "targ.mgz",
     regheader = TRUE,
-    interp = "nearest",
     o = out
   ),
   outfile = out
@@ -74,6 +55,5 @@ fs_flag_cmd(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=fs_cmd]{fs_cmd()}} for positional-argument commands; \code{\link[=mri_vol2vol]{mri_vol2vol()}} and
-\code{\link[=mri_surf2surf]{mri_surf2surf()}} for wrappers built on this helper.
+\code{\link[=fs_cmd]{fs_cmd()}} for positional-argument commands.
 }
