@@ -12,7 +12,8 @@
 #'   after it runs.
 #' @template opts
 #' @template verbose
-#' @param ... Additional arguments passed to the internal command runner.
+#' @param ... Additional arguments controlling command execution, such as a
+#'   timeout.
 #'
 #' @return The `outfile`, invisibly.
 #' @seealso [fs_cmd()] for positional-argument commands.

@@ -27,7 +27,8 @@ after it runs.}
 
 \item{verbose}{(logical) print diagnostic messages}
 
-\item{...}{Additional arguments passed to the internal command runner.}
+\item{...}{Additional arguments controlling command execution, such as a
+timeout.}
 }
 \value{
 The \code{outfile}, invisibly.
