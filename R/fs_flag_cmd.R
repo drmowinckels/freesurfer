@@ -12,7 +12,7 @@
 #'   after it runs.
 #' @template opts
 #' @template verbose
-#' @param ... Additional arguments passed to [run_check_fs_cmd()].
+#' @param ... Additional arguments passed to the internal command runner.
 #'
 #' @return The `outfile`, invisibly.
 #' @seealso [fs_cmd()] for positional-argument commands.

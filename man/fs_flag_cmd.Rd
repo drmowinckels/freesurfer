@@ -27,7 +27,7 @@ after it runs.}
 
 \item{verbose}{(logical) print diagnostic messages}
 
-\item{...}{Additional arguments passed to \code{\link[=run_check_fs_cmd]{run_check_fs_cmd()}}.}
+\item{...}{Additional arguments passed to the internal command runner.}
 }
 \value{
 The \code{outfile}, invisibly.
